@@ -3,8 +3,8 @@ package daemon
 import (
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	"moby/dockerversion"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/dockerversion"
 )
 
 // AuthenticateToRegistry checks the validity of credentials in authConfig

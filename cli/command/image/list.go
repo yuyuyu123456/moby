@@ -3,11 +3,11 @@ package image
 import (
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	"moby/cli"
-	"moby/cli/command"
-	"moby/cli/command/formatter"
-	"moby/opts"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/command/formatter"
+	"github.com/docker/docker/opts"
 	"github.com/spf13/cobra"
 )
 

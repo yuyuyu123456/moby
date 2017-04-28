@@ -3,8 +3,8 @@
 package main
 
 import (
-	"moby/daemon/config"
-	"moby/opts"
+	"github.com/docker/docker/daemon/config"
+	"github.com/docker/docker/opts"
 	units "github.com/docker/go-units"
 	"github.com/spf13/pflag"
 )

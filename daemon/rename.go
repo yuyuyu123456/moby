@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	dockercontainer "moby/container"
+	dockercontainer "github.com/docker/docker/container"
 	"github.com/docker/libnetwork"
 )
 

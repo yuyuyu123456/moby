@@ -7,7 +7,7 @@ import (
 	"text/template"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 	units "github.com/docker/go-units"
 )
 

@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/Sirupsen/logrus"
-	"moby/cli/command"
-	"moby/cli/debug"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/debug"
 	"github.com/stretchr/testify/assert"
 )
 

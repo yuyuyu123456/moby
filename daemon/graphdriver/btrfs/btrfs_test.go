@@ -7,7 +7,7 @@ import (
 	"path"
 	"testing"
 
-	"moby/daemon/graphdriver/graphtest"
+	"github.com/docker/docker/daemon/graphdriver/graphtest"
 )
 
 // This avoids creating a new driver for each test if all tests are run

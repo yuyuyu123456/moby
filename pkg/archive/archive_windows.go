@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"moby/pkg/longpath"
+	"github.com/docker/docker/pkg/longpath"
 )
 
 // fixVolumePathPrefix does platform specific processing to ensure that if

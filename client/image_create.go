@@ -7,7 +7,7 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 // ImageCreate creates a new image based in the parent options.

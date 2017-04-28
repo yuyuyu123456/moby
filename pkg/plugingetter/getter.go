@@ -1,6 +1,6 @@
 package plugingetter
 
-import "moby/pkg/plugins"
+import "github.com/docker/docker/pkg/plugins"
 
 const (
 	// Lookup doesn't update RefCount

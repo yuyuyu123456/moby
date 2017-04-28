@@ -5,7 +5,7 @@ import (
 
 	aliasedio "io"
 
-	"moby/pkg/plugins/pluginrpc-gen/fixtures/otherfixture"
+	"github.com/docker/docker/pkg/plugins/pluginrpc-gen/fixtures/otherfixture"
 )
 
 var (

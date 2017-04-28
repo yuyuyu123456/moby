@@ -3,8 +3,8 @@ package system
 import (
 	"github.com/spf13/cobra"
 
-	"moby/cli"
-	"moby/cli/command"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
 )
 
 // NewSystemCommand returns a cobra command for `system` subcommands

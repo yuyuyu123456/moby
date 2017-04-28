@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"testing"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 )
 
 func TestCanonicalTarNameForPath(t *testing.T) {

@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"moby/api/types/container"
-	"moby/opts"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/opts"
 	"github.com/stretchr/testify/assert"
 )
 

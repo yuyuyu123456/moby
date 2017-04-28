@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	eventtypes "moby/api/types/events"
-	"moby/pkg/pubsub"
+	eventtypes "github.com/docker/docker/api/types/events"
+	"github.com/docker/docker/pkg/pubsub"
 )
 
 const (

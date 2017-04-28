@@ -5,7 +5,7 @@ package runconfig
 import (
 	"testing"
 
-	"moby/api/types/container"
+	"github.com/docker/docker/api/types/container"
 )
 
 func TestValidatePrivileged(t *testing.T) {

@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	"moby/api/types/swarm"
-	"moby/integration-cli/checker"
-	"moby/integration-cli/daemon"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/daemon"
 	"github.com/go-check/check"
 )
 

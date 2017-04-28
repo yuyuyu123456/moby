@@ -20,8 +20,8 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	containerd "github.com/docker/containerd/api/grpc/types"
-	"moby/pkg/locker"
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/locker"
+	"github.com/docker/docker/pkg/system"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
 	"golang.org/x/net/context"

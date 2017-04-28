@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"moby/daemon/graphdriver"
-	"moby/daemon/graphdriver/graphtest"
+	"github.com/docker/docker/daemon/graphdriver"
+	"github.com/docker/docker/daemon/graphdriver/graphtest"
 )
 
 func init() {

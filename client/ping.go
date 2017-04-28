@@ -3,7 +3,7 @@ package client
 import (
 	"fmt"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 	"golang.org/x/net/context"
 )
 

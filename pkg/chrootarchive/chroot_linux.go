@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"moby/pkg/mount"
+	"github.com/docker/docker/pkg/mount"
 	rsystem "github.com/opencontainers/runc/libcontainer/system"
 )
 

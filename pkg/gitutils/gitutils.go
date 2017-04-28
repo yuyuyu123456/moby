@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"moby/pkg/symlink"
-	"moby/pkg/urlutil"
+	"github.com/docker/docker/pkg/symlink"
+	"github.com/docker/docker/pkg/urlutil"
 )
 
 // Clone clones a repository into a newly created directory which

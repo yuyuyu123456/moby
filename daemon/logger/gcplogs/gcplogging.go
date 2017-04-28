@@ -6,7 +6,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"moby/daemon/logger"
+	"github.com/docker/docker/daemon/logger"
 
 	"cloud.google.com/go/compute/metadata"
 	"cloud.google.com/go/logging"

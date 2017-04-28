@@ -7,7 +7,7 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 // ImageImport creates a new image based in the source options.

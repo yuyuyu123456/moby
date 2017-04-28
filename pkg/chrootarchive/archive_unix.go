@@ -12,8 +12,8 @@ import (
 	"os"
 	"runtime"
 
-	"moby/pkg/archive"
-	"moby/pkg/reexec"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 // untar is the entry-point for docker-untar on re-exec. This is not used on

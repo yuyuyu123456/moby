@@ -11,9 +11,9 @@ import (
 	"golang.org/x/net/context"
 
 	"encoding/json"
-	"moby/api/types"
-	"moby/api/types/filters"
-	"moby/api/types/registry"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/registry"
 )
 
 func TestImageSearchAnyError(t *testing.T) {

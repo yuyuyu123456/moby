@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"moby/pkg/reexec"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 func init() {

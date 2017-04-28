@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"moby/api/types/mount"
+	"github.com/docker/docker/api/types/mount"
 )
 
 func TestValidateMount(t *testing.T) {

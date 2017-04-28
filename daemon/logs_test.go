@@ -3,7 +3,7 @@ package daemon
 import (
 	"testing"
 
-	containertypes "moby/api/types/container"
+	containertypes "github.com/docker/docker/api/types/container"
 )
 
 func TestMergeAndVerifyLogConfigNilConfig(t *testing.T) {

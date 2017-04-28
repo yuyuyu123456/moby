@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"moby/api/types"
-	"moby/api/types/filters"
-	"moby/api/types/registry"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/registry"
 	"golang.org/x/net/context"
 )
 

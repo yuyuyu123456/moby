@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"moby/api/types/mount"
+	"github.com/docker/docker/api/types/mount"
 )
 
 var errBindNotExist = errors.New("bind source path does not exist")

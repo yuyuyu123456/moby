@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"moby/api/types"
-	containertypes "moby/api/types/container"
-	eventtypes "moby/api/types/events"
-	"moby/container"
-	"moby/daemon/events"
+	"github.com/docker/docker/api/types"
+	containertypes "github.com/docker/docker/api/types/container"
+	eventtypes "github.com/docker/docker/api/types/events"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/daemon/events"
 )
 
 func reset(c *container.Container) {

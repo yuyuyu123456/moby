@@ -7,7 +7,7 @@ import (
 	"strings"
 	"syscall"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 )
 
 func getWhiteoutConverter(format WhiteoutFormat) tarWhiteoutConverter {

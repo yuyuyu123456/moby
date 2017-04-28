@@ -8,7 +8,7 @@ import (
 	"strings"
 	"syscall"
 
-	"moby/pkg/idtools"
+	"github.com/docker/docker/pkg/idtools"
 )
 
 // Setup populates a directory with mountpoints suitable

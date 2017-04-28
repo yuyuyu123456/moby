@@ -3,9 +3,9 @@ package image
 import (
 	"golang.org/x/net/context"
 
-	"moby/cli"
-	"moby/cli/command"
-	"moby/cli/command/formatter"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/command/formatter"
 	"github.com/spf13/cobra"
 )
 

@@ -12,10 +12,10 @@ import (
 	"strconv"
 	"strings"
 
-	"moby/integration-cli/checker"
-	"moby/pkg/stringid"
-	"moby/pkg/system"
-	"moby/pkg/testutil"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/pkg/stringid"
+	"github.com/docker/docker/pkg/system"
+	"github.com/docker/docker/pkg/testutil"
 	"github.com/go-check/check"
 )
 

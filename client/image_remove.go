@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/url"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 	"golang.org/x/net/context"
 )
 

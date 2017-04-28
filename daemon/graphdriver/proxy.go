@@ -6,10 +6,10 @@ import (
 	"io"
 	"path/filepath"
 
-	"moby/pkg/archive"
-	"moby/pkg/idtools"
-	"moby/pkg/plugingetter"
-	"moby/pkg/plugins"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/idtools"
+	"github.com/docker/docker/pkg/plugingetter"
+	"github.com/docker/docker/pkg/plugins"
 )
 
 type graphDriverProxy struct {

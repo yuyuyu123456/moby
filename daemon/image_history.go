@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types/image"
-	"moby/layer"
+	"github.com/docker/docker/api/types/image"
+	"github.com/docker/docker/layer"
 )
 
 // ImageHistory returns a slice of ImageHistory structures for the specified image

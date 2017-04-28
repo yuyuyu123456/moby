@@ -7,8 +7,8 @@ package registry
 import (
 	"testing"
 
-	"moby/api/types"
-	registrytypes "moby/api/types/registry"
+	"github.com/docker/docker/api/types"
+	registrytypes "github.com/docker/docker/api/types/registry"
 )
 
 func buildAuthConfigs() map[string]types.AuthConfig {

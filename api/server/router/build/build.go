@@ -1,6 +1,6 @@
 package build
 
-import "moby/api/server/router"
+import "github.com/docker/docker/api/server/router"
 
 // buildRouter is a router to talk with the build controller
 type buildRouter struct {

@@ -3,8 +3,8 @@ package image
 import (
 	"io"
 
-	"moby/cli"
-	"moby/cli/command"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"

@@ -10,12 +10,12 @@ import (
 	"strings"
 	"sync"
 
-	"moby/integration-cli/cli"
-	"moby/integration-cli/cli/build"
-	"moby/integration-cli/cli/build/fakecontext"
-	"moby/integration-cli/environment"
-	"moby/integration-cli/request"
-	"moby/pkg/stringutils"
+	"github.com/docker/docker/integration-cli/cli"
+	"github.com/docker/docker/integration-cli/cli/build"
+	"github.com/docker/docker/integration-cli/cli/build/fakecontext"
+	"github.com/docker/docker/integration-cli/environment"
+	"github.com/docker/docker/integration-cli/request"
+	"github.com/docker/docker/pkg/stringutils"
 )
 
 var (

@@ -16,26 +16,26 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/Sirupsen/logrus"
-	containertypes "moby/api/types/container"
-	mounttypes "moby/api/types/mount"
-	networktypes "moby/api/types/network"
-	swarmtypes "moby/api/types/swarm"
-	"moby/container/stream"
-	"moby/daemon/exec"
-	"moby/daemon/logger"
-	"moby/daemon/logger/jsonfilelog"
-	"moby/daemon/network"
-	"moby/image"
-	"moby/layer"
-	"moby/libcontainerd"
-	"moby/opts"
-	"moby/pkg/idtools"
-	"moby/pkg/ioutils"
-	"moby/pkg/signal"
-	"moby/pkg/symlink"
-	"moby/restartmanager"
-	"moby/runconfig"
-	"moby/volume"
+	containertypes "github.com/docker/docker/api/types/container"
+	mounttypes "github.com/docker/docker/api/types/mount"
+	networktypes "github.com/docker/docker/api/types/network"
+	swarmtypes "github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/container/stream"
+	"github.com/docker/docker/daemon/exec"
+	"github.com/docker/docker/daemon/logger"
+	"github.com/docker/docker/daemon/logger/jsonfilelog"
+	"github.com/docker/docker/daemon/network"
+	"github.com/docker/docker/image"
+	"github.com/docker/docker/layer"
+	"github.com/docker/docker/libcontainerd"
+	"github.com/docker/docker/opts"
+	"github.com/docker/docker/pkg/idtools"
+	"github.com/docker/docker/pkg/ioutils"
+	"github.com/docker/docker/pkg/signal"
+	"github.com/docker/docker/pkg/symlink"
+	"github.com/docker/docker/restartmanager"
+	"github.com/docker/docker/runconfig"
+	"github.com/docker/docker/volume"
 	"github.com/docker/go-connections/nat"
 	"github.com/docker/go-units"
 	"github.com/docker/libnetwork"
@@ -454,7 +454,7 @@ func (container *Container) StopTimeout() int {
 // The non-recommended host configuration in the start api can
 // make these fields nil again, this corrects that issue until
 // we remove that behavior for good.
-// See https://moby/pull/17779
+// See https://github.com/docker/docker/pull/17779
 // for a more detailed explanation on why we don't want that.
 func (container *Container) InitDNSHostConfig() {
 	container.Lock()

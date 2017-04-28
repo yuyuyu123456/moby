@@ -5,8 +5,8 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"moby/api/types/mount"
-	"moby/cli/compose/types"
+	"github.com/docker/docker/api/types/mount"
+	"github.com/docker/docker/cli/compose/types"
 	"github.com/pkg/errors"
 )
 

@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"bytes"
-	"moby/api/types/image"
-	"moby/pkg/stringid"
-	"moby/pkg/stringutils"
+	"github.com/docker/docker/api/types/image"
+	"github.com/docker/docker/pkg/stringid"
+	"github.com/docker/docker/pkg/stringutils"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -1,8 +1,8 @@
 package formatter
 
 import (
-	"moby/api/types/container"
-	"moby/pkg/archive"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/pkg/archive"
 )
 
 const (

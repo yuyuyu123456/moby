@@ -7,12 +7,12 @@ import (
 	"net/url"
 	"strings"
 
-	"moby/api/types"
-	"moby/api/types/image"
-	"moby/integration-cli/checker"
-	"moby/integration-cli/cli"
-	"moby/integration-cli/cli/build"
-	"moby/integration-cli/request"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/image"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/cli"
+	"github.com/docker/docker/integration-cli/cli/build"
+	"github.com/docker/docker/integration-cli/request"
 	"github.com/go-check/check"
 )
 

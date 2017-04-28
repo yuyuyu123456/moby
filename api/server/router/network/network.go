@@ -1,8 +1,8 @@
 package network
 
 import (
-	"moby/api/server/router"
-	"moby/daemon/cluster"
+	"github.com/docker/docker/api/server/router"
+	"github.com/docker/docker/daemon/cluster"
 )
 
 // networkRouter is a router to talk with the network controller

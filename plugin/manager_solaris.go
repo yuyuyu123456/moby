@@ -3,7 +3,7 @@ package plugin
 import (
 	"fmt"
 
-	"moby/plugin/v2"
+	"github.com/docker/docker/plugin/v2"
 	specs "github.com/opencontainers/runtime-spec/specs-go"
 )
 

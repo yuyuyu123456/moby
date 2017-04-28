@@ -4,8 +4,8 @@ import (
 	"io"
 	"strings"
 
-	"moby/integration-cli/cli/build/fakecontext"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/integration-cli/cli/build/fakecontext"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 )
 
 type testingT interface {

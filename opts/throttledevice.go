@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"moby/api/types/blkiodev"
+	"github.com/docker/docker/api/types/blkiodev"
 	"github.com/docker/go-units"
 )
 

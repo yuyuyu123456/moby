@@ -2,8 +2,8 @@ package volume
 
 import (
 	// TODO return types need to be refactored into pkg
-	"moby/api/types"
-	"moby/api/types/filters"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
 )
 
 // Backend is the methods that need to be implemented to provide

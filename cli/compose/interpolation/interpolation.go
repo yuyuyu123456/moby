@@ -1,7 +1,7 @@
 package interpolation
 
 import (
-	"moby/cli/compose/template"
+	"github.com/docker/docker/cli/compose/template"
 	"github.com/pkg/errors"
 )
 

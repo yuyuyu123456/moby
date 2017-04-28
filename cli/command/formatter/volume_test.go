@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"moby/api/types"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/pkg/stringid"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/discovery"
+	"github.com/docker/docker/pkg/discovery"
 
 	// Register the libkv backends for discovery.
-	_ "moby/pkg/discovery/kv"
+	_ "github.com/docker/docker/pkg/discovery/kv"
 )
 
 const (

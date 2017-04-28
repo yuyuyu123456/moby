@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"moby/api"
-	"moby/api/server/httputils"
-	"moby/api/server/middleware"
+	"github.com/docker/docker/api"
+	"github.com/docker/docker/api/server/httputils"
+	"github.com/docker/docker/api/server/middleware"
 
 	"golang.org/x/net/context"
 )

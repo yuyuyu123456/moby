@@ -6,7 +6,7 @@ import (
 	"os"
 	"syscall"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 )
 
 func statDifferent(oldStat *system.StatT, newStat *system.StatT) bool {

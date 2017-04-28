@@ -5,12 +5,12 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"moby/api/types/swarm"
-	"moby/cli/internal/test"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/cli/internal/test"
 	"github.com/pkg/errors"
 	// Import builders to get the builder function as package function
-	. "moby/cli/internal/test/builders"
-	"moby/pkg/testutil"
+	. "github.com/docker/docker/cli/internal/test/builders"
+	"github.com/docker/docker/pkg/testutil"
 	"github.com/stretchr/testify/assert"
 )
 

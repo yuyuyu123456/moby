@@ -1,9 +1,9 @@
 package cluster
 
 import (
-	apitypes "moby/api/types"
-	types "moby/api/types/swarm"
-	"moby/daemon/cluster/convert"
+	apitypes "github.com/docker/docker/api/types"
+	types "github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/daemon/cluster/convert"
 	swarmapi "github.com/docker/swarmkit/api"
 	"golang.org/x/net/context"
 )

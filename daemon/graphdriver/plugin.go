@@ -5,8 +5,8 @@ import (
 	"io"
 	"path/filepath"
 
-	"moby/pkg/plugingetter"
-	"moby/plugin/v2"
+	"github.com/docker/docker/pkg/plugingetter"
+	"github.com/docker/docker/plugin/v2"
 )
 
 type pluginClient interface {

@@ -3,7 +3,7 @@ package controlapi
 import (
 	"net"
 
-	"moby/pkg/plugingetter"
+	"github.com/docker/docker/pkg/plugingetter"
 	"github.com/docker/libnetwork/driverapi"
 	"github.com/docker/libnetwork/ipamapi"
 	"github.com/docker/swarmkit/api"

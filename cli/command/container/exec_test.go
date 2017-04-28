@@ -3,7 +3,7 @@ package container
 import (
 	"testing"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 type arguments struct {

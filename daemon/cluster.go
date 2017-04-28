@@ -1,10 +1,10 @@
 package daemon
 
 import (
-	apitypes "moby/api/types"
+	apitypes "github.com/docker/docker/api/types"
 )
 
-// Cluster is the interface for moby/daemon/cluster.(*Cluster).
+// Cluster is the interface for github.com/docker/docker/daemon/cluster.(*Cluster).
 type Cluster interface {
 	ClusterStatus
 	NetworkManager

@@ -15,7 +15,7 @@ import (
 	"syscall"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/reexec"
+	"github.com/docker/docker/pkg/reexec"
 	"github.com/docker/libnetwork/iptables"
 	"github.com/docker/libnetwork/ipvs"
 	"github.com/docker/libnetwork/ns"

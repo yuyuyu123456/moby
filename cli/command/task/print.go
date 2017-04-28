@@ -6,10 +6,10 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types/swarm"
-	"moby/cli/command"
-	"moby/cli/command/formatter"
-	"moby/cli/command/idresolver"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/command/formatter"
+	"github.com/docker/docker/cli/command/idresolver"
 )
 
 type tasksBySlot []swarm.Task

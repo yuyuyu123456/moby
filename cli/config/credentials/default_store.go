@@ -3,7 +3,7 @@ package credentials
 import (
 	"os/exec"
 
-	"moby/cli/config/configfile"
+	"github.com/docker/docker/cli/config/configfile"
 )
 
 // DetectDefaultStore sets the default credentials store

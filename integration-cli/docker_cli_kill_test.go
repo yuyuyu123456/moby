@@ -6,10 +6,10 @@ import (
 	"strings"
 	"time"
 
-	"moby/integration-cli/checker"
-	"moby/integration-cli/cli"
-	"moby/integration-cli/request"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/cli"
+	"github.com/docker/docker/integration-cli/request"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

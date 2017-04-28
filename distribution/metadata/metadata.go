@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"moby/pkg/ioutils"
+	"github.com/docker/docker/pkg/ioutils"
 )
 
 // Store implements a K/V store for mapping distribution-related IDs

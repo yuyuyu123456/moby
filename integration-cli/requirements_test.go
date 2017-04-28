@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"moby/integration-cli/requirement"
+	"github.com/docker/docker/integration-cli/requirement"
 	"github.com/go-check/check"
 )
 

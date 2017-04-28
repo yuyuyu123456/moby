@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"moby/pkg/ioutils"
+	"github.com/docker/docker/pkg/ioutils"
 )
 
 func loadPersistentState(root string) (*nodeStartConfig, error) {

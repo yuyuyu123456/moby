@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 )
 
 // FollowSymlinkInScope is a wrapper around evalSymlinksInScope that returns an

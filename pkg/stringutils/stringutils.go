@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"strings"
 
-	"moby/pkg/random"
+	"github.com/docker/docker/pkg/random"
 )
 
 // GenerateRandomAlphaOnlyString generates an alphabetical random string with length n.

@@ -5,7 +5,7 @@ package daemon
 import (
 	"fmt"
 
-	aaprofile "moby/profiles/apparmor"
+	aaprofile "github.com/docker/docker/profiles/apparmor"
 	"github.com/opencontainers/runc/libcontainer/apparmor"
 )
 

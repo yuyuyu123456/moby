@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 	"github.com/opencontainers/runc/libcontainer/user"
 )
 

@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/docker/distribution/reference"
-	"moby/builder"
-	"moby/image"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/builder"
+	"github.com/docker/docker/image"
+	"github.com/docker/docker/pkg/stringid"
 )
 
 // ErrImageDoesNotExist is error returned when no image can be found for a reference.
@@ -46,7 +46,7 @@ func (daemon *Daemon) GetImageID(refOrID string) (image.ID, error) {
 		return image.IDFromDigest(id), nil
 	}
 
-	// deprecated: repo:shortid https://moby/pull/799
+	// deprecated: repo:shortid https://github.com/docker/docker/pull/799
 	if tagged, ok := namedRef.(reference.Tagged); ok {
 		if tag := tagged.Tag(); stringid.IsShortID(stringid.TruncateID(tag)) {
 			if id, err := daemon.imageStore.Search(tag); err == nil {

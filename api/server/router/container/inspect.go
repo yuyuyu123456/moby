@@ -3,7 +3,7 @@ package container
 import (
 	"net/http"
 
-	"moby/api/server/httputils"
+	"github.com/docker/docker/api/server/httputils"
 	"golang.org/x/net/context"
 )
 

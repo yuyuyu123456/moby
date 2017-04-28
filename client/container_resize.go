@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 	"golang.org/x/net/context"
 )
 

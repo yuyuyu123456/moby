@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"moby/integration-cli/checker"
-	"moby/pkg/testutil"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/pkg/testutil"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

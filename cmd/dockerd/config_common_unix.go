@@ -3,9 +3,9 @@
 package main
 
 import (
-	"moby/api/types"
-	"moby/daemon/config"
-	"moby/opts"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/daemon/config"
+	"github.com/docker/docker/opts"
 	"github.com/spf13/pflag"
 )
 

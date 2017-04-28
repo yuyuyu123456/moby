@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api"
+	"github.com/docker/docker/api"
 )
 
 // APIVersionKey is the client's requested API version.

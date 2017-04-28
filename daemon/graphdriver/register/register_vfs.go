@@ -2,5 +2,5 @@ package register
 
 import (
 	// register vfs
-	_ "moby/daemon/graphdriver/vfs"
+	_ "github.com/docker/docker/daemon/graphdriver/vfs"
 )

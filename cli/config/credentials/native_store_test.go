@@ -10,7 +10,7 @@ import (
 
 	"moby-credential-helpers/client"
 	"moby-credential-helpers/credentials"
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 	"github.com/pkg/errors"
 )
 

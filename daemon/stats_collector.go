@@ -4,8 +4,8 @@ import (
 	"runtime"
 	"time"
 
-	"moby/daemon/stats"
-	"moby/pkg/system"
+	"github.com/docker/docker/daemon/stats"
+	"github.com/docker/docker/pkg/system"
 )
 
 // newStatsCollector returns a new statsCollector that collections

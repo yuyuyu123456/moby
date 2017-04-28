@@ -3,7 +3,7 @@ package plugin
 import (
 	"testing"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 func TestValidatePrivileges(t *testing.T) {

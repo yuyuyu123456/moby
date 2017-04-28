@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	"moby/api/server/httputils"
-	"moby/pkg/ioutils"
+	"github.com/docker/docker/api/server/httputils"
+	"github.com/docker/docker/pkg/ioutils"
 	"golang.org/x/net/context"
 )
 

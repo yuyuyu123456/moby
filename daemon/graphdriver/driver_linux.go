@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"moby/pkg/mount"
+	"github.com/docker/docker/pkg/mount"
 )
 
 const (

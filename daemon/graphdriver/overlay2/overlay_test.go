@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"testing"
 
-	"moby/daemon/graphdriver"
-	"moby/daemon/graphdriver/graphtest"
-	"moby/pkg/archive"
-	"moby/pkg/reexec"
+	"github.com/docker/docker/daemon/graphdriver"
+	"github.com/docker/docker/daemon/graphdriver/graphtest"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 func init() {

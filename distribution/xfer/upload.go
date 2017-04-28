@@ -6,8 +6,8 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution"
-	"moby/layer"
-	"moby/pkg/progress"
+	"github.com/docker/docker/layer"
+	"github.com/docker/docker/pkg/progress"
 	"golang.org/x/net/context"
 )
 

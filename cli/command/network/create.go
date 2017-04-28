@@ -7,12 +7,12 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	"moby/api/types/network"
-	"moby/cli"
-	"moby/cli/command"
-	"moby/opts"
-	runconfigopts "moby/runconfig/opts"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/network"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/opts"
+	runconfigopts "github.com/docker/docker/runconfig/opts"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )

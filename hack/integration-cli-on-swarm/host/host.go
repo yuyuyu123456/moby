@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"moby/api/types"
-	"moby/api/types/filters"
-	"moby/client"
-	"moby/pkg/stdcopy"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/client"
+	"github.com/docker/docker/pkg/stdcopy"
 )
 
 const (

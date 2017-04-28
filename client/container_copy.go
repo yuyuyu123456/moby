@@ -12,7 +12,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 // ContainerStatPath returns Stat information about a path inside the container filesystem.

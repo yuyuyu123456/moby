@@ -1,8 +1,8 @@
 package daemon
 
 import (
-	"moby/api/types"
-	"moby/pkg/sysinfo"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/pkg/sysinfo"
 )
 
 // FillPlatformInfo fills the platform related info.

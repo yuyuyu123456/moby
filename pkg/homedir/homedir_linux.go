@@ -5,7 +5,7 @@ package homedir
 import (
 	"os"
 
-	"moby/pkg/idtools"
+	"github.com/docker/docker/pkg/idtools"
 )
 
 // GetStatic returns the home directory for the current user without calling

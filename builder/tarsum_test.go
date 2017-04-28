@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"moby/pkg/archive"
-	"moby/pkg/reexec"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 const (

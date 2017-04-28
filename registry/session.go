@@ -21,12 +21,12 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution/reference"
 	"github.com/docker/distribution/registry/api/errcode"
-	"moby/api/types"
-	registrytypes "moby/api/types/registry"
-	"moby/pkg/httputils"
-	"moby/pkg/ioutils"
-	"moby/pkg/stringid"
-	"moby/pkg/tarsum"
+	"github.com/docker/docker/api/types"
+	registrytypes "github.com/docker/docker/api/types/registry"
+	"github.com/docker/docker/pkg/httputils"
+	"github.com/docker/docker/pkg/ioutils"
+	"github.com/docker/docker/pkg/stringid"
+	"github.com/docker/docker/pkg/tarsum"
 )
 
 var (

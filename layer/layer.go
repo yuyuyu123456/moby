@@ -15,7 +15,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution"
-	"moby/pkg/archive"
+	"github.com/docker/docker/pkg/archive"
 	"github.com/opencontainers/go-digest"
 )
 

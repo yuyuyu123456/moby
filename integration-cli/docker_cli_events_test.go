@@ -12,14 +12,14 @@ import (
 	"strings"
 	"time"
 
-	eventtypes "moby/api/types/events"
-	eventstestutils "moby/daemon/events/testutils"
-	"moby/integration-cli/checker"
-	"moby/integration-cli/cli"
-	"moby/integration-cli/cli/build"
-	"moby/integration-cli/request"
-	"moby/pkg/testutil"
-	icmd "moby/pkg/testutil/cmd"
+	eventtypes "github.com/docker/docker/api/types/events"
+	eventstestutils "github.com/docker/docker/daemon/events/testutils"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/cli"
+	"github.com/docker/docker/integration-cli/cli/build"
+	"github.com/docker/docker/integration-cli/request"
+	"github.com/docker/docker/pkg/testutil"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

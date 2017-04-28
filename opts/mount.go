@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	mounttypes "moby/api/types/mount"
+	mounttypes "github.com/docker/docker/api/types/mount"
 	"github.com/docker/go-units"
 )
 

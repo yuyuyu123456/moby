@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"sync"
 
-	"moby/pkg/pubsub"
+	"github.com/docker/docker/pkg/pubsub"
 )
 
 // RotateFileWriter is Logger implementation for default Docker logging.

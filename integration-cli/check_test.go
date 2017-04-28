@@ -11,14 +11,14 @@ import (
 	"syscall"
 	"testing"
 
-	"moby/api/types/swarm"
-	cliconfig "moby/cli/config"
-	"moby/integration-cli/cli"
-	"moby/integration-cli/cli/build/fakestorage"
-	"moby/integration-cli/daemon"
-	"moby/integration-cli/environment"
-	"moby/integration-cli/registry"
-	"moby/pkg/reexec"
+	"github.com/docker/docker/api/types/swarm"
+	cliconfig "github.com/docker/docker/cli/config"
+	"github.com/docker/docker/integration-cli/cli"
+	"github.com/docker/docker/integration-cli/cli/build/fakestorage"
+	"github.com/docker/docker/integration-cli/daemon"
+	"github.com/docker/docker/integration-cli/environment"
+	"github.com/docker/docker/integration-cli/registry"
+	"github.com/docker/docker/pkg/reexec"
 	"github.com/go-check/check"
 )
 

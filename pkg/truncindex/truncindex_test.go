@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"moby/pkg/stringid"
+	"github.com/docker/docker/pkg/stringid"
 )
 
 // Test the behavior of TruncIndex, an index for querying IDs from a non-conflicting prefix.

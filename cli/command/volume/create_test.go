@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"moby/api/types"
-	volumetypes "moby/api/types/volume"
-	"moby/cli/internal/test"
-	"moby/pkg/testutil"
+	"github.com/docker/docker/api/types"
+	volumetypes "github.com/docker/docker/api/types/volume"
+	"github.com/docker/docker/cli/internal/test"
+	"github.com/docker/docker/pkg/testutil"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 )

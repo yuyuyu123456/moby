@@ -3,12 +3,12 @@ package stack
 import (
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	"moby/api/types/filters"
-	"moby/api/types/swarm"
-	"moby/cli/compose/convert"
-	"moby/client"
-	"moby/opts"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/cli/compose/convert"
+	"github.com/docker/docker/client"
+	"github.com/docker/docker/opts"
 )
 
 func getStackFilter(namespace string) filters.Args {

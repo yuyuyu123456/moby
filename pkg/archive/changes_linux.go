@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 )
 
 // walker is used to implement collectFileInfoForChanges on linux. Where this

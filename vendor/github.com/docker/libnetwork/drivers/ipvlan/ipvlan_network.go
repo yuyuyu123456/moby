@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/parsers/kernel"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/pkg/parsers/kernel"
+	"github.com/docker/docker/pkg/stringid"
 	"github.com/docker/libnetwork/driverapi"
 	"github.com/docker/libnetwork/netlabel"
 	"github.com/docker/libnetwork/ns"

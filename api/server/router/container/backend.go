@@ -6,11 +6,11 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	"moby/api/types/backend"
-	"moby/api/types/container"
-	"moby/api/types/filters"
-	"moby/pkg/archive"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/backend"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/pkg/archive"
 )
 
 // execBackend includes functions to implement to provide exec functionality.

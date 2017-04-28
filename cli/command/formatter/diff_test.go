@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
-	"moby/api/types/container"
-	"moby/pkg/archive"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/pkg/archive"
 	"github.com/stretchr/testify/assert"
 )
 

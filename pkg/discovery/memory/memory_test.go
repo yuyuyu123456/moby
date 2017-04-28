@@ -3,7 +3,7 @@ package memory
 import (
 	"testing"
 
-	"moby/pkg/discovery"
+	"github.com/docker/docker/pkg/discovery"
 	"github.com/go-check/check"
 )
 

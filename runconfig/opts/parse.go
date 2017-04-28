@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"moby/api/types/container"
+	"github.com/docker/docker/api/types/container"
 )
 
 // ReadKVStrings reads a file of line terminated key=value pairs, and overrides any keys

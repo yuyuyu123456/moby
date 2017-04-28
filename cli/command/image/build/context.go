@@ -11,13 +11,13 @@ import (
 	"runtime"
 	"strings"
 
-	"moby/pkg/archive"
-	"moby/pkg/fileutils"
-	"moby/pkg/gitutils"
-	"moby/pkg/httputils"
-	"moby/pkg/ioutils"
-	"moby/pkg/progress"
-	"moby/pkg/streamformatter"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/fileutils"
+	"github.com/docker/docker/pkg/gitutils"
+	"github.com/docker/docker/pkg/httputils"
+	"github.com/docker/docker/pkg/ioutils"
+	"github.com/docker/docker/pkg/progress"
+	"github.com/docker/docker/pkg/streamformatter"
 	"github.com/pkg/errors"
 )
 

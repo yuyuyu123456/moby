@@ -3,8 +3,8 @@
 package runconfig
 
 import (
-	"moby/api/types/container"
-	networktypes "moby/api/types/network"
+	"github.com/docker/docker/api/types/container"
+	networktypes "github.com/docker/docker/api/types/network"
 )
 
 // ContainerConfigWrapper is a Config wrapper that holds the container Config (portable)

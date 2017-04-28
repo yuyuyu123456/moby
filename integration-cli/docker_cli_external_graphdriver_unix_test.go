@@ -12,11 +12,11 @@ import (
 	"os"
 	"strings"
 
-	"moby/daemon/graphdriver"
-	"moby/daemon/graphdriver/vfs"
-	"moby/integration-cli/daemon"
-	"moby/pkg/archive"
-	"moby/pkg/plugins"
+	"github.com/docker/docker/daemon/graphdriver"
+	"github.com/docker/docker/daemon/graphdriver/vfs"
+	"github.com/docker/docker/integration-cli/daemon"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/plugins"
 	"github.com/go-check/check"
 )
 

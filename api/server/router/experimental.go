@@ -6,8 +6,8 @@ import (
 
 	"golang.org/x/net/context"
 
-	apierrors "moby/api/errors"
-	"moby/api/server/httputils"
+	apierrors "github.com/docker/docker/api/errors"
+	"github.com/docker/docker/api/server/httputils"
 )
 
 var (

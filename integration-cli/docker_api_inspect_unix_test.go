@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"moby/integration-cli/checker"
-	"moby/integration-cli/request"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/request"
 	"github.com/go-check/check"
 )
 

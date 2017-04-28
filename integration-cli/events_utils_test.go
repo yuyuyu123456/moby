@@ -10,8 +10,8 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	eventstestutils "moby/daemon/events/testutils"
-	"moby/integration-cli/checker"
+	eventstestutils "github.com/docker/docker/daemon/events/testutils"
+	"github.com/docker/docker/integration-cli/checker"
 	"github.com/go-check/check"
 )
 

@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/errors"
-	"moby/api/types"
-	"moby/container"
-	"moby/image"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/api/errors"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/image"
+	"github.com/docker/docker/pkg/stringid"
 )
 
 type conflictType int

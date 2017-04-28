@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"moby/volume/drivers"
-	volumetestutils "moby/volume/testutils"
+	"github.com/docker/docker/volume/drivers"
+	volumetestutils "github.com/docker/docker/volume/testutils"
 )
 
 func TestCreate(t *testing.T) {

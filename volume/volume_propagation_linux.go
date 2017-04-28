@@ -5,7 +5,7 @@ package volume
 import (
 	"strings"
 
-	mounttypes "moby/api/types/mount"
+	mounttypes "github.com/docker/docker/api/types/mount"
 )
 
 // DefaultPropagationMode defines what propagation mode should be used by

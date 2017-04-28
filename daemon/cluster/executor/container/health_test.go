@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	containertypes "moby/api/types/container"
-	"moby/container"
-	"moby/daemon"
-	"moby/daemon/events"
+	containertypes "github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/daemon"
+	"github.com/docker/docker/daemon/events"
 	"github.com/docker/swarmkit/api"
 	"golang.org/x/net/context"
 )

@@ -7,14 +7,14 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution/reference"
-	"moby/api/types"
-	"moby/api/types/filters"
-	timetypes "moby/api/types/time"
-	"moby/image"
-	"moby/layer"
-	"moby/pkg/directory"
-	"moby/runconfig"
-	"moby/volume"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	timetypes "github.com/docker/docker/api/types/time"
+	"github.com/docker/docker/image"
+	"github.com/docker/docker/layer"
+	"github.com/docker/docker/pkg/directory"
+	"github.com/docker/docker/runconfig"
+	"github.com/docker/docker/volume"
 	"github.com/docker/libnetwork"
 	digest "github.com/opencontainers/go-digest"
 )
@@ -261,7 +261,7 @@ func (daemon *Daemon) clusterNetworksPrune(pruneFilters filters.Args) (*types.Ne
 		if !matchLabels(pruneFilters, nw.Labels) {
 			continue
 		}
-		// https://moby/issues/24186
+		// https://github.com/docker/docker/issues/24186
 		// `docker network inspect` unfortunately displays ONLY those containers that are local to that node.
 		// So we try to remove it anyway and check the error
 		err = cluster.RemoveNetwork(nw.ID)

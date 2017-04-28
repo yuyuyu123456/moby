@@ -5,12 +5,12 @@ import (
 	"strings"
 	"testing"
 
-	"moby/api/types"
-	"moby/api/types/container"
-	"moby/builder"
-	"moby/builder/dockerfile/parser"
-	"moby/pkg/archive"
-	"moby/pkg/reexec"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/builder"
+	"github.com/docker/docker/builder/dockerfile/parser"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 type dispatchTestCase struct {

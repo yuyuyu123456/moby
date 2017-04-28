@@ -1,8 +1,8 @@
 package main
 
 import (
-	"moby/integration-cli/checker"
-	"moby/runconfig"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/runconfig"
 	"github.com/go-check/check"
 )
 

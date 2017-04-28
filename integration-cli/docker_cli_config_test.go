@@ -8,11 +8,11 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"moby/api"
-	"moby/dockerversion"
-	"moby/integration-cli/checker"
-	"moby/pkg/homedir"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/api"
+	"github.com/docker/docker/dockerversion"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/pkg/homedir"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

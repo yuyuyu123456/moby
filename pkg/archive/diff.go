@@ -11,9 +11,9 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/idtools"
-	"moby/pkg/pools"
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/idtools"
+	"github.com/docker/docker/pkg/pools"
+	"github.com/docker/docker/pkg/system"
 )
 
 // UnpackLayer unpack `layer` to a `dest`. The stream `layer` can be

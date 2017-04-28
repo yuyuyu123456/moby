@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"moby/api/types"
-	"moby/api/types/filters"
-	"moby/api/types/swarm"
-	"moby/integration-cli/checker"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/integration-cli/checker"
 	"github.com/go-check/check"
 	"github.com/pkg/errors"
 )

@@ -3,8 +3,8 @@ package chrootarchive
 import (
 	"io"
 
-	"moby/pkg/archive"
-	"moby/pkg/longpath"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/longpath"
 )
 
 // chroot is not supported by Windows

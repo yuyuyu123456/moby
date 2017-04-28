@@ -3,7 +3,7 @@
 package seccomp
 
 import (
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 	"github.com/opencontainers/runtime-spec/specs-go"
 )
 

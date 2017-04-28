@@ -8,8 +8,8 @@ import (
 	"text/template"
 
 	"github.com/Sirupsen/logrus"
-	"moby/cli"
-	"moby/pkg/templates"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/pkg/templates"
 	"github.com/pkg/errors"
 )
 

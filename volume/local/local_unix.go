@@ -13,7 +13,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"moby/pkg/mount"
+	"github.com/docker/docker/pkg/mount"
 )
 
 var (

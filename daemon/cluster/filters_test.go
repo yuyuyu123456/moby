@@ -3,7 +3,7 @@ package cluster
 import (
 	"testing"
 
-	"moby/api/types/filters"
+	"github.com/docker/docker/api/types/filters"
 )
 
 func TestNewListSecretsFilters(t *testing.T) {

@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	mounttypes "moby/api/types/mount"
-	"moby/pkg/testutil"
+	mounttypes "github.com/docker/docker/api/types/mount"
+	"github.com/docker/docker/pkg/testutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

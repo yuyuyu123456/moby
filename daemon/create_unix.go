@@ -8,10 +8,10 @@ import (
 	"path/filepath"
 
 	"github.com/Sirupsen/logrus"
-	containertypes "moby/api/types/container"
-	mounttypes "moby/api/types/mount"
-	"moby/container"
-	"moby/pkg/stringid"
+	containertypes "github.com/docker/docker/api/types/container"
+	mounttypes "github.com/docker/docker/api/types/mount"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/pkg/stringid"
 	"github.com/opencontainers/runc/libcontainer/label"
 )
 

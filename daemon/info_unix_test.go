@@ -5,8 +5,8 @@ package daemon
 import (
 	"testing"
 
-	"moby/api/types"
-	"moby/dockerversion"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/dockerversion"
 	"github.com/stretchr/testify/assert"
 )
 

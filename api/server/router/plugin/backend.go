@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/docker/distribution/reference"
-	enginetypes "moby/api/types"
-	"moby/api/types/filters"
+	enginetypes "github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
 	"golang.org/x/net/context"
 )
 

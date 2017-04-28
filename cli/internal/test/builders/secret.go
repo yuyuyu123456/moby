@@ -3,7 +3,7 @@ package builders
 import (
 	"time"
 
-	"moby/api/types/swarm"
+	"github.com/docker/docker/api/types/swarm"
 )
 
 // Secret creates a secret with default values.

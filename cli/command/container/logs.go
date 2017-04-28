@@ -3,10 +3,10 @@ package container
 import (
 	"io"
 
-	"moby/api/types"
-	"moby/cli"
-	"moby/cli/command"
-	"moby/pkg/stdcopy"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/pkg/stdcopy"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 )

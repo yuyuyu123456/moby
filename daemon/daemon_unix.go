@@ -18,20 +18,20 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"moby/api/types"
-	"moby/api/types/blkiodev"
-	pblkiodev "moby/api/types/blkiodev"
-	containertypes "moby/api/types/container"
-	"moby/container"
-	"moby/daemon/config"
-	"moby/image"
-	"moby/opts"
-	"moby/pkg/idtools"
-	"moby/pkg/parsers"
-	"moby/pkg/parsers/kernel"
-	"moby/pkg/sysinfo"
-	"moby/runconfig"
-	"moby/volume"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/blkiodev"
+	pblkiodev "github.com/docker/docker/api/types/blkiodev"
+	containertypes "github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/daemon/config"
+	"github.com/docker/docker/image"
+	"github.com/docker/docker/opts"
+	"github.com/docker/docker/pkg/idtools"
+	"github.com/docker/docker/pkg/parsers"
+	"github.com/docker/docker/pkg/parsers/kernel"
+	"github.com/docker/docker/pkg/sysinfo"
+	"github.com/docker/docker/runconfig"
+	"github.com/docker/docker/volume"
 	"github.com/docker/libnetwork"
 	nwconfig "github.com/docker/libnetwork/config"
 	"github.com/docker/libnetwork/drivers/bridge"
@@ -238,7 +238,7 @@ func checkKernel() error {
 	// Unfortunately we can't test for the feature "does not cause a kernel panic"
 	// without actually causing a kernel panic, so we need this workaround until
 	// the circumstances of pre-3.10 crashes are clearer.
-	// For details see https://moby/issues/407
+	// For details see https://github.com/docker/docker/issues/407
 	// Docker 1.11 and above doesn't actually run on kernels older than 3.4,
 	// due to containerd-shim usage of PR_SET_CHILD_SUBREAPER (introduced in 3.4).
 	if !kernel.CheckKernelVersion(3, 10, 0) {

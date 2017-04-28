@@ -3,8 +3,8 @@ package daemon
 import (
 	"errors"
 
-	containertypes "moby/api/types/container"
-	"moby/container"
+	containertypes "github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/container"
 )
 
 // checkIfPathIsInAVolume checks if the path is in a volume. If it is, it

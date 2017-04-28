@@ -6,7 +6,7 @@ import (
 	"syscall"
 
 	"github.com/Sirupsen/logrus"
-	"moby/daemon/graphdriver"
+	"github.com/docker/docker/daemon/graphdriver"
 )
 
 func checkRootdirFs(rootdir string) error {

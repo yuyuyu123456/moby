@@ -8,7 +8,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution/digestset"
-	"moby/layer"
+	"github.com/docker/docker/layer"
 	"github.com/opencontainers/go-digest"
 )
 

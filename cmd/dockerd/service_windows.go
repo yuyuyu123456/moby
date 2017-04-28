@@ -14,7 +14,7 @@ import (
 	"unsafe"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 	"github.com/spf13/pflag"
 	"golang.org/x/sys/windows"
 	"golang.org/x/sys/windows/svc"

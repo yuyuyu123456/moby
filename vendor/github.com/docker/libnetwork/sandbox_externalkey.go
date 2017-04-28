@@ -1,6 +1,6 @@
 package libnetwork
 
-import "moby/pkg/reexec"
+import "github.com/docker/docker/pkg/reexec"
 
 type setKeyData struct {
 	ContainerID string

@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"moby/pkg/discovery"
+	"github.com/docker/docker/pkg/discovery"
 )
 
 // Discovery implements a discovery backend that keeps

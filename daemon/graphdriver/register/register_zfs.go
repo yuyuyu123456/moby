@@ -4,5 +4,5 @@ package register
 
 import (
 	// register the zfs driver
-	_ "moby/daemon/graphdriver/zfs"
+	_ "github.com/docker/docker/daemon/graphdriver/zfs"
 )

@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	cliconfig "moby/cli/config"
-	"moby/integration-cli/checker"
-	icmd "moby/pkg/testutil/cmd"
+	cliconfig "github.com/docker/docker/cli/config"
+	"github.com/docker/docker/integration-cli/checker"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/docker/go-connections/tlsconfig"
 	"github.com/go-check/check"
 )

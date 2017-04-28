@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/pkg/stringid"
 	"github.com/docker/libnetwork/config"
 	"github.com/docker/libnetwork/datastore"
 	"github.com/docker/libnetwork/driverapi"

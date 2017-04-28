@@ -1,8 +1,8 @@
 package system
 
 import (
-	"moby/api/server/router"
-	"moby/daemon/cluster"
+	"github.com/docker/docker/api/server/router"
+	"github.com/docker/docker/daemon/cluster"
 )
 
 // systemRouter provides information about the Docker system overall.

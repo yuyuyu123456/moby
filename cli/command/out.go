@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/term"
+	"github.com/docker/docker/pkg/term"
 )
 
 // OutStream is an output stream used by the DockerCli to write normal program

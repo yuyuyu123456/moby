@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/reexec"
+	"github.com/docker/docker/pkg/reexec"
 	"github.com/docker/libnetwork/ns"
 	"github.com/docker/libnetwork/types"
 	"github.com/vishvananda/netlink"

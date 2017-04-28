@@ -7,14 +7,14 @@ import (
 	"strings"
 	"time"
 
-	"moby/api/types/container"
-	"moby/api/types/swarm"
-	"moby/api/types/versions"
-	servicecli "moby/cli/command/service"
-	composetypes "moby/cli/compose/types"
-	"moby/client"
-	"moby/opts"
-	runconfigopts "moby/runconfig/opts"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/api/types/versions"
+	servicecli "github.com/docker/docker/cli/command/service"
+	composetypes "github.com/docker/docker/cli/compose/types"
+	"github.com/docker/docker/client"
+	"github.com/docker/docker/opts"
+	runconfigopts "github.com/docker/docker/runconfig/opts"
 	"github.com/pkg/errors"
 )
 

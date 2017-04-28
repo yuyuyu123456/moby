@@ -3,7 +3,7 @@ package container
 import (
 	"testing"
 
-	"moby/opts"
+	"github.com/docker/docker/opts"
 	"github.com/stretchr/testify/assert"
 )
 

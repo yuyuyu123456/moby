@@ -3,7 +3,7 @@ package client
 import (
 	"fmt"
 
-	"moby/api/types/versions"
+	"github.com/docker/docker/api/types/versions"
 	"github.com/pkg/errors"
 )
 

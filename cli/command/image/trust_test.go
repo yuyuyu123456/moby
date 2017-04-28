@@ -4,9 +4,9 @@ import (
 	"os"
 	"testing"
 
-	registrytypes "moby/api/types/registry"
-	"moby/cli/trust"
-	"moby/registry"
+	registrytypes "github.com/docker/docker/api/types/registry"
+	"github.com/docker/docker/cli/trust"
+	"github.com/docker/docker/registry"
 )
 
 func unsetENV() {

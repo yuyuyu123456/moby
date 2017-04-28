@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 
-	"moby/cli/command/bundlefile"
+	"github.com/docker/docker/cli/command/bundlefile"
 	"github.com/pkg/errors"
 	"github.com/spf13/pflag"
 )

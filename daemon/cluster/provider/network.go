@@ -1,6 +1,6 @@
 package provider
 
-import "moby/api/types"
+import "github.com/docker/docker/api/types"
 
 // NetworkCreateRequest is a request when creating a network.
 type NetworkCreateRequest struct {

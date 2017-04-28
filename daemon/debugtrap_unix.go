@@ -8,7 +8,7 @@ import (
 	"syscall"
 
 	"github.com/Sirupsen/logrus"
-	stackdump "moby/pkg/signal"
+	stackdump "github.com/docker/docker/pkg/signal"
 )
 
 func (d *Daemon) setupDumpStackTrap(root string) {

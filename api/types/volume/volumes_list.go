@@ -7,7 +7,7 @@ package volume
 // See hack/generate-swagger-api.sh
 // ----------------------------------------------------------------------------
 
-import "moby/api/types"
+import "github.com/docker/docker/api/types"
 
 // VolumesListOKBody volumes list o k body
 // swagger:model VolumesListOKBody

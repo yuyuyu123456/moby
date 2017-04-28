@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/ioutils"
+	"github.com/docker/docker/pkg/ioutils"
 	"github.com/opencontainers/go-digest"
 	"github.com/pkg/errors"
 )

@@ -7,9 +7,9 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	registrytypes "moby/api/types/registry"
-	"moby/registry"
+	"github.com/docker/docker/api/types"
+	registrytypes "github.com/docker/docker/api/types/registry"
+	"github.com/docker/docker/registry"
 )
 
 type FakeService struct {

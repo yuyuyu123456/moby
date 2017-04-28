@@ -1,7 +1,7 @@
 package node
 
 import (
-	"moby/opts"
+	"github.com/docker/docker/opts"
 )
 
 type nodeOptions struct {

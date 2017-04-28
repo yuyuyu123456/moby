@@ -1,7 +1,7 @@
 package credentials
 
 import (
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 // Store is the interface that any credentials store must implement.

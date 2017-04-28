@@ -5,9 +5,9 @@ import (
 	"net/url"
 	"strings"
 
-	"moby/api/types/container"
-	"moby/api/types/network"
-	"moby/api/types/versions"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/network"
+	"github.com/docker/docker/api/types/versions"
 	"golang.org/x/net/context"
 )
 

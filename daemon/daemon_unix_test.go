@@ -8,13 +8,13 @@ import (
 	"path/filepath"
 	"testing"
 
-	containertypes "moby/api/types/container"
-	"moby/container"
-	"moby/daemon/config"
-	"moby/volume"
-	"moby/volume/drivers"
-	"moby/volume/local"
-	"moby/volume/store"
+	containertypes "github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/daemon/config"
+	"github.com/docker/docker/volume"
+	"github.com/docker/docker/volume/drivers"
+	"github.com/docker/docker/volume/local"
+	"github.com/docker/docker/volume/store"
 )
 
 // Unix test as uses settings which are not available on Windows

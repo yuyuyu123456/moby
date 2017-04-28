@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/archive"
-	"moby/pkg/chrootarchive"
-	"moby/pkg/idtools"
-	"moby/pkg/ioutils"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/chrootarchive"
+	"github.com/docker/docker/pkg/idtools"
+	"github.com/docker/docker/pkg/ioutils"
 )
 
 var (

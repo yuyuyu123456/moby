@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	types "moby/api/types/swarm"
-	"moby/pkg/namesgenerator"
+	types "github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/pkg/namesgenerator"
 	swarmapi "github.com/docker/swarmkit/api"
 	gogotypes "github.com/gogo/protobuf/types"
 )

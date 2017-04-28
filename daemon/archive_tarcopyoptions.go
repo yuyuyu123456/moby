@@ -1,7 +1,7 @@
 package daemon
 
 import (
-	"moby/pkg/archive"
+	"github.com/docker/docker/pkg/archive"
 )
 
 // defaultTarCopyOptions is the setting that is used when unpacking an archive

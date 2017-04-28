@@ -3,8 +3,8 @@ package loader
 import (
 	"testing"
 
-	"moby/cli/compose/types"
-	"moby/pkg/testutil"
+	"github.com/docker/docker/cli/compose/types"
+	"github.com/docker/docker/pkg/testutil"
 	"github.com/stretchr/testify/assert"
 )
 

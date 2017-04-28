@@ -1,7 +1,7 @@
 package client
 
 import (
-	"moby/api/types/filters"
+	"github.com/docker/docker/api/types/filters"
 	"net/url"
 	"regexp"
 )

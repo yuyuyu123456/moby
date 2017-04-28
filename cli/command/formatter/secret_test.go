@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"moby/api/types/swarm"
+	"github.com/docker/docker/api/types/swarm"
 	"github.com/stretchr/testify/assert"
 )
 

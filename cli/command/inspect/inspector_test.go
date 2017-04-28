@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"moby/pkg/templates"
+	"github.com/docker/docker/pkg/templates"
 )
 
 type testElement struct {

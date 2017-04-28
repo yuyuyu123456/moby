@@ -6,9 +6,9 @@ import (
 	"sort"
 	"strconv"
 
-	containertypes "moby/api/types/container"
-	"moby/container"
-	"moby/oci"
+	containertypes "github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/oci"
 	"github.com/docker/libnetwork"
 	"github.com/opencontainers/runtime-spec/specs-go"
 )

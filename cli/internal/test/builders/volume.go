@@ -1,7 +1,7 @@
 package builders
 
 import (
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 // Volume creates a volume with default values.

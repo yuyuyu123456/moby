@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"moby/api/types/image"
+	"github.com/docker/docker/api/types/image"
 	"golang.org/x/net/context"
 )
 

@@ -9,10 +9,10 @@ import (
 	"strconv"
 	"strings"
 
-	"moby/api/types"
-	"moby/api/types/container"
-	"moby/client"
-	"moby/opts"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/client"
+	"github.com/docker/docker/opts"
 	"golang.org/x/net/context"
 )
 

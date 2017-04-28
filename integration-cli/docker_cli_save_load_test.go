@@ -13,10 +13,10 @@ import (
 	"strings"
 	"time"
 
-	"moby/integration-cli/checker"
-	"moby/integration-cli/cli/build"
-	"moby/pkg/testutil"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/cli/build"
+	"github.com/docker/docker/pkg/testutil"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 	"github.com/opencontainers/go-digest"
 )

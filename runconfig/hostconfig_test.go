@@ -8,8 +8,8 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"moby/api/types/container"
-	"moby/pkg/sysinfo"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/pkg/sysinfo"
 )
 
 // TODO Windows: This will need addressing for a Windows daemon.

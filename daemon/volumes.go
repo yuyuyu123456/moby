@@ -8,13 +8,13 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	dockererrors "moby/api/errors"
-	"moby/api/types"
-	containertypes "moby/api/types/container"
-	mounttypes "moby/api/types/mount"
-	"moby/container"
-	"moby/volume"
-	"moby/volume/drivers"
+	dockererrors "github.com/docker/docker/api/errors"
+	"github.com/docker/docker/api/types"
+	containertypes "github.com/docker/docker/api/types/container"
+	mounttypes "github.com/docker/docker/api/types/mount"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/volume"
+	"github.com/docker/docker/volume/drivers"
 )
 
 var (

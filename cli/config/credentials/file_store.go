@@ -1,9 +1,9 @@
 package credentials
 
 import (
-	"moby/api/types"
-	"moby/cli/config/configfile"
-	"moby/registry"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/cli/config/configfile"
+	"github.com/docker/docker/registry"
 )
 
 // fileStore implements a credentials store using

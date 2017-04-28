@@ -10,7 +10,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types/swarm"
+	"github.com/docker/docker/api/types/swarm"
 )
 
 func TestSwarmJoinError(t *testing.T) {

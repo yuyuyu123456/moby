@@ -3,8 +3,8 @@ package httputils
 import (
 	"io"
 
-	"moby/api/types/container"
-	"moby/api/types/network"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/network"
 )
 
 // ContainerDecoder specifies how

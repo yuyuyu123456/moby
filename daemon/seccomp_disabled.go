@@ -5,7 +5,7 @@ package daemon
 import (
 	"fmt"
 
-	"moby/container"
+	"github.com/docker/docker/container"
 	"github.com/opencontainers/runtime-spec/specs-go"
 )
 

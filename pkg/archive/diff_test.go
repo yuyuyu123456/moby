@@ -10,7 +10,7 @@ import (
 	"runtime"
 	"testing"
 
-	"moby/pkg/ioutils"
+	"github.com/docker/docker/pkg/ioutils"
 )
 
 func TestApplyLayerInvalidFilenames(t *testing.T) {

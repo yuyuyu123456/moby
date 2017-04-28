@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"moby/api/types/swarm"
+	"github.com/docker/docker/api/types/swarm"
 	"golang.org/x/net/context"
 )
 

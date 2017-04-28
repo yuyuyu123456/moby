@@ -1,7 +1,7 @@
 package main
 
 import (
-	"moby/integration-cli/daemon"
+	"github.com/docker/docker/integration-cli/daemon"
 	"github.com/go-check/check"
 )
 

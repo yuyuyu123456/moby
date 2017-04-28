@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"io"
 
-	"moby/pkg/jsonmessage"
-	"moby/pkg/progress"
+	"github.com/docker/docker/pkg/jsonmessage"
+	"github.com/docker/docker/pkg/progress"
 )
 
 // StreamFormatter formats a stream, optionally using JSON.

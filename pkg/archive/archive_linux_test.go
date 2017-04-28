@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"testing"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 )
 
 // setupOverlayTestDir creates files in a directory with overlay whiteouts

@@ -10,7 +10,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 func TestImagePullReferenceParseError(t *testing.T) {

@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"moby/integration-cli/checker"
-	"moby/pkg/system"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/pkg/system"
 	"github.com/go-check/check"
 )
 

@@ -3,9 +3,9 @@ package service
 import (
 	"io"
 
-	"moby/cli/command"
-	"moby/cli/command/service/progress"
-	"moby/pkg/jsonmessage"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/command/service/progress"
+	"github.com/docker/docker/pkg/jsonmessage"
 	"golang.org/x/net/context"
 )
 

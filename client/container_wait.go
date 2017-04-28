@@ -5,7 +5,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/api/types/container"
+	"github.com/docker/docker/api/types/container"
 )
 
 // ContainerWait pauses execution until a container exits.

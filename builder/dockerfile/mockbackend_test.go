@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types"
-	"moby/api/types/backend"
-	"moby/api/types/container"
-	"moby/builder"
-	"moby/image"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/backend"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/builder"
+	"github.com/docker/docker/image"
 	"golang.org/x/net/context"
 )
 

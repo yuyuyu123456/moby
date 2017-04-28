@@ -2,7 +2,7 @@
 
 package layer
 
-import "moby/pkg/stringid"
+import "github.com/docker/docker/pkg/stringid"
 
 func (ls *layerStore) mountID(name string) string {
 	return stringid.GenerateRandomID()

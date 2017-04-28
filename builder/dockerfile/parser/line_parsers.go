@@ -15,7 +15,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"moby/builder/dockerfile/command"
+	"github.com/docker/docker/builder/dockerfile/command"
 )
 
 var (
@@ -221,7 +221,7 @@ func NodeFromLabels(labels map[string]string) *Node {
 		value := labels[key]
 		labelPairs = append(labelPairs, fmt.Sprintf("%q='%s'", key, value))
 		// Value must be single quoted to prevent env variable expansion
-		// See https://moby/issues/26027
+		// See https://github.com/docker/docker/issues/26027
 		node := newKeyValueNode(key, "'"+value+"'")
 		rootNode, prevNode = appendKeyValueNode(node, rootNode, prevNode)
 	}

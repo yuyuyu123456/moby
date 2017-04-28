@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 
 	"golang.org/x/net/context"
 )

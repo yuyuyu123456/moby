@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"moby/api/types"
-	"moby/api/types/container"
-	"moby/integration-cli/checker"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/integration-cli/checker"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

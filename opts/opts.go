@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"moby/api/types/filters"
+	"github.com/docker/docker/api/types/filters"
 	units "github.com/docker/go-units"
 )
 

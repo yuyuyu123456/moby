@@ -8,7 +8,7 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 // ImagePull requests the docker host to pull an image from a remote registry.

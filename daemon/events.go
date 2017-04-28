@@ -4,10 +4,10 @@ import (
 	"strings"
 	"time"
 
-	"moby/api/types/events"
-	"moby/api/types/filters"
-	"moby/container"
-	daemonevents "moby/daemon/events"
+	"github.com/docker/docker/api/types/events"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/container"
+	daemonevents "github.com/docker/docker/daemon/events"
 	"github.com/docker/libnetwork"
 )
 

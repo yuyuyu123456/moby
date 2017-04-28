@@ -1,7 +1,7 @@
 package config
 
 import (
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 // BridgeConfig stores all the bridge driver specific

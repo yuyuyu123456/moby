@@ -6,13 +6,13 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"moby/api/types"
-	"moby/cli/internal/test"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/cli/internal/test"
 	"github.com/pkg/errors"
 	// Import builders to get the builder function as package function
-	. "moby/cli/internal/test/builders"
-	"moby/pkg/testutil"
-	"moby/pkg/testutil/golden"
+	. "github.com/docker/docker/cli/internal/test/builders"
+	"github.com/docker/docker/pkg/testutil"
+	"github.com/docker/docker/pkg/testutil/golden"
 	"github.com/stretchr/testify/assert"
 )
 

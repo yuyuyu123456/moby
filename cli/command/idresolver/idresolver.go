@@ -3,9 +3,9 @@ package idresolver
 import (
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	"moby/api/types/swarm"
-	"moby/client"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/client"
 	"github.com/pkg/errors"
 )
 

@@ -1,7 +1,7 @@
 package stats
 
 import (
-	"moby/container"
+	"github.com/docker/docker/container"
 )
 
 // platformNewStatsCollector performs platform specific initialisation of the

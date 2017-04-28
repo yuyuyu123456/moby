@@ -3,11 +3,11 @@
 package daemon
 
 import (
-	"moby/api/types"
-	"moby/api/types/backend"
-	"moby/api/types/versions/v1p19"
-	"moby/container"
-	"moby/daemon/exec"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/backend"
+	"github.com/docker/docker/api/types/versions/v1p19"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/daemon/exec"
 )
 
 // This sets platform-specific fields

@@ -11,10 +11,10 @@ import (
 	"strconv"
 	"syscall"
 
-	"moby/cmd/dockerd/hack"
-	"moby/daemon"
-	"moby/libcontainerd"
-	"moby/pkg/system"
+	"github.com/docker/docker/cmd/dockerd/hack"
+	"github.com/docker/docker/daemon"
+	"github.com/docker/docker/libcontainerd"
+	"github.com/docker/docker/pkg/system"
 	"github.com/docker/libnetwork/portallocator"
 )
 

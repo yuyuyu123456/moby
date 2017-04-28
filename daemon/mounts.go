@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"moby/container"
-	volumestore "moby/volume/store"
+	"github.com/docker/docker/container"
+	volumestore "github.com/docker/docker/volume/store"
 )
 
 func (daemon *Daemon) prepareMountPoints(container *container.Container) error {

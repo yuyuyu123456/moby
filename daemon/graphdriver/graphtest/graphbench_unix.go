@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"moby/pkg/stringid"
+	"github.com/docker/docker/pkg/stringid"
 )
 
 // DriverBenchExists benchmarks calls to exist

@@ -5,7 +5,7 @@ import (
 	"os"
 	"runtime"
 
-	"moby/pkg/term"
+	"github.com/docker/docker/pkg/term"
 	"github.com/pkg/errors"
 )
 

@@ -5,11 +5,11 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution/reference"
-	"moby/api"
-	"moby/distribution/metadata"
-	"moby/pkg/progress"
-	refstore "moby/reference"
-	"moby/registry"
+	"github.com/docker/docker/api"
+	"github.com/docker/docker/distribution/metadata"
+	"github.com/docker/docker/pkg/progress"
+	refstore "github.com/docker/docker/reference"
+	"github.com/docker/docker/registry"
 	"github.com/opencontainers/go-digest"
 	"golang.org/x/net/context"
 )

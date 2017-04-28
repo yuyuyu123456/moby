@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"moby/api/types/events"
-	timetypes "moby/api/types/time"
+	"github.com/docker/docker/api/types/events"
+	timetypes "github.com/docker/docker/api/types/time"
 )
 
 var (

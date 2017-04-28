@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"moby/pkg/discovery"
+	"github.com/docker/docker/pkg/discovery"
 	"github.com/docker/libkv"
 	"github.com/docker/libkv/store"
 

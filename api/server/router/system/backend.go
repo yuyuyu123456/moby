@@ -3,9 +3,9 @@ package system
 import (
 	"time"
 
-	"moby/api/types"
-	"moby/api/types/events"
-	"moby/api/types/filters"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/events"
+	"github.com/docker/docker/api/types/filters"
 	"golang.org/x/net/context"
 )
 

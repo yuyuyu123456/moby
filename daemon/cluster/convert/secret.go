@@ -1,7 +1,7 @@
 package convert
 
 import (
-	swarmtypes "moby/api/types/swarm"
+	swarmtypes "github.com/docker/docker/api/types/swarm"
 	swarmapi "github.com/docker/swarmkit/api"
 	gogotypes "github.com/gogo/protobuf/types"
 )

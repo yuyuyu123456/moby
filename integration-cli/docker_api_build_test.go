@@ -8,11 +8,11 @@ import (
 	"regexp"
 	"strings"
 
-	"moby/integration-cli/checker"
-	"moby/integration-cli/cli/build/fakecontext"
-	"moby/integration-cli/cli/build/fakestorage"
-	"moby/integration-cli/request"
-	"moby/pkg/testutil"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/cli/build/fakecontext"
+	"github.com/docker/docker/integration-cli/cli/build/fakestorage"
+	"github.com/docker/docker/integration-cli/request"
+	"github.com/docker/docker/pkg/testutil"
 	"github.com/go-check/check"
 )
 

@@ -3,10 +3,10 @@ package node
 import (
 	"errors"
 
-	"moby/api/types"
-	"moby/cli"
-	"moby/cli/command"
-	apiclient "moby/client"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
+	apiclient "github.com/docker/docker/client"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 )

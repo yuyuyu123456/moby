@@ -10,8 +10,8 @@ import (
 	"strings"
 	"sync"
 
-	"moby/integration-cli/checker"
-	"moby/integration-cli/fixtures/load"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/fixtures/load"
 	"github.com/go-check/check"
 )
 

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"unicode"
 
-	"moby/builder/dockerfile/command"
+	"github.com/docker/docker/builder/dockerfile/command"
 	"github.com/pkg/errors"
 )
 

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 	"golang.org/x/net/context"
 )
 

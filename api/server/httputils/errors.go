@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	"moby/api/types"
-	"moby/api/types/versions"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/versions"
 	"github.com/gorilla/mux"
 	"google.golang.org/grpc"
 )

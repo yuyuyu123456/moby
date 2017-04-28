@@ -5,8 +5,8 @@ import (
 
 	"golang.org/x/net/context"
 
-	"moby/cli"
-	"moby/cli/command"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
 	"github.com/spf13/cobra"
 )
 

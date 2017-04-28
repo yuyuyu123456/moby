@@ -1,9 +1,9 @@
 package daemon
 
 import (
-	"moby/container"
-	"moby/daemon/exec"
-	"moby/libcontainerd"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/daemon/exec"
+	"github.com/docker/docker/libcontainerd"
 )
 
 func execSetPlatformOpt(c *container.Container, ec *exec.Config, p *libcontainerd.Process) error {

@@ -3,8 +3,8 @@ package image
 import (
 	"testing"
 
-	"moby/layer"
-	"moby/pkg/testutil"
+	"github.com/docker/docker/layer"
+	"github.com/docker/docker/pkg/testutil"
 	"github.com/opencontainers/go-digest"
 	"github.com/stretchr/testify/assert"
 )

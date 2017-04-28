@@ -1,10 +1,10 @@
 package service
 
 import (
-	"moby/api/types"
-	"moby/api/types/filters"
-	swarmtypes "moby/api/types/swarm"
-	"moby/client"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	swarmtypes "github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/client"
 	"github.com/pkg/errors"
 	"golang.org/x/net/context"
 )

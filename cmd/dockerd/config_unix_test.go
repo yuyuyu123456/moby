@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"testing"
 
-	"moby/daemon/config"
+	"github.com/docker/docker/daemon/config"
 	"github.com/spf13/pflag"
 	"github.com/stretchr/testify/assert"
 )

@@ -1,12 +1,12 @@
 package prune
 
 import (
-	"moby/cli/command"
-	"moby/cli/command/container"
-	"moby/cli/command/image"
-	"moby/cli/command/network"
-	"moby/cli/command/volume"
-	"moby/opts"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/command/container"
+	"github.com/docker/docker/cli/command/image"
+	"github.com/docker/docker/cli/command/network"
+	"github.com/docker/docker/cli/command/volume"
+	"github.com/docker/docker/opts"
 	"github.com/spf13/cobra"
 )
 

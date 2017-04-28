@@ -3,8 +3,8 @@
 package daemon
 
 import (
-	"moby/container"
-	"moby/runconfig"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/runconfig"
 	"github.com/docker/libnetwork"
 )
 

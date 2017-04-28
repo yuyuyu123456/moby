@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	swarmtypes "moby/api/types/swarm"
+	swarmtypes "github.com/docker/docker/api/types/swarm"
 )
 
 // SecretOpt is a Value type for parsing secrets

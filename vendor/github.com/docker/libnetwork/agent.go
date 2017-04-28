@@ -11,7 +11,7 @@ import (
 	"sync"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/pkg/stringid"
 	"github.com/docker/go-events"
 	"github.com/docker/libnetwork/datastore"
 	"github.com/docker/libnetwork/discoverapi"

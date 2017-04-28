@@ -18,12 +18,12 @@ import (
 	"syscall"
 
 	"github.com/Sirupsen/logrus"
-	"moby/pkg/fileutils"
-	"moby/pkg/idtools"
-	"moby/pkg/ioutils"
-	"moby/pkg/pools"
-	"moby/pkg/promise"
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/fileutils"
+	"github.com/docker/docker/pkg/idtools"
+	"github.com/docker/docker/pkg/ioutils"
+	"github.com/docker/docker/pkg/pools"
+	"github.com/docker/docker/pkg/promise"
+	"github.com/docker/docker/pkg/system"
 )
 
 type (

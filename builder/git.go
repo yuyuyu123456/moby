@@ -3,8 +3,8 @@ package builder
 import (
 	"os"
 
-	"moby/pkg/archive"
-	"moby/pkg/gitutils"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/gitutils"
 )
 
 // MakeGitContext returns a Context from gitURL that is cloned in a temporary directory.

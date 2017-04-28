@@ -8,14 +8,14 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types/backend"
-	containertypes "moby/api/types/container"
-	"moby/builder/dockerfile"
-	"moby/container"
-	"moby/dockerversion"
-	"moby/image"
-	"moby/layer"
-	"moby/pkg/ioutils"
+	"github.com/docker/docker/api/types/backend"
+	containertypes "github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/builder/dockerfile"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/dockerversion"
+	"github.com/docker/docker/image"
+	"github.com/docker/docker/layer"
+	"github.com/docker/docker/pkg/ioutils"
 	"github.com/pkg/errors"
 )
 

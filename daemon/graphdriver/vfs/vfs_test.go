@@ -5,9 +5,9 @@ package vfs
 import (
 	"testing"
 
-	"moby/daemon/graphdriver/graphtest"
+	"github.com/docker/docker/daemon/graphdriver/graphtest"
 
-	"moby/pkg/reexec"
+	"github.com/docker/docker/pkg/reexec"
 )
 
 func init() {

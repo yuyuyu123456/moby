@@ -3,9 +3,9 @@
 package daemon
 
 import (
-	"moby/container"
-	"moby/pkg/archive"
-	"moby/pkg/idtools"
+	"github.com/docker/docker/container"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/idtools"
 )
 
 func (daemon *Daemon) tarCopyOptions(container *container.Container, noOverwriteDirNonDir bool) (*archive.TarOptions, error) {

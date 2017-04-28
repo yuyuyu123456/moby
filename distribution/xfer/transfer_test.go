@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"moby/pkg/progress"
+	"github.com/docker/docker/pkg/progress"
 )
 
 func TestTransfer(t *testing.T) {

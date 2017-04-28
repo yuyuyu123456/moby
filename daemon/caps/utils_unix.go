@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"moby/pkg/stringutils"
+	"github.com/docker/docker/pkg/stringutils"
 	"github.com/syndtr/gocapability/capability"
 )
 

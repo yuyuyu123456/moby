@@ -10,11 +10,11 @@ import (
 	"strings"
 	"time"
 
-	"moby/integration-cli/checker"
-	"moby/integration-cli/cli"
-	"moby/integration-cli/cli/build"
-	"moby/pkg/stringid"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/cli"
+	"github.com/docker/docker/integration-cli/cli/build"
+	"github.com/docker/docker/pkg/stringid"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

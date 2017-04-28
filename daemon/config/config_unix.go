@@ -5,7 +5,7 @@ package config
 import (
 	"fmt"
 
-	"moby/opts"
+	"github.com/docker/docker/opts"
 	units "github.com/docker/go-units"
 )
 

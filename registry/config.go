@@ -10,8 +10,8 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution/reference"
-	registrytypes "moby/api/types/registry"
-	"moby/opts"
+	registrytypes "github.com/docker/docker/api/types/registry"
+	"github.com/docker/docker/opts"
 	"github.com/pkg/errors"
 	"github.com/spf13/pflag"
 )

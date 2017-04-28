@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"moby/pkg/system"
+	"github.com/docker/docker/pkg/system"
 	"github.com/go-check/check"
 )
 

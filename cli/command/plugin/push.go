@@ -4,11 +4,11 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/docker/distribution/reference"
-	"moby/cli"
-	"moby/cli/command"
-	"moby/cli/command/image"
-	"moby/pkg/jsonmessage"
-	"moby/registry"
+	"github.com/docker/docker/cli"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/command/image"
+	"github.com/docker/docker/pkg/jsonmessage"
+	"github.com/docker/docker/registry"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )

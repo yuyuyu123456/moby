@@ -12,9 +12,9 @@ import (
 	"time"
 
 	"github.com/docker/distribution"
-	"moby/image"
-	"moby/layer"
-	"moby/pkg/progress"
+	"github.com/docker/docker/image"
+	"github.com/docker/docker/layer"
+	"github.com/docker/docker/pkg/progress"
 	"github.com/opencontainers/go-digest"
 	"golang.org/x/net/context"
 )

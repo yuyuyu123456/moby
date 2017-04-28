@@ -3,7 +3,7 @@ package main
 import (
 	"os/exec"
 
-	"moby/pkg/testutil/cmd"
+	"github.com/docker/docker/pkg/testutil/cmd"
 )
 
 func getPrefixAndSlashFromDaemonPlatform() (prefix, slash string) {

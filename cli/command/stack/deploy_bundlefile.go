@@ -3,10 +3,10 @@ package stack
 import (
 	"golang.org/x/net/context"
 
-	"moby/api/types"
-	"moby/api/types/swarm"
-	"moby/cli/command"
-	"moby/cli/compose/convert"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/swarm"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/compose/convert"
 )
 
 func deployBundle(ctx context.Context, dockerCli *command.DockerCli, opts deployOptions) error {

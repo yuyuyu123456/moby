@@ -5,7 +5,7 @@ package config
 import (
 	"testing"
 
-	"moby/api/types"
+	"github.com/docker/docker/api/types"
 )
 
 func TestCommonUnixValidateConfigurationErrors(t *testing.T) {

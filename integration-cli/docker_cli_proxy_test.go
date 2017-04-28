@@ -4,8 +4,8 @@ import (
 	"net"
 	"strings"
 
-	"moby/integration-cli/checker"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/integration-cli/checker"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

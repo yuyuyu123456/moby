@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"moby/cli/internal/test"
+	"github.com/docker/docker/cli/internal/test"
 	"github.com/stretchr/testify/assert"
 )
 

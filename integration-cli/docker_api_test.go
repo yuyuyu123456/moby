@@ -9,12 +9,12 @@ import (
 	"strconv"
 	"strings"
 
-	"moby/api"
-	"moby/integration-cli/checker"
-	"moby/integration-cli/cli"
-	"moby/integration-cli/request"
-	"moby/pkg/testutil"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/api"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/integration-cli/cli"
+	"github.com/docker/docker/integration-cli/request"
+	"github.com/docker/docker/pkg/testutil"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

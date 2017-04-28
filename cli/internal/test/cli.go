@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"moby/cli/command"
-	"moby/cli/config/configfile"
-	"moby/client"
+	"github.com/docker/docker/cli/command"
+	"github.com/docker/docker/cli/config/configfile"
+	"github.com/docker/docker/client"
 )
 
 // FakeCli emulates the default DockerCli

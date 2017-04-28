@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"moby/api/types"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/pkg/stringid"
 	units "github.com/docker/go-units"
 )
 

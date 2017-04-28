@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"moby/api/types/plugins/logdriver"
+	"github.com/docker/docker/api/types/plugins/logdriver"
 	protoio "github.com/gogo/protobuf/io"
 )
 

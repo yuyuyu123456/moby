@@ -11,7 +11,7 @@ import (
 	"strings"
 	"testing"
 
-	"moby/pkg/archive"
+	"github.com/docker/docker/pkg/archive"
 )
 
 const dockerfileContents = "FROM busybox"

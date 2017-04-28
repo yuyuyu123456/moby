@@ -8,9 +8,9 @@ import (
 	"strings"
 	"syscall"
 
-	"moby/integration-cli/checker"
-	"moby/pkg/mount"
-	icmd "moby/pkg/testutil/cmd"
+	"github.com/docker/docker/integration-cli/checker"
+	"github.com/docker/docker/pkg/mount"
+	icmd "github.com/docker/docker/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

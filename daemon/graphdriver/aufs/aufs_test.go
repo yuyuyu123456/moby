@@ -12,10 +12,10 @@ import (
 	"sync"
 	"testing"
 
-	"moby/daemon/graphdriver"
-	"moby/pkg/archive"
-	"moby/pkg/reexec"
-	"moby/pkg/stringid"
+	"github.com/docker/docker/daemon/graphdriver"
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/reexec"
+	"github.com/docker/docker/pkg/stringid"
 )
 
 var (

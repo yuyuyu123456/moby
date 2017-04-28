@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"moby/builder/dockerfile/parser"
+	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/stretchr/testify/assert"
 )
 

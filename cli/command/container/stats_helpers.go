@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"moby/api/types"
-	"moby/cli/command/formatter"
-	"moby/client"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/cli/command/formatter"
+	"github.com/docker/docker/client"
 	"github.com/pkg/errors"
 	"golang.org/x/net/context"
 )
