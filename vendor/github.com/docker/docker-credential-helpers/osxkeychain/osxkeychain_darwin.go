@@ -15,7 +15,7 @@ import (
 	"strings"
 	"unsafe"
 
-	"moby-credential-helpers/credentials"
+	"github.com/docker/docker-credential-helpers/credentials"
 )
 
 // errCredentialsNotFound is the specific error message returned by OS X

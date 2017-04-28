@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"moby-credential-helpers/client"
-	"moby-credential-helpers/credentials"
+	"github.com/docker/docker-credential-helpers/client"
+	"github.com/docker/docker-credential-helpers/credentials"
 	"github.com/docker/docker/api/types"
 	"github.com/pkg/errors"
 )

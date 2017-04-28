@@ -54,18 +54,18 @@ func TestCloneArgsDumbHttp(t *testing.T) {
 }
 
 func TestCloneArgsGit(t *testing.T) {
-	u, _ := url.Parse("git://moby")
+	u, _ := url.Parse("git://github.com/docker/docker")
 	args := cloneArgs(u, "/tmp")
-	exp := []string{"clone", "--recursive", "--depth", "1", "git://moby", "/tmp"}
+	exp := []string{"clone", "--recursive", "--depth", "1", "git://github.com/docker/docker", "/tmp"}
 	if !reflect.DeepEqual(args, exp) {
 		t.Fatalf("Expected %v, got %v", exp, args)
 	}
 }
 
 func TestCloneArgsStripFragment(t *testing.T) {
-	u, _ := url.Parse("git://moby#test")
+	u, _ := url.Parse("git://github.com/docker/docker#test")
 	args := cloneArgs(u, "/tmp")
-	exp := []string{"clone", "--recursive", "git://moby", "/tmp"}
+	exp := []string{"clone", "--recursive", "git://github.com/docker/docker", "/tmp"}
 	if !reflect.DeepEqual(args, exp) {
 		t.Fatalf("Expected %v, got %v", exp, args)
 	}
