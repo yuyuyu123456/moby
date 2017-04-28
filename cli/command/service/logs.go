@@ -9,14 +9,14 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/idresolver"
-	"github.com/docker/docker/client"
-	"github.com/docker/docker/pkg/stdcopy"
-	"github.com/docker/docker/pkg/stringid"
+	"moby/api/types"
+	"moby/api/types/swarm"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/command/idresolver"
+	"moby/client"
+	"moby/pkg/stdcopy"
+	"moby/pkg/stringid"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )

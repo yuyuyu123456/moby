@@ -3,7 +3,7 @@ package testutils
 import (
 	"fmt"
 
-	"github.com/docker/docker/volume"
+	"moby/volume"
 )
 
 // NoopVolume is a volume that doesn't perform any operation

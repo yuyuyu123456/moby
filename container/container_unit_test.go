@@ -3,8 +3,8 @@ package container
 import (
 	"testing"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/pkg/signal"
+	"moby/api/types/container"
+	"moby/pkg/signal"
 )
 
 func TestContainerStopSignal(t *testing.T) {

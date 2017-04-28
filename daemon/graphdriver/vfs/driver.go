@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/docker/docker/daemon/graphdriver"
-	"github.com/docker/docker/pkg/chrootarchive"
-	"github.com/docker/docker/pkg/idtools"
+	"moby/daemon/graphdriver"
+	"moby/pkg/chrootarchive"
+	"moby/pkg/idtools"
 
 	"github.com/opencontainers/runc/libcontainer/label"
 )

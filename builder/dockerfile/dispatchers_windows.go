@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/docker/docker/pkg/system"
+	"moby/pkg/system"
 )
 
 var pattern = regexp.MustCompile(`^[a-zA-Z]:\.$`)

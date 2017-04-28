@@ -12,8 +12,8 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/daemon/graphdriver/devmapper"
-	"github.com/docker/docker/pkg/devicemapper"
+	"moby/daemon/graphdriver/devmapper"
+	"moby/pkg/devicemapper"
 )
 
 func usage() {

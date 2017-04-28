@@ -10,8 +10,8 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/container"
+	"moby/api/types"
+	"moby/api/types/container"
 )
 
 // ImageBuild sends request to the daemon to build images.
@@ -58,6 +58,11 @@ func (cli *Client) imageBuildOptionsToQuery(options types.ImageBuildOptions) (ur
 	}
 	if options.NoCache {
 		query.Set("nocache", "1")
+	}
+	if options.Usefilecache{
+		query.Set("usefilecache","1")
+	}else{
+		query.Set("usefilecache","0")
 	}
 	if options.Remove {
 		query.Set("rm", "1")

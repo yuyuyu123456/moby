@@ -11,7 +11,7 @@ import (
 	"errors"
 	"unsafe"
 
-	"github.com/docker/docker-credential-helpers/credentials"
+	"moby-credential-helpers/credentials"
 )
 
 // Secretservice handles secrets using Linux secret-service as a store.

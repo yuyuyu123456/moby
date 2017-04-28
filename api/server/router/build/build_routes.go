@@ -13,14 +13,14 @@ import (
 	"sync"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/server/httputils"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/backend"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/versions"
-	"github.com/docker/docker/pkg/ioutils"
-	"github.com/docker/docker/pkg/progress"
-	"github.com/docker/docker/pkg/streamformatter"
+	"moby/api/server/httputils"
+	"moby/api/types"
+	"moby/api/types/backend"
+	"moby/api/types/container"
+	"moby/api/types/versions"
+	"moby/pkg/ioutils"
+	"moby/pkg/progress"
+	"moby/pkg/streamformatter"
 	"github.com/docker/go-units"
 	"golang.org/x/net/context"
 )
@@ -42,6 +42,7 @@ func newImageBuildOptions(ctx context.Context, r *http.Request) (*types.ImageBui
 	options.Dockerfile = r.FormValue("dockerfile")
 	options.SuppressOutput = httputils.BoolValue(r, "q")
 	options.NoCache = httputils.BoolValue(r, "nocache")
+	options.Usefilecache=httputils.BoolValue(r,"usefilecache")
 	options.ForceRemove = httputils.BoolValue(r, "forcerm")
 	options.MemorySwap = httputils.Int64ValueOrZero(r, "memswap")
 	options.Memory = httputils.Int64ValueOrZero(r, "memory")

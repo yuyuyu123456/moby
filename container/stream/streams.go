@@ -8,10 +8,10 @@ import (
 	"sync"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/libcontainerd"
-	"github.com/docker/docker/pkg/broadcaster"
-	"github.com/docker/docker/pkg/ioutils"
-	"github.com/docker/docker/pkg/pools"
+	"moby/libcontainerd"
+	"moby/pkg/broadcaster"
+	"moby/pkg/ioutils"
+	"moby/pkg/pools"
 )
 
 // Config holds information about I/O streams managed together.

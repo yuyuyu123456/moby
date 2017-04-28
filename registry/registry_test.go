@@ -12,8 +12,8 @@ import (
 
 	"github.com/docker/distribution/reference"
 	"github.com/docker/distribution/registry/client/transport"
-	"github.com/docker/docker/api/types"
-	registrytypes "github.com/docker/docker/api/types/registry"
+	"moby/api/types"
+	registrytypes "moby/api/types/registry"
 )
 
 var (

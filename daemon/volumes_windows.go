@@ -5,8 +5,8 @@ package daemon
 import (
 	"sort"
 
-	"github.com/docker/docker/container"
-	"github.com/docker/docker/volume"
+	"moby/container"
+	"moby/volume"
 )
 
 // setupMounts configures the mount points for a container by appending each

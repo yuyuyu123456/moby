@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/docker/docker/pkg/pools"
-	"github.com/docker/docker/pkg/system"
+	"moby/pkg/pools"
+	"moby/pkg/system"
 	rsystem "github.com/opencontainers/runc/libcontainer/system"
 )
 

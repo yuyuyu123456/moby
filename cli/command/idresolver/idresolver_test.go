@@ -3,9 +3,9 @@ package idresolver
 import (
 	"testing"
 
-	"github.com/docker/docker/api/types/swarm"
+	"moby/api/types/swarm"
 	// Import builders to get the builder function as package function
-	. "github.com/docker/docker/cli/internal/test/builders"
+	. "moby/cli/internal/test/builders"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"

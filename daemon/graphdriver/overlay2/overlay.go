@@ -19,18 +19,18 @@ import (
 
 	"github.com/Sirupsen/logrus"
 
-	"github.com/docker/docker/daemon/graphdriver"
-	"github.com/docker/docker/daemon/graphdriver/overlayutils"
-	"github.com/docker/docker/daemon/graphdriver/quota"
-	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/chrootarchive"
-	"github.com/docker/docker/pkg/directory"
-	"github.com/docker/docker/pkg/fsutils"
-	"github.com/docker/docker/pkg/idtools"
-	"github.com/docker/docker/pkg/locker"
-	"github.com/docker/docker/pkg/mount"
-	"github.com/docker/docker/pkg/parsers"
-	"github.com/docker/docker/pkg/parsers/kernel"
+	"moby/daemon/graphdriver"
+	"moby/daemon/graphdriver/overlayutils"
+	"moby/daemon/graphdriver/quota"
+	"moby/pkg/archive"
+	"moby/pkg/chrootarchive"
+	"moby/pkg/directory"
+	"moby/pkg/fsutils"
+	"moby/pkg/idtools"
+	"moby/pkg/locker"
+	"moby/pkg/mount"
+	"moby/pkg/parsers"
+	"moby/pkg/parsers/kernel"
 	units "github.com/docker/go-units"
 
 	"github.com/opencontainers/runc/libcontainer/label"
@@ -518,7 +518,7 @@ func (d *Driver) Get(id string, mountLabel string) (s string, err error) {
 	// as of go 1.7. This will be fixed in 1.8 and this block can be
 	// removed when building with 1.8.
 	// See https://github.com/golang/go/commit/1b9499b06989d2831e5b156161d6c07642926ee1
-	// See https://github.com/docker/docker/issues/27384
+	// See https://moby/issues/27384
 	if pageSize > 4096 {
 		pageSize = 4096
 	}

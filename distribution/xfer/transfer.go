@@ -4,7 +4,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/docker/docker/pkg/progress"
+	"moby/pkg/progress"
 	"golang.org/x/net/context"
 )
 

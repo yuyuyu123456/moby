@@ -3,10 +3,10 @@ package stack
 import (
 	"fmt"
 
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/compose/convert"
+	"moby/api/types/swarm"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/compose/convert"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"

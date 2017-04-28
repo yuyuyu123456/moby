@@ -8,10 +8,10 @@ import (
 	"strconv"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/server/httputils"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/versions"
-	"github.com/docker/docker/pkg/stdcopy"
+	"moby/api/server/httputils"
+	"moby/api/types"
+	"moby/api/types/versions"
+	"moby/pkg/stdcopy"
 	"golang.org/x/net/context"
 )
 

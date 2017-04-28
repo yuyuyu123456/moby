@@ -5,13 +5,13 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/filters"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/formatter"
-	"github.com/docker/docker/cli/command/service"
-	"github.com/docker/docker/opts"
+	"moby/api/types"
+	"moby/api/types/filters"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/command/formatter"
+	"moby/cli/command/service"
+	"moby/opts"
 	"github.com/spf13/cobra"
 )
 

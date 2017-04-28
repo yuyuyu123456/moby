@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/libcontainerd"
-	"github.com/docker/docker/restartmanager"
+	"moby/api/types"
+	"moby/libcontainerd"
+	"moby/restartmanager"
 )
 
 // StateChanged updates daemon state changes from containerd

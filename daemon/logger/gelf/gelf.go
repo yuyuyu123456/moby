@@ -15,9 +15,9 @@ import (
 
 	"github.com/Graylog2/go-gelf/gelf"
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/daemon/logger"
-	"github.com/docker/docker/daemon/logger/loggerutils"
-	"github.com/docker/docker/pkg/urlutil"
+	"moby/daemon/logger"
+	"moby/daemon/logger/loggerutils"
+	"moby/pkg/urlutil"
 )
 
 const name = "gelf"

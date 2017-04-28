@@ -3,7 +3,7 @@ package client
 import (
 	"net/url"
 
-	"github.com/docker/docker/api/types/versions"
+	"moby/api/types/versions"
 	"golang.org/x/net/context"
 )
 

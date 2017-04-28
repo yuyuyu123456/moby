@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/container"
-	"github.com/docker/docker/pkg/signal"
+	"moby/container"
+	"moby/pkg/signal"
 )
 
 type errNoSuchProcess struct {

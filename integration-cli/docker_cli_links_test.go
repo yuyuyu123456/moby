@@ -6,9 +6,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/pkg/testutil"
-	"github.com/docker/docker/runconfig"
+	"moby/integration-cli/checker"
+	"moby/pkg/testutil"
+	"moby/runconfig"
 	"github.com/go-check/check"
 )
 

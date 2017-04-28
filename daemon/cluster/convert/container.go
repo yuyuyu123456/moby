@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	container "github.com/docker/docker/api/types/container"
-	mounttypes "github.com/docker/docker/api/types/mount"
-	types "github.com/docker/docker/api/types/swarm"
+	container "moby/api/types/container"
+	mounttypes "moby/api/types/mount"
+	types "moby/api/types/swarm"
 	swarmapi "github.com/docker/swarmkit/api"
 	gogotypes "github.com/gogo/protobuf/types"
 )

@@ -3,7 +3,7 @@ package daemon
 import (
 	"strings"
 
-	"github.com/docker/docker/container"
+	"moby/container"
 )
 
 // excludeByIsolation is a platform specific helper function to support PS

@@ -3,9 +3,9 @@ package volume
 import (
 	"fmt"
 
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/opts"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/opts"
 	units "github.com/docker/go-units"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"

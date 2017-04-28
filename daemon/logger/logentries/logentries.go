@@ -7,7 +7,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/bsphere/le_go"
-	"github.com/docker/docker/daemon/logger"
+	"moby/daemon/logger"
 )
 
 type logentries struct {

@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	containertypes "github.com/docker/docker/api/types/container"
+	containertypes "moby/api/types/container"
 )
 
 // Container holds fields specific to the Windows implementation. See

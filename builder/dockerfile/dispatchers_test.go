@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/api/types"
+	"moby/api/types/container"
+	"moby/api/types/strslice"
+	"moby/builder"
 	"github.com/docker/go-connections/nat"
 	"github.com/stretchr/testify/assert"
 )

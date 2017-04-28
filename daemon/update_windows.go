@@ -3,8 +3,8 @@
 package daemon
 
 import (
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/libcontainerd"
+	"moby/api/types/container"
+	"moby/libcontainerd"
 )
 
 func toContainerdResources(resources container.Resources) libcontainerd.Resources {

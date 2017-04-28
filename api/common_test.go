@@ -7,7 +7,7 @@ import (
 
 	"os"
 
-	"github.com/docker/docker/api/types"
+	"moby/api/types"
 )
 
 type ports struct {

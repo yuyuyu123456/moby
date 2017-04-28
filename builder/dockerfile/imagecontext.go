@@ -6,9 +6,9 @@ import (
 	"sync"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/builder"
-	"github.com/docker/docker/builder/remotecontext"
+	"moby/api/types/container"
+	"moby/builder"
+	"moby/builder/remotecontext"
 	"github.com/pkg/errors"
 )
 

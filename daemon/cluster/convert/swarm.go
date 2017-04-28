@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	types "github.com/docker/docker/api/types/swarm"
+	types "moby/api/types/swarm"
 	swarmapi "github.com/docker/swarmkit/api"
 	gogotypes "github.com/gogo/protobuf/types"
 )

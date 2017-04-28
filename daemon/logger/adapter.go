@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/types/plugins/logdriver"
-	"github.com/docker/docker/pkg/plugingetter"
+	"moby/api/types/plugins/logdriver"
+	"moby/pkg/plugingetter"
 	"github.com/pkg/errors"
 )
 

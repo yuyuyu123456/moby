@@ -1,9 +1,9 @@
 package container
 
 import (
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/formatter"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/command/formatter"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"

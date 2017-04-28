@@ -13,8 +13,8 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/docker/docker/daemon/graphdriver"
-	"github.com/docker/docker/pkg/stringid"
+	"moby/daemon/graphdriver"
+	"moby/pkg/stringid"
 	"github.com/docker/go-units"
 )
 

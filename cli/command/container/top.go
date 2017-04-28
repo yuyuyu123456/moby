@@ -5,8 +5,8 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
+	"moby/cli"
+	"moby/cli/command"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 )

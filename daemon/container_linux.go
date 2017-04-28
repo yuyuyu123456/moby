@@ -3,7 +3,7 @@
 package daemon
 
 import (
-	"github.com/docker/docker/container"
+	"moby/container"
 )
 
 func (daemon *Daemon) saveApparmorConfig(container *container.Container) error {

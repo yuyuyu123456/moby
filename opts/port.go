@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/docker/docker/api/types/swarm"
+	"moby/api/types/swarm"
 	"github.com/docker/go-connections/nat"
 )
 

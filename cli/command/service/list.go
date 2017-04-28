@@ -3,13 +3,13 @@ package service
 import (
 	"fmt"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/filters"
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/formatter"
-	"github.com/docker/docker/opts"
+	"moby/api/types"
+	"moby/api/types/filters"
+	"moby/api/types/swarm"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/command/formatter"
+	"moby/opts"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 )

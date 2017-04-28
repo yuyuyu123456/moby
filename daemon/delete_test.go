@@ -6,10 +6,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/docker/docker/api/types"
-	containertypes "github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/container"
-	"github.com/docker/docker/pkg/testutil"
+	"moby/api/types"
+	containertypes "moby/api/types/container"
+	"moby/container"
+	"moby/pkg/testutil"
 	"github.com/stretchr/testify/require"
 )
 

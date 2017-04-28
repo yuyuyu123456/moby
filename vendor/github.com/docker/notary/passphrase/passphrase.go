@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/docker/docker/pkg/term"
+	"moby/pkg/term"
 	"github.com/docker/notary"
 )
 

@@ -14,22 +14,22 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"github.com/docker/docker/api"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/builder/dockerignore"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/image/build"
-	"github.com/docker/docker/opts"
-	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/fileutils"
-	"github.com/docker/docker/pkg/jsonmessage"
-	"github.com/docker/docker/pkg/progress"
-	"github.com/docker/docker/pkg/streamformatter"
-	"github.com/docker/docker/pkg/stringid"
-	"github.com/docker/docker/pkg/urlutil"
-	runconfigopts "github.com/docker/docker/runconfig/opts"
+	"moby/api"
+	"moby/api/types"
+	"moby/api/types/container"
+	"moby/builder/dockerignore"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/command/image/build"
+	"moby/opts"
+	"moby/pkg/archive"
+	"moby/pkg/fileutils"
+	"moby/pkg/jsonmessage"
+	"moby/pkg/progress"
+	"moby/pkg/streamformatter"
+	"moby/pkg/stringid"
+	"moby/pkg/urlutil"
+	runconfigopts "moby/runconfig/opts"
 	units "github.com/docker/go-units"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -65,6 +65,7 @@ type buildOptions struct {
 	networkMode    string
 	squash         bool
 	target         string
+	usefilecache   bool
 }
 
 // NewBuildCommand creates a new `docker build` command
@@ -106,6 +107,7 @@ func NewBuildCommand(dockerCli *command.DockerCli) *cobra.Command {
 	flags.StringVar(&options.isolation, "isolation", "", "Container isolation technology")
 	flags.Var(&options.labels, "label", "Set metadata for an image")
 	flags.BoolVar(&options.noCache, "no-cache", false, "Do not use cache when building the image")
+	flags.BoolVar(&options.usefilecache,"usefilecache",true,"use local cached file")
 	flags.BoolVar(&options.rm, "rm", true, "Remove intermediate containers after a successful build")
 	flags.BoolVar(&options.forceRm, "force-rm", false, "Always remove intermediate containers")
 	flags.BoolVarP(&options.quiet, "quiet", "q", false, "Suppress the build output and print image ID on success")
@@ -305,6 +307,7 @@ func runBuild(dockerCli *command.DockerCli, options buildOptions) error {
 		Squash:         options.squash,
 		ExtraHosts:     options.extraHosts.GetAll(),
 		Target:         options.target,
+		Usefilecache:   options.usefilecache,
 	}
 
 	response, err := dockerCli.Client().ImageBuild(ctx, body, buildOptions)

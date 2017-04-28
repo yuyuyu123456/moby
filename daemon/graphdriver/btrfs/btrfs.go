@@ -23,10 +23,10 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/docker/docker/daemon/graphdriver"
-	"github.com/docker/docker/pkg/idtools"
-	"github.com/docker/docker/pkg/mount"
-	"github.com/docker/docker/pkg/parsers"
+	"moby/daemon/graphdriver"
+	"moby/pkg/idtools"
+	"moby/pkg/mount"
+	"moby/pkg/parsers"
 	"github.com/docker/go-units"
 	"github.com/opencontainers/runc/libcontainer/label"
 )

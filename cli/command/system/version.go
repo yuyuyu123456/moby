@@ -6,11 +6,11 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/dockerversion"
-	"github.com/docker/docker/pkg/templates"
+	"moby/api/types"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/dockerversion"
+	"moby/pkg/templates"
 	"github.com/spf13/cobra"
 )
 

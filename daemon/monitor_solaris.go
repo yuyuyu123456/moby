@@ -1,8 +1,8 @@
 package daemon
 
 import (
-	"github.com/docker/docker/container"
-	"github.com/docker/docker/libcontainerd"
+	"moby/container"
+	"moby/libcontainerd"
 )
 
 // platformConstructExitStatus returns a platform specific exit status structure

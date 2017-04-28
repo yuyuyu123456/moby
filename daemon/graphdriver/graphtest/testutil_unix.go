@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"testing"
 
-	"github.com/docker/docker/daemon/graphdriver"
+	"moby/daemon/graphdriver"
 )
 
 // InitLoopbacks ensures that the loopback devices are properly created within

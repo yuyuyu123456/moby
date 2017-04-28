@@ -11,8 +11,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/docker/docker/api"
-	"github.com/docker/docker/api/types"
+	"moby/api"
+	"moby/api/types"
 	"golang.org/x/net/context"
 )
 

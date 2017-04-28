@@ -8,20 +8,20 @@ import (
 	"path/filepath"
 	"testing"
 
-	containertypes "github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/container"
-	_ "github.com/docker/docker/pkg/discovery/memory"
-	"github.com/docker/docker/pkg/registrar"
-	"github.com/docker/docker/pkg/truncindex"
-	"github.com/docker/docker/volume"
-	volumedrivers "github.com/docker/docker/volume/drivers"
-	"github.com/docker/docker/volume/local"
-	"github.com/docker/docker/volume/store"
+	containertypes "moby/api/types/container"
+	"moby/container"
+	_ "moby/pkg/discovery/memory"
+	"moby/pkg/registrar"
+	"moby/pkg/truncindex"
+	"moby/volume"
+	volumedrivers "moby/volume/drivers"
+	"moby/volume/local"
+	"moby/volume/store"
 	"github.com/docker/go-connections/nat"
 )
 
 //
-// https://github.com/docker/docker/issues/8069
+// https://moby/issues/8069
 //
 
 func TestGetContainer(t *testing.T) {

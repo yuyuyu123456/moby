@@ -3,7 +3,7 @@ package layer
 import (
 	"io"
 
-	"github.com/docker/docker/pkg/archive"
+	"moby/pkg/archive"
 )
 
 type mountedLayer struct {

@@ -1,8 +1,8 @@
 package container
 
 import (
-	"github.com/docker/docker/api/server/httputils"
-	"github.com/docker/docker/api/server/router"
+	"moby/api/server/httputils"
+	"moby/api/server/router"
 )
 
 type validationError struct {

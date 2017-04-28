@@ -9,10 +9,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/cli"
-	"github.com/docker/docker/pkg/testutil"
-	icmd "github.com/docker/docker/pkg/testutil/cmd"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/cli"
+	"moby/pkg/testutil"
+	icmd "moby/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

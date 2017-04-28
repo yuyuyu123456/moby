@@ -8,11 +8,11 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/errors"
-	"github.com/docker/docker/api/server/httputils"
-	"github.com/docker/docker/api/server/middleware"
-	"github.com/docker/docker/api/server/router"
-	"github.com/docker/docker/dockerversion"
+	"moby/api/errors"
+	"moby/api/server/httputils"
+	"moby/api/server/middleware"
+	"moby/api/server/router"
+	"moby/dockerversion"
 	"github.com/gorilla/mux"
 	"golang.org/x/net/context"
 )

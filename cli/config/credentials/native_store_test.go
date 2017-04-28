@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/docker/docker-credential-helpers/client"
-	"github.com/docker/docker-credential-helpers/credentials"
-	"github.com/docker/docker/api/types"
+	"moby-credential-helpers/client"
+	"moby-credential-helpers/credentials"
+	"moby/api/types"
 	"github.com/pkg/errors"
 )
 

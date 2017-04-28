@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
+	"moby/api/types"
 	"github.com/docker/go-units"
 )
 

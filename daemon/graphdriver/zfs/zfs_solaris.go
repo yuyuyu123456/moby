@@ -21,7 +21,7 @@ import (
 	"unsafe"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/daemon/graphdriver"
+	"moby/daemon/graphdriver"
 )
 
 func checkRootdirFs(rootdir string) error {

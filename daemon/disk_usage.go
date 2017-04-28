@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/filters"
-	"github.com/docker/docker/layer"
-	"github.com/docker/docker/pkg/directory"
-	"github.com/docker/docker/volume"
+	"moby/api/types"
+	"moby/api/types/filters"
+	"moby/layer"
+	"moby/pkg/directory"
+	"moby/volume"
 	"github.com/opencontainers/go-digest"
 )
 

@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/cli/config/configfile"
-	"github.com/docker/docker/pkg/homedir"
+	"moby/api/types"
+	"moby/cli/config/configfile"
+	"moby/pkg/homedir"
 	"github.com/pkg/errors"
 )
 

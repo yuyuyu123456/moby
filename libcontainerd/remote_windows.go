@@ -1,6 +1,6 @@
 package libcontainerd
 
-import "github.com/docker/docker/pkg/locker"
+import "moby/pkg/locker"
 
 type remote struct {
 }

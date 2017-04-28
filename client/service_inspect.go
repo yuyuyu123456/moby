@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/swarm"
+	"moby/api/types"
+	"moby/api/types/swarm"
 	"golang.org/x/net/context"
 )
 

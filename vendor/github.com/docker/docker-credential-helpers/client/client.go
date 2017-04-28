@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/docker/docker-credential-helpers/credentials"
+	"moby-credential-helpers/credentials"
 )
 
 // Store uses an external program to save credentials.

@@ -3,9 +3,9 @@ package network
 import (
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/inspect"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/command/inspect"
 	"github.com/spf13/cobra"
 )
 

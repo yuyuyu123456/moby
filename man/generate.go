@@ -7,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/commands"
-	"github.com/docker/docker/pkg/term"
+	"moby/cli/command"
+	"moby/cli/command/commands"
+	"moby/pkg/term"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 	"github.com/spf13/pflag"

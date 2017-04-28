@@ -13,9 +13,9 @@ import (
 	"github.com/docker/distribution/manifest"
 	"github.com/docker/distribution/manifest/manifestlist"
 	"github.com/docker/distribution/manifest/schema2"
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/cli/build"
-	icmd "github.com/docker/docker/pkg/testutil/cmd"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/cli/build"
+	icmd "moby/pkg/testutil/cmd"
 	"github.com/go-check/check"
 	"github.com/opencontainers/go-digest"
 )

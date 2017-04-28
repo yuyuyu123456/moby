@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/types"
-	daemonconfig "github.com/docker/docker/daemon/config"
-	"github.com/docker/docker/dockerversion"
-	"github.com/docker/docker/pkg/sysinfo"
+	"moby/api/types"
+	daemonconfig "moby/daemon/config"
+	"moby/dockerversion"
+	"moby/pkg/sysinfo"
 	"github.com/pkg/errors"
 )
 

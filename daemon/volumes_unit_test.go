@@ -3,7 +3,7 @@ package daemon
 import (
 	"testing"
 
-	"github.com/docker/docker/volume"
+	"moby/volume"
 )
 
 func TestParseVolumesFrom(t *testing.T) {

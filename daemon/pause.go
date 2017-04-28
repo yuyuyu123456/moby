@@ -3,7 +3,7 @@ package daemon
 import (
 	"fmt"
 
-	"github.com/docker/docker/container"
+	"moby/container"
 )
 
 // ContainerPause pauses a container

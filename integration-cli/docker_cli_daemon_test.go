@@ -21,13 +21,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/cli"
-	"github.com/docker/docker/integration-cli/daemon"
-	"github.com/docker/docker/pkg/mount"
-	"github.com/docker/docker/pkg/stringid"
-	"github.com/docker/docker/pkg/testutil"
-	icmd "github.com/docker/docker/pkg/testutil/cmd"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/cli"
+	"moby/integration-cli/daemon"
+	"moby/pkg/mount"
+	"moby/pkg/stringid"
+	"moby/pkg/testutil"
+	icmd "moby/pkg/testutil/cmd"
 	units "github.com/docker/go-units"
 	"github.com/docker/libnetwork/iptables"
 	"github.com/docker/libtrust"
@@ -1303,7 +1303,7 @@ func (s *DockerDaemonSuite) TestHTTPSInfo(c *check.C) {
 }
 
 // TestHTTPSRun connects via two-way authenticated HTTPS to the create, attach, start, and wait endpoints.
-// https://github.com/docker/docker/issues/19280
+// https://moby/issues/19280
 func (s *DockerDaemonSuite) TestHTTPSRun(c *check.C) {
 	const (
 		testDaemonHTTPSAddr = "tcp://localhost:4271"
@@ -2605,8 +2605,8 @@ func (s *DockerDaemonSuite) TestDaemonRestartSaveContainerExitCode(c *check.C) {
 	// process itself is PID1, the container does not fail on _startup_ (i.e., `docker-init` starting),
 	// but directly after. The exit code of the container is still 127, but the Error Message is not
 	// captured, so `.State.Error` is empty.
-	// See the discussion on https://github.com/docker/docker/pull/30227#issuecomment-274161426,
-	// and https://github.com/docker/docker/pull/26061#r78054578 for more information.
+	// See the discussion on https://moby/pull/30227#issuecomment-274161426,
+	// and https://moby/pull/26061#r78054578 for more information.
 	out, err := s.d.Cmd("run", "--name", containerName, "--init=false", "busybox", "toto")
 	c.Assert(err, checker.NotNil)
 

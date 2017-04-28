@@ -8,8 +8,8 @@ import (
 	"syscall"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/libcontainerd"
-	"github.com/docker/docker/pkg/system"
+	"moby/libcontainerd"
+	"moby/pkg/system"
 )
 
 var defaultDaemonConfigFile = ""

@@ -9,9 +9,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/integration-cli/checker"
-	icmd "github.com/docker/docker/pkg/testutil/cmd"
+	"moby/api/types/swarm"
+	"moby/integration-cli/checker"
+	icmd "moby/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

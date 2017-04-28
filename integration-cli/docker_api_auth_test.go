@@ -3,9 +3,9 @@ package main
 import (
 	"net/http"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/request"
+	"moby/api/types"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/request"
 	"github.com/go-check/check"
 )
 

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/docker/docker/api/types/swarm"
+	"moby/api/types/swarm"
 
 	"golang.org/x/net/context"
 )

@@ -5,8 +5,8 @@ package daemon
 import (
 	"fmt"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/container"
+	"moby/api/types"
+	"moby/container"
 )
 
 // Resolve Network SandboxID in case the container reuse another container's network stack

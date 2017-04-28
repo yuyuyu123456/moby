@@ -10,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/daemon"
-	icmd "github.com/docker/docker/pkg/testutil/cmd"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/daemon"
+	icmd "moby/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 

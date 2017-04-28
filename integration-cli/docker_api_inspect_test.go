@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/versions/v1p20"
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/request"
-	"github.com/docker/docker/pkg/stringutils"
+	"moby/api/types"
+	"moby/api/types/versions/v1p20"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/request"
+	"moby/pkg/stringutils"
 	"github.com/go-check/check"
 )
 

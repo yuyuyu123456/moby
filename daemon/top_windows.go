@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	containertypes "github.com/docker/docker/api/types/container"
+	containertypes "moby/api/types/container"
 	"github.com/docker/go-units"
 )
 

@@ -8,7 +8,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/docker/docker/pkg/archive"
+	"moby/pkg/archive"
 )
 
 func TestMountInit(t *testing.T) {

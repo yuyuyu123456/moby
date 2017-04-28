@@ -13,11 +13,11 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/daemon/logger"
-	"github.com/docker/docker/pkg/filenotify"
-	"github.com/docker/docker/pkg/ioutils"
-	"github.com/docker/docker/pkg/jsonlog"
-	"github.com/docker/docker/pkg/tailfile"
+	"moby/daemon/logger"
+	"moby/pkg/filenotify"
+	"moby/pkg/ioutils"
+	"moby/pkg/jsonlog"
+	"moby/pkg/tailfile"
 )
 
 const maxJSONDecodeRetry = 20000

@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/pkg/stringid"
+	"moby/api/types/swarm"
+	"moby/cli/command"
+	"moby/pkg/stringid"
 	"github.com/docker/go-units"
 )
 

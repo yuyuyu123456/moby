@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli/command/formatter"
+	"moby/api/types"
+	"moby/api/types/swarm"
+	"moby/cli/command/formatter"
 	"github.com/stretchr/testify/assert"
 )
 

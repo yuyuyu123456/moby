@@ -4,19 +4,19 @@ import "testing"
 
 var (
 	gitUrls = []string{
-		"git://github.com/docker/docker",
+		"git://moby",
 		"git@github.com:docker/docker.git",
 		"git@bitbucket.org:atlassianlabs/atlassian-docker.git",
-		"https://github.com/docker/docker.git",
-		"http://github.com/docker/docker.git",
-		"http://github.com/docker/docker.git#branch",
-		"http://github.com/docker/docker.git#:dir",
+		"https://moby.git",
+		"http://moby.git",
+		"http://moby.git#branch",
+		"http://moby.git#:dir",
 	}
 	incompleteGitUrls = []string{
-		"github.com/docker/docker",
+		"moby",
 	}
 	invalidGitUrls = []string{
-		"http://github.com/docker/docker.git:#branch",
+		"http://moby.git:#branch",
 	}
 	transportUrls = []string{
 		"tcp://example.com",

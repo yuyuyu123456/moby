@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/docker/docker/api/types/plugins/logdriver"
-	getter "github.com/docker/docker/pkg/plugingetter"
-	"github.com/docker/docker/pkg/stringid"
+	"moby/api/types/plugins/logdriver"
+	getter "moby/pkg/plugingetter"
+	"moby/pkg/stringid"
 	"github.com/pkg/errors"
 )
 

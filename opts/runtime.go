@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/docker/docker/api/types"
+	"moby/api/types"
 )
 
 // RuntimeOpt defines a map of Runtimes

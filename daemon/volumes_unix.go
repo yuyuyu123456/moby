@@ -12,12 +12,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/docker/docker/container"
-	"github.com/docker/docker/pkg/fileutils"
-	"github.com/docker/docker/pkg/mount"
-	"github.com/docker/docker/volume"
-	"github.com/docker/docker/volume/drivers"
-	"github.com/docker/docker/volume/local"
+	"moby/container"
+	"moby/pkg/fileutils"
+	"moby/pkg/mount"
+	"moby/volume"
+	"moby/volume/drivers"
+	"moby/volume/local"
 	"github.com/pkg/errors"
 )
 

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/docker/docker/api/types/swarm"
+	"moby/api/types/swarm"
 	"github.com/stretchr/testify/assert"
 )
 

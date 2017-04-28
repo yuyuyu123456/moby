@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/cli/build"
-	"github.com/docker/docker/pkg/stringid"
-	"github.com/docker/docker/pkg/stringutils"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/cli/build"
+	"moby/pkg/stringid"
+	"moby/pkg/stringutils"
 	"github.com/go-check/check"
 )
 

@@ -3,7 +3,7 @@ package daemon
 import (
 	"fmt"
 
-	"github.com/docker/docker/api/errors"
+	"moby/api/errors"
 )
 
 func (d *Daemon) imageNotExistToErrcode(err error) error {

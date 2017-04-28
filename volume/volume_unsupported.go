@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"runtime"
 
-	mounttypes "github.com/docker/docker/api/types/mount"
+	mounttypes "moby/api/types/mount"
 )
 
 // ConvertTmpfsOptions converts *mounttypes.TmpfsOptions to the raw option string

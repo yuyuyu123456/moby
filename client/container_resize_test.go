@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/docker/docker/api/types"
+	"moby/api/types"
 	"golang.org/x/net/context"
 )
 

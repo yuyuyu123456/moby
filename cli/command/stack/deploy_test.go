@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/docker/docker/cli/compose/convert"
-	"github.com/docker/docker/cli/internal/test"
+	"moby/cli/compose/convert"
+	"moby/cli/internal/test"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"
 )

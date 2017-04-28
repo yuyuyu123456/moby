@@ -3,10 +3,10 @@ package convert
 import (
 	"testing"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/network"
-	composetypes "github.com/docker/docker/cli/compose/types"
-	"github.com/docker/docker/pkg/testutil/tempfile"
+	"moby/api/types"
+	"moby/api/types/network"
+	composetypes "moby/cli/compose/types"
+	"moby/pkg/testutil/tempfile"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

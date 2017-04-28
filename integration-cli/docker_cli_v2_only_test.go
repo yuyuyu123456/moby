@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/docker/docker/integration-cli/registry"
+	"moby/integration-cli/registry"
 	"github.com/go-check/check"
 )
 

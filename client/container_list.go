@@ -5,8 +5,8 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/filters"
+	"moby/api/types"
+	"moby/api/types/filters"
 	"golang.org/x/net/context"
 )
 

@@ -8,8 +8,8 @@ import (
 
 	winio "github.com/Microsoft/go-winio"
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/pkg/signal"
-	"github.com/docker/docker/pkg/system"
+	"moby/pkg/signal"
+	"moby/pkg/system"
 )
 
 func (d *Daemon) setupDumpStackTrap(root string) {

@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/docker/docker/integration-cli/checker"
-	icmd "github.com/docker/docker/pkg/testutil/cmd"
+	"moby/integration-cli/checker"
+	icmd "moby/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 
@@ -288,7 +288,7 @@ func (s *DockerSuite) TestPluginInspect(c *check.C) {
 	c.Assert(err, checker.NotNil)
 }
 
-// Test case for https://github.com/docker/docker/pull/29186#discussion_r91277345
+// Test case for https://moby/pull/29186#discussion_r91277345
 func (s *DockerSuite) TestPluginInspectOnWindows(c *check.C) {
 	// This test should work on Windows only
 	testRequires(c, DaemonIsWindows)

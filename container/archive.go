@@ -4,9 +4,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/system"
+	"moby/api/types"
+	"moby/pkg/archive"
+	"moby/pkg/system"
 )
 
 // ResolvePath resolves the given path in the container to a resource on the

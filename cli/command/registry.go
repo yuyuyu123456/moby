@@ -13,10 +13,10 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/docker/distribution/reference"
-	"github.com/docker/docker/api/types"
-	registrytypes "github.com/docker/docker/api/types/registry"
-	"github.com/docker/docker/pkg/term"
-	"github.com/docker/docker/registry"
+	"moby/api/types"
+	registrytypes "moby/api/types/registry"
+	"moby/pkg/term"
+	"moby/registry"
 	"github.com/pkg/errors"
 )
 
@@ -90,7 +90,7 @@ func ConfigureAuth(cli *DockerCli, flUser, flPassword, serverAddress string, isD
 
 	// Some links documenting this:
 	// - https://code.google.com/archive/p/mintty/issues/56
-	// - https://github.com/docker/docker/issues/15272
+	// - https://moby/issues/15272
 	// - https://mintty.github.io/ (compatibility)
 	// Linux will hit this if you attempt `cat | docker login`, and Windows
 	// will hit this if you attempt docker login from mintty where stdin

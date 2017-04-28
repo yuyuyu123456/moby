@@ -3,10 +3,10 @@ package container
 import (
 	"fmt"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	dockeropts "github.com/docker/docker/opts"
+	"moby/api/types"
+	"moby/cli"
+	"moby/cli/command"
+	dockeropts "moby/opts"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 )

@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/pkg/stringid"
-	"github.com/docker/docker/pkg/stringutils"
+	"moby/api/types/image"
+	"moby/pkg/stringid"
+	"moby/pkg/stringutils"
 	units "github.com/docker/go-units"
 )
 

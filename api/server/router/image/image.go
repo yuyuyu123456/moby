@@ -1,8 +1,8 @@
 package image
 
 import (
-	"github.com/docker/docker/api/server/httputils"
-	"github.com/docker/docker/api/server/router"
+	"moby/api/server/httputils"
+	"moby/api/server/router"
 )
 
 // imageRouter is a router to talk with the image controller

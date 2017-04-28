@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/docker/docker/api/types/mount"
+	"moby/api/types/mount"
 )
 
 func TestParseMountRaw(t *testing.T) {

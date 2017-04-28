@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/docker/docker/pkg/locker"
+	"moby/pkg/locker"
 )
 
 // clientCommon contains the platform agnostic fields used in the client structure

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/docker/docker/api/types"
+	"moby/api/types"
 	units "github.com/docker/go-units"
 )
 

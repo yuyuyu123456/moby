@@ -3,8 +3,8 @@ package cache
 import (
 	"testing"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/strslice"
+	"moby/api/types/container"
+	"moby/api/types/strslice"
 	"github.com/docker/go-connections/nat"
 )
 

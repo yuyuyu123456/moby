@@ -5,8 +5,8 @@ import (
 	"io"
 	"net"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/filters"
+	"moby/api/types/container"
+	"moby/api/types/filters"
 	"github.com/docker/go-units"
 )
 
@@ -178,6 +178,7 @@ type ImageBuildOptions struct {
 	SecurityOpt []string
 	ExtraHosts  []string // List of extra hosts
 	Target      string
+	Usefilecache bool
 }
 
 // ImageBuildResponse holds information

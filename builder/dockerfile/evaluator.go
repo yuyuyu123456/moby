@@ -23,9 +23,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/docker/docker/builder/dockerfile/command"
-	"github.com/docker/docker/builder/dockerfile/parser"
-	"github.com/docker/docker/runconfig/opts"
+	"moby/builder/dockerfile/command"
+	"moby/builder/dockerfile/parser"
+	"moby/runconfig/opts"
 	"github.com/pkg/errors"
 )
 

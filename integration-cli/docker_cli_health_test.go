@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/cli/build"
+	"moby/api/types"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/cli/build"
 	"github.com/go-check/check"
 )
 

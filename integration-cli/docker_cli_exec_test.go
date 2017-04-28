@@ -15,11 +15,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/cli"
-	"github.com/docker/docker/integration-cli/cli/build"
-	"github.com/docker/docker/integration-cli/request"
-	icmd "github.com/docker/docker/pkg/testutil/cmd"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/cli"
+	"moby/integration-cli/cli/build"
+	"moby/integration-cli/request"
+	icmd "moby/pkg/testutil/cmd"
 	"github.com/go-check/check"
 )
 
@@ -516,7 +516,7 @@ func (s *DockerSuite) TestExecStartFails(c *check.C) {
 	c.Assert(out, checker.Contains, "executable file not found")
 }
 
-// Fix regression in https://github.com/docker/docker/pull/26461#issuecomment-250287297
+// Fix regression in https://moby/pull/26461#issuecomment-250287297
 func (s *DockerSuite) TestExecWindowsPathNotWiped(c *check.C) {
 	testRequires(c, DaemonIsWindows)
 	out, _ := dockerCmd(c, "run", "-d", "--name", "testing", minimalBaseImage(), "powershell", "start-sleep", "60")

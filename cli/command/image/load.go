@@ -5,10 +5,10 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/pkg/jsonmessage"
-	"github.com/docker/docker/pkg/system"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/pkg/jsonmessage"
+	"moby/pkg/system"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )

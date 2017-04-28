@@ -13,11 +13,11 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution/reference"
-	"github.com/docker/docker/api/types"
-	registrytypes "github.com/docker/docker/api/types/registry"
-	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/stringid"
-	"github.com/docker/docker/registry"
+	"moby/api/types"
+	registrytypes "moby/api/types/registry"
+	"moby/pkg/archive"
+	"moby/pkg/stringid"
+	"moby/registry"
 	"golang.org/x/net/context"
 )
 

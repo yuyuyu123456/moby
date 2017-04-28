@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/docker/pkg/jsonlog"
-	"github.com/docker/docker/pkg/term"
+	"moby/pkg/jsonlog"
+	"moby/pkg/term"
 )
 
 func TestError(t *testing.T) {

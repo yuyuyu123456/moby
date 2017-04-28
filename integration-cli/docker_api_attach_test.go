@@ -10,12 +10,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/client"
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/request"
-	"github.com/docker/docker/pkg/stdcopy"
-	"github.com/docker/docker/pkg/testutil"
+	"moby/api/types"
+	"moby/client"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/request"
+	"moby/pkg/stdcopy"
+	"moby/pkg/testutil"
 	"github.com/go-check/check"
 	"golang.org/x/net/websocket"
 )

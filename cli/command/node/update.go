@@ -3,11 +3,11 @@ package node
 import (
 	"fmt"
 
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/opts"
-	runconfigopts "github.com/docker/docker/runconfig/opts"
+	"moby/api/types/swarm"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/opts"
+	runconfigopts "moby/runconfig/opts"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"

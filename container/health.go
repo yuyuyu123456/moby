@@ -2,7 +2,7 @@ package container
 
 import (
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api/types"
+	"moby/api/types"
 )
 
 // Health holds the current container health-check state

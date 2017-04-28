@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/docker/distribution"
-	"github.com/docker/docker/layer"
-	"github.com/docker/docker/pkg/progress"
+	"moby/layer"
+	"moby/pkg/progress"
 	"golang.org/x/net/context"
 )
 

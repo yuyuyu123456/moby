@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/docker/distribution/reference"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/layer"
+	"moby/api/types"
+	"moby/layer"
 	"github.com/pkg/errors"
 )
 

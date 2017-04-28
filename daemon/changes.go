@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/docker/docker/pkg/archive"
+	"moby/pkg/archive"
 )
 
 // ContainerChanges returns a list of container fs changes

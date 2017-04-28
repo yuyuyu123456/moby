@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/docker/docker/pkg/system"
+	"moby/pkg/system"
 )
 
 // normaliseDest normalises the destination of a COPY/ADD command in a

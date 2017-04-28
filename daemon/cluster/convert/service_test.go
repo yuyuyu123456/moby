@@ -3,7 +3,7 @@ package convert
 import (
 	"testing"
 
-	swarmtypes "github.com/docker/docker/api/types/swarm"
+	swarmtypes "moby/api/types/swarm"
 	swarmapi "github.com/docker/swarmkit/api"
 	google_protobuf3 "github.com/gogo/protobuf/types"
 )

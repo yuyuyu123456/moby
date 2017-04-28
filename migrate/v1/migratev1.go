@@ -15,12 +15,12 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/distribution/reference"
-	"github.com/docker/docker/distribution/metadata"
-	"github.com/docker/docker/image"
-	imagev1 "github.com/docker/docker/image/v1"
-	"github.com/docker/docker/layer"
-	"github.com/docker/docker/pkg/ioutils"
-	refstore "github.com/docker/docker/reference"
+	"moby/distribution/metadata"
+	"moby/image"
+	imagev1 "moby/image/v1"
+	"moby/layer"
+	"moby/pkg/ioutils"
+	refstore "moby/reference"
 	"github.com/opencontainers/go-digest"
 )
 

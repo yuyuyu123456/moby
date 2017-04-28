@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"time"
 
-	timetypes "github.com/docker/docker/api/types/time"
+	timetypes "moby/api/types/time"
 	"golang.org/x/net/context"
 )
 

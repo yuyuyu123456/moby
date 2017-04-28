@@ -3,8 +3,8 @@ package opts
 import (
 	"testing"
 
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/pkg/testutil"
+	"moby/api/types/swarm"
+	"moby/pkg/testutil"
 	"github.com/stretchr/testify/assert"
 )
 

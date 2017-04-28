@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/docker/docker/integration-cli/registry"
+	"moby/integration-cli/registry"
 	"github.com/go-check/check"
 )
 

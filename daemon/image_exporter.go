@@ -3,7 +3,7 @@ package daemon
 import (
 	"io"
 
-	"github.com/docker/docker/image/tarexport"
+	"moby/image/tarexport"
 )
 
 // ExportImage exports a list of images to the given output stream. The

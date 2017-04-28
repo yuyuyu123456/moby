@@ -6,7 +6,7 @@ import (
 	"net"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/pkg/plugins"
+	"moby/pkg/plugins"
 	"github.com/docker/libnetwork/datastore"
 	"github.com/docker/libnetwork/discoverapi"
 	"github.com/docker/libnetwork/driverapi"

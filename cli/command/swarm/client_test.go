@@ -1,9 +1,9 @@
 package swarm
 
 import (
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/client"
+	"moby/api/types"
+	"moby/api/types/swarm"
+	"moby/client"
 	"golang.org/x/net/context"
 )
 

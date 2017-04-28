@@ -6,12 +6,12 @@ import (
 
 	dist "github.com/docker/distribution"
 	"github.com/docker/distribution/reference"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/builder"
-	"github.com/docker/docker/distribution"
-	progressutils "github.com/docker/docker/distribution/utils"
-	"github.com/docker/docker/pkg/progress"
-	"github.com/docker/docker/registry"
+	"moby/api/types"
+	"moby/builder"
+	"moby/distribution"
+	progressutils "moby/distribution/utils"
+	"moby/pkg/progress"
+	"moby/registry"
 	"github.com/opencontainers/go-digest"
 	"golang.org/x/net/context"
 )

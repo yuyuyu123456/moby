@@ -8,11 +8,11 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/backend"
-	"github.com/docker/docker/pkg/ioutils"
-	"github.com/docker/docker/pkg/jsonlog"
-	"github.com/docker/docker/pkg/stdcopy"
+	"moby/api/types"
+	"moby/api/types/backend"
+	"moby/pkg/ioutils"
+	"moby/pkg/jsonlog"
+	"moby/pkg/stdcopy"
 )
 
 // WriteLogStream writes an encoded byte stream of log messages from the

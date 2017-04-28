@@ -8,7 +8,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/docker/docker/pkg/longpath"
+	"moby/pkg/longpath"
 )
 
 func toShort(path string) (string, error) {

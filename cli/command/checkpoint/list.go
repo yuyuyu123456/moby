@@ -3,10 +3,10 @@ package checkpoint
 import (
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	"github.com/docker/docker/cli/command/formatter"
+	"moby/api/types"
+	"moby/cli"
+	"moby/cli/command"
+	"moby/cli/command/formatter"
 	"github.com/spf13/cobra"
 )
 

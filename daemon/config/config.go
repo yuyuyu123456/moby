@@ -14,11 +14,11 @@ import (
 	"sync"
 
 	"github.com/Sirupsen/logrus"
-	daemondiscovery "github.com/docker/docker/daemon/discovery"
-	"github.com/docker/docker/opts"
-	"github.com/docker/docker/pkg/authorization"
-	"github.com/docker/docker/pkg/discovery"
-	"github.com/docker/docker/registry"
+	daemondiscovery "moby/daemon/discovery"
+	"moby/opts"
+	"moby/pkg/authorization"
+	"moby/pkg/discovery"
+	"moby/registry"
 	"github.com/imdario/mergo"
 	"github.com/spf13/pflag"
 )
@@ -324,7 +324,7 @@ func getConflictFreeConfiguration(configFile string, flags *pflag.FlagSet) (*Con
 
 		// Override flag values to make sure the values set in the config file with nullable values, like `false`,
 		// are not overridden by default truthy values from the flags that were not explicitly set.
-		// See https://github.com/docker/docker/issues/20289 for an example.
+		// See https://moby/issues/20289 for an example.
 		//
 		// TODO: Rewrite configuration logic to avoid same issue with other nullable values, like numbers.
 		namedOptions := make(map[string]interface{})

@@ -3,7 +3,7 @@
 package daemon
 
 import (
-	"github.com/docker/docker/container"
+	"moby/container"
 	"github.com/docker/libnetwork"
 )
 

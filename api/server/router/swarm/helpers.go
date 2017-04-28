@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/docker/docker/api/server/httputils"
-	basictypes "github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/backend"
+	"moby/api/server/httputils"
+	basictypes "moby/api/types"
+	"moby/api/types/backend"
 	"golang.org/x/net/context"
 )
 

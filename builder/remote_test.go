@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/httputils"
+	"moby/pkg/archive"
+	"moby/pkg/httputils"
 )
 
 var binaryContext = []byte{0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00} //xz magic

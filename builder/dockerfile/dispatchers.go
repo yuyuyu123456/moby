@@ -18,12 +18,12 @@ import (
 
 	"bytes"
 	"github.com/Sirupsen/logrus"
-	"github.com/docker/docker/api"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
-	"github.com/docker/docker/pkg/signal"
+	"moby/api"
+	"moby/api/types"
+	"moby/api/types/container"
+	"moby/api/types/strslice"
+	"moby/builder"
+	"moby/pkg/signal"
 	"github.com/docker/go-connections/nat"
 	"github.com/pkg/errors"
 )

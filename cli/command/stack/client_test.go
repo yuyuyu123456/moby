@@ -3,11 +3,11 @@ package stack
 import (
 	"strings"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/filters"
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli/compose/convert"
-	"github.com/docker/docker/client"
+	"moby/api/types"
+	"moby/api/types/filters"
+	"moby/api/types/swarm"
+	"moby/cli/compose/convert"
+	"moby/client"
 	"golang.org/x/net/context"
 )
 

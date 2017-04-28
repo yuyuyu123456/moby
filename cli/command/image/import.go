@@ -6,12 +6,12 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
-	dockeropts "github.com/docker/docker/opts"
-	"github.com/docker/docker/pkg/jsonmessage"
-	"github.com/docker/docker/pkg/urlutil"
+	"moby/api/types"
+	"moby/cli"
+	"moby/cli/command"
+	dockeropts "moby/opts"
+	"moby/pkg/jsonmessage"
+	"moby/pkg/urlutil"
 	"github.com/spf13/cobra"
 )
 

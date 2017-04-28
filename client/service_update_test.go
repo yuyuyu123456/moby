@@ -10,8 +10,8 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/swarm"
+	"moby/api/types"
+	"moby/api/types/swarm"
 )
 
 func TestServiceUpdateError(t *testing.T) {

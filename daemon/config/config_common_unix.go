@@ -5,7 +5,7 @@ package config
 import (
 	"net"
 
-	"github.com/docker/docker/api/types"
+	"moby/api/types"
 )
 
 // CommonUnixConfig defines configuration of a docker daemon that is

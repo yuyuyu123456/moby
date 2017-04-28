@@ -3,7 +3,7 @@ package main
 import (
 	"sync/atomic"
 
-	_ "github.com/docker/docker/autogen/winresources/docker"
+	_ "moby/autogen/winresources/docker"
 )
 
 //go:cgo_import_dynamic main.dummy CommandLineToArgvW%2 "shell32.dll"

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/docker/docker/pkg/stringid"
+	"moby/pkg/stringid"
 	"github.com/stretchr/testify/assert"
 )
 

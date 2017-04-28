@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/docker/docker/pkg/random"
+	"moby/pkg/random"
 )
 
 const shortLen = 12

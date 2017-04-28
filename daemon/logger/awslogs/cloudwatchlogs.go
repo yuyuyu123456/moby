@@ -20,10 +20,10 @@ import (
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
-	"github.com/docker/docker/daemon/logger"
-	"github.com/docker/docker/daemon/logger/loggerutils"
-	"github.com/docker/docker/dockerversion"
-	"github.com/docker/docker/pkg/templates"
+	"moby/daemon/logger"
+	"moby/daemon/logger/loggerutils"
+	"moby/dockerversion"
+	"moby/pkg/templates"
 )
 
 const (

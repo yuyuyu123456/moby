@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/builder"
-	"github.com/docker/docker/pkg/archive"
+	"moby/api/types"
+	"moby/builder"
+	"moby/pkg/archive"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

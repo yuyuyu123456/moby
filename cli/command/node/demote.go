@@ -3,9 +3,9 @@ package node
 import (
 	"fmt"
 
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/cli"
-	"github.com/docker/docker/cli/command"
+	"moby/api/types/swarm"
+	"moby/cli"
+	"moby/cli/command"
 	"github.com/spf13/cobra"
 )
 

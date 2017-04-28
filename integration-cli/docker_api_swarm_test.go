@@ -15,11 +15,11 @@ import (
 	"time"
 
 	"github.com/cloudflare/cfssl/helpers"
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/swarm"
-	"github.com/docker/docker/integration-cli/checker"
-	"github.com/docker/docker/integration-cli/daemon"
+	"moby/api/types"
+	"moby/api/types/container"
+	"moby/api/types/swarm"
+	"moby/integration-cli/checker"
+	"moby/integration-cli/daemon"
 	"github.com/go-check/check"
 )
 

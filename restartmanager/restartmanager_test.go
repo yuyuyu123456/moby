@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/docker/api/types/container"
+	"moby/api/types/container"
 )
 
 func TestRestartManagerTimeout(t *testing.T) {

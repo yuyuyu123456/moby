@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/api/types/swarm"
+	"moby/api/types/swarm"
 	units "github.com/docker/go-units"
 )
 

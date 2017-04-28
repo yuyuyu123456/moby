@@ -5,7 +5,7 @@ package build
 import (
 	"path/filepath"
 
-	"github.com/docker/docker/pkg/longpath"
+	"moby/pkg/longpath"
 )
 
 func getContextRoot(srcPath string) (string, error) {

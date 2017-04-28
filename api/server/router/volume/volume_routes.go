@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/docker/docker/api/server/httputils"
-	"github.com/docker/docker/api/types/filters"
-	volumetypes "github.com/docker/docker/api/types/volume"
+	"moby/api/server/httputils"
+	"moby/api/types/filters"
+	volumetypes "moby/api/types/volume"
 	"golang.org/x/net/context"
 )
 
