@@ -145,7 +145,7 @@ func add(b *Builder, args []string, attributes map[string]bool, original string)
 	if err := b.flags.Parse(); err != nil {
 		return err
 	}
-
+        fmt.Fprintf(b.Stdout,"usefilecache flag is:\n",b.options.Usefilecache)
 	return b.runContextCommand(args, true, true, "ADD", nil)
 }
 
