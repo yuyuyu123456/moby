@@ -146,7 +146,7 @@ func add(b *Builder, args []string, attributes map[string]bool, original string)
 		return err
 	}
         fmt.Fprintf(b.Stdout,"usefilecache flag is :\n",b.options.Usefilecache)
-	fmt.Fprint(b.Stdout,"no-cache flag is :\n",b.options.NoCache)
+	fmt.Fprintf(b.Stdout,"no-cache flag is :\n",b.options.NoCache)
 	return b.runContextCommand(args, true, true, "ADD", nil)
 }
 
