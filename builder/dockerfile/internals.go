@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -36,6 +36,7 @@ import (
 	"github.com/docker/docker/pkg/tarsum"
 	"github.com/docker/docker/pkg/urlutil"
 	"github.com/pkg/errors"
+	//"docker/vendor/github.com/docker/swarmkit/manager/orchestrator"
 )
 
 func (b *Builder) commit(id string, autoCmd strslice.StrSlice, comment string) error {
@@ -92,6 +93,174 @@ type copyInfo struct {
 	decompress bool
 }
 
+type fileCacheInter interface{
+     getCopyInfo(origins string) ([]copyInfo,bool)
+     setCopyInfo(origins string,copyinfo []copyInfo)(bool,error)
+     delCopyInfo(origins []string)(bool,error)
+     getFileCacheInfo(origins []string)(fileCacheInfo,bool)
+     setFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)(bool,error)
+     delFileCacheInfo(origins []string)	(bool,error)
+     delAll()
+}
+
+var fileca=&fileCache{
+	singlefileCacheMap:make(map[string][]copyInfo),
+	fileCacheMap:make(map[string]fileCacheInfo),
+}
+type fileCacheInfo struct {
+	infos []copyInfo
+        srcHash string
+	origPaths string
+}
+
+type fileCache struct {
+	singlefileCacheMap map[string][]copyInfo
+	fileCacheMap map[string]fileCacheInfo
+}
+
+func (filecache *fileCache)getCopyInfo(origins string)([]copyInfo,bool)  {
+
+	if origins==nil || len(origins)==0{
+		logrus.Error("getCopyInfo: origins key is nil or length is 0")
+		return nil,false
+	}
+
+	if filecache.singlefileCacheMap==nil{
+		logrus.Error("singlefileCacheMap is not initialized")
+		logrus.Debug("initializing singlefileCacheMap")
+		filecache.singlefileCacheMap=make(map[string][]copyInfo)
+		return nil,false
+	}
+
+	copyinfos,exist:=filecache.singlefileCacheMap[origins]
+	if !exist{
+		logrus.Debug("do not find copyinfos")
+		return nil,false
+	}
+	return copyinfos,true
+}
+
+
+func (filecache *fileCache)setCopyInfo(origins string,copyinfo []copyInfo)(bool,error){
+
+	//if !checkFileCacheInfo(origins,filecacheinfo){
+	//	return false,errors.New("filecacheinfo error")
+	//}
+	if len(copyinfo)==0{
+		return false,errors.New("copyinfo is empty")
+	}
+
+	filecache.singlefileCacheMap[origins]=copyinfo
+	return true,nil
+}
+
+func (filecache *fileCache)delCopyInfo(origins []string)(bool,error){
+
+	if origins==nil|| len(origins)==0{
+		return false,errors.New("key args is nil")
+	}
+	for _,orgin:=range origins{
+		_,exist:=filecache.getCopyInfo(orgin)
+		if !exist{
+			logrus.Debug("delCopyInfo:key origin in singlefileCacheMap not found,do nothing")
+		}else{
+			logrus.Debug("delCopyInfo:key origin in singlefileCacheMap deleting")
+			delete(filecache.singlefileCacheMap,orgin)
+		}
+	}
+	return true,nil
+}
+
+func (filecache *fileCache)getFileCacheInfo(origins []string)(fileCacheInfo,bool){
+	if origins==nil || len(origins)==0||len(origins)==1{
+		logrus.Error("getFileCacheInfo: origins key is nil or length is 0 oris not complex-valued")
+		return nil,false
+	}
+
+	sort.Strings(origins)
+	for key,value:=range filecache.fileCacheMap{
+		keys:=strings.Split(key,",")
+		if compareSlice(origins,keys){
+			return value,true
+		}
+	}
+        logrus.Debug("getFileCacheInfo:origins key not found")
+	return nil,false
+}
+
+func compareSlice(sli1 []string,sli2 []string)bool{
+	if len(sli1)!=len(sli2){
+		return false
+	}
+	for i,k:=range sli1{
+		if sli2[i]!=k{
+			return false
+		}
+	}
+	return true
+}
+
+func (filecache *fileCache)setFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)(bool,error){
+        if !checkFileCacheInfo(origins,filecacheinfo){
+		return false,errors.New("setFileCacheInfo failure")
+	}
+
+	sort.Strings(origins)
+	key:=strings.Join(origins,",")
+	filecache.fileCacheMap[key]=filecacheinfo
+	return true,nil
+}
+func(filecache *fileCache) delFileCacheInfo(origins []string)	(bool,error)  {
+	if origins==nil|| len(origins)==0||len(origins)==1 {
+		return false,errors.New("key args is nil")
+	}
+
+	_, exist := filecache.getFileCacheInfo(origins)
+	if !exist {
+		logrus.Debug("delFileCacheInfo:key origin in fileCacheMap not found,do nothing")
+	} else {
+		logrus.Debug("delFileCacheInfo:key origin in fileCacheMap deleting")
+		sort.Strings(origins)
+		value:=strings.Join(origins,",")
+		delete(filecache.fileCacheMap,value)
+	}
+
+	return true,nil
+}
+
+func checkFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)bool{
+
+	if origins == nil || len(origins) == 0 || len(origins) == 1 {
+		logrus.Error("setFileCacheInfo: origins key is nil or length is 0 or is not complex-valued")
+		return false
+	}
+
+	srcHash := strings.Replace(filecacheinfo.srcHash, " ", "", -1)
+	if srcHash == "" {
+		logrus.Error("setFileCacheInfo:srcHash is  empty")
+		return false
+	}
+	originPaths := strings.Replace(filecacheinfo.origPaths, " ", "", -1)
+	if originPaths == "" {
+		logrus.Error("setFileCacheInfo:originPaths is empty")
+		return false
+	}
+
+	return true
+
+}
+
+func (filecache *fileCache) delAll(){
+      for k,_:=range filecache.singlefileCacheMap{
+	      delete(filecache.singlefileCacheMap,k)
+      }
+
+      for k,_:=range filecache.fileCacheMap{
+	      delete(filecache.fileCacheMap,k)
+      }
+
+}
+
 func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalDecompression bool, cmdName string, imageSource *imageMount) error {
 	if len(args) < 2 {
 		return fmt.Errorf("Invalid %s format - at least two arguments required", cmdName)
@@ -108,30 +277,11 @@ func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalD
 	// do the copy (e.g. hash value if cached).  Don't actually do
 	// the copy until we've looked at all src files
 	var err error
+
 	for _, orig := range args[0 : len(args)-1] {
-		var fi builder.FileInfo
-		if urlutil.IsURL(orig) {
-			if !allowRemote {
-				return fmt.Errorf("Source can't be a URL for %s", cmdName)
-			}
-			fi, err = b.download(orig)
-			if err != nil {
-				return err
-			}
-			defer os.RemoveAll(filepath.Dir(fi.Path()))
-			infos = append(infos, copyInfo{
-				FileInfo:   fi,
-				decompress: false,
-			})
-			continue
-		}
-		// not a URL
-		subInfos, err := b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
-		if err != nil {
+		if err=handleFileInfos(orig,b,allowRemote,cmdName,allowLocalDecompression,imageSource,&infos);err!=nil{
 			return err
 		}
-
-		infos = append(infos, subInfos...)
 	}
 
 	if len(infos) == 0 {
@@ -143,30 +293,8 @@ func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalD
 
 	// For backwards compat, if there's just one info then use it as the
 	// cache look-up string, otherwise hash 'em all into one
-	var srcHash string
-	var origPaths string
+	origPaths,srcHash:=handleSrcHashAndOrigPaths(infos)
 
-	if len(infos) == 1 {
-		fi := infos[0].FileInfo
-		origPaths = fi.Name()
-		if hfi, ok := fi.(builder.Hashed); ok {
-			srcHash = hfi.Hash()
-		}
-	} else {
-		var hashs []string
-		var origs []string
-		for _, info := range infos {
-			fi := info.FileInfo
-			origs = append(origs, fi.Name())
-			if hfi, ok := fi.(builder.Hashed); ok {
-				hashs = append(hashs, hfi.Hash())
-			}
-		}
-		hasher := sha256.New()
-		hasher.Write([]byte(strings.Join(hashs, ",")))
-		srcHash = "multi:" + hex.EncodeToString(hasher.Sum(nil))
-		origPaths = strings.Join(origs, " ")
-	}
 
 	cmd := b.runConfig.Cmd
 	b.runConfig.Cmd = strslice.StrSlice(append(getShell(b.runConfig), fmt.Sprintf("#(nop) %s %s in %s ", cmdName, srcHash, dest)))
@@ -205,11 +333,162 @@ func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalD
 	return b.commit(container.ID, cmd, comment)
 }
 
-func (b *Builder) download(srcURL string) (fi builder.FileInfo, err error) {
+func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allowLocalDecompression bool,imageSource *imageMount,copyinfos *[]copyInfo)error{
+	// Loop through each src file and calculate the info we need to
+	// do the copy (e.g. hash value if cached).  Don't actually do
+	// the copy until we've looked at all src files
+	var err error
+	var cpinfo copyInfo
+	if urlutil.IsURL(orig) {
+		if !allowRemote {
+			return fmt.Errorf("Source can't be a URL for %s", cmdName)
+		}
+		if !b.options.Usefilecache {
+			cpinfo,err=b.getByDownload(orig)
+			if err!=nil{
+				return  err
+			}
+
+		}else{
+			copyinfos,hit:=fileca.getCopyInfo(orig)
+			cpinfo=copyinfos[0]
+			if hit && len(copyinfos)==1{
+
+				//if copyinfo do not have modtime,
+				// use cache fileinfo without check
+				//otherwise check modtime and update file
+				//if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
+				//
+				//}
+				if ok,err:=b.updateFile(orig,cpinfo);err!=nil{
+					logrus.Debug("update file in cache fail")
+					if ok{
+						logrus.Debug("get the cache after update")
+						cpinfo,_=fileca.getCopyInfo(orig)
+					}
+				}
+
+			}
+			if len(copyinfos)!=1{
+				logrus.Error("the cache copyinfo is mistaken")
+			}
+		}
+
+		*copyinfos = append(*copyinfos,cpinfo)
+		return nil
+	}
+	// not a URL
+	subInfos, err := b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
+	if err != nil {
+		return err
+	}
+
+	*copyinfos = append(*copyinfos, subInfos...)
+	return nil
+}
+//download url resourses and save in the cache
+func(b *Builder) getByDownload(orig string)(copyInfo,error){
+	fi, err:= b.download(orig)
+	if err != nil {
+		return nil,err
+	}
+	//defer os.RemoveAll(filepath.Dir(fi.Path()))
+	copyinfo:=copyInfo{
+		FileInfo:   fi,
+		decompress: false,
+	}
+	logrus.Debug("setCopyInfo :saving in the cache")
+	fileca.setCopyInfo(orig,[]copyInfo{copyinfo})
+	return copyinfo,nil
+}
+
+func handleSrcHashAndOrigPaths(infos []copyInfo)(origPaths string,srcHash string){
+	if len(infos) == 1 {
+		fi := infos[0].FileInfo
+		origPaths = fi.Name()
+		if hfi, ok := fi.(builder.Hashed); ok {
+			srcHash = hfi.Hash()
+		}
+		return origPaths,srcHash
+	} else {
+		var hashs []string
+		var origs []string
+		for _, info := range infos {
+			fi := info.FileInfo
+			origs = append(origs, fi.Name())
+			if hfi, ok := fi.(builder.Hashed); ok {
+				hashs = append(hashs, hfi.Hash())
+			}
+		}
+		hasher := sha256.New()
+		hasher.Write([]byte(strings.Join(hashs, ",")))
+		srcHash = "multi:" + hex.EncodeToString(hasher.Sum(nil))
+		origPaths = strings.Join(origs, " ")
+		return origPaths,srcHash
+	}
+}
+//if the server modified,update filecache return true
+//otherwise return false
+func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
+	//// get filename from URL
+	//u, err := url.Parse(srcURL)
+	//if err != nil {
+	//	return false,err
+	//}
+	//path := filepath.FromSlash(u.Path) // Ensure in platform semantics
+	//if strings.HasSuffix(path, string(os.PathSeparator)) {
+	//	path = path[:len(path)-1]
+	//}
+	//parts := strings.Split(path, string(os.PathSeparator))
+	//filename := parts[len(parts)-1]
+	//if filename == "" {
+	//	err = fmt.Errorf("cannot determine filename from url: %s", u)
+	//	return
+	//}
+        filename,err:=handleFileName(srcURL)
+	if err!=nil{
+		return false,err
+	}
+	if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
+		client:=&http.DefaultClient
+		req,err:=http.NewRequest("GET",srcURL,nil)
+		if err!=nil{
+			return false,err
+		}
+		req.Header.Add("If-Modified-Since",cpinfo.ModTime().String())
+		resp,err:=client.Do(req)
+		if err!=nil{
+			return false,err
+		}
+		if resp.StatusCode >= 400 {
+			return false, fmt.Errorf("Got HTTP status code >= 400: %s", resp.Status)
+		}
+		if resp.StatusCode==304{
+			logrus.Debug("%s server not modified",srcURL)
+			return false,nil
+		}
+		if resp.StatusCode==200{
+		    fmt.Fprintf(b.Stdout,"downloading modified file  %s and update cache",srcURL)
+                    hashedfileinfo,err:=b.downloadFile(filename,resp)
+		    if err!=nil{
+			    return false,err
+		    }
+		    copyinfo:=copyInfo{
+				FileInfo:   hashedfileinfo,
+				decompress: false,
+			}
+		    fileca.setCopyInfo(srcURL,[]copyInfo{copyinfo})
+		    return true,nil
+		}
+	}
+     return false,nil
+}
+
+func handleFileName(srcURL string)(string,error){
 	// get filename from URL
 	u, err := url.Parse(srcURL)
 	if err != nil {
-		return
+		return nil,err
 	}
 	path := filepath.FromSlash(u.Path) // Ensure in platform semantics
 	if strings.HasSuffix(path, string(os.PathSeparator)) {
@@ -219,19 +498,16 @@ func (b *Builder) download(srcURL string) (fi builder.FileInfo, err error) {
 	filename := parts[len(parts)-1]
 	if filename == "" {
 		err = fmt.Errorf("cannot determine filename from url: %s", u)
-		return
+		return nil,err
 	}
+	return filename,nil
 
-	// Initiate the download
-	resp, err := httputils.Download(srcURL)
-	if err != nil {
-		return
-	}
-
+}
+func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.HashedFileInfo,error){
 	// Prepare file in a tmp dir
 	tmpDir, err := ioutils.TempDir("", "docker-remote")
 	if err != nil {
-		return
+		return nil,err
 	}
 	defer func() {
 		if err != nil {
@@ -241,7 +517,7 @@ func (b *Builder) download(srcURL string) (fi builder.FileInfo, err error) {
 	tmpFileName := filepath.Join(tmpDir, filename)
 	tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
 	if err != nil {
-		return
+		return nil,err
 	}
 
 	stdoutFormatter := b.Stdout.(*streamformatter.StdoutFormatter)
@@ -250,7 +526,7 @@ func (b *Builder) download(srcURL string) (fi builder.FileInfo, err error) {
 	// Download and dump result to tmp file
 	if _, err = io.Copy(tmpFile, progressReader); err != nil {
 		tmpFile.Close()
-		return
+		return nil,err
 	}
 	fmt.Fprintln(b.Stdout)
 	// ignoring error because the file was already opened successfully
@@ -276,24 +552,107 @@ func (b *Builder) download(srcURL string) (fi builder.FileInfo, err error) {
 	tmpFile.Close()
 
 	if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
-		return
+		return nil,err
 	}
 
 	// Calc the checksum, even if we're using the cache
 	r, err := archive.Tar(tmpFileName, archive.Uncompressed)
 	if err != nil {
-		return
+		return nil,err
 	}
 	tarSum, err := tarsum.NewTarSum(r, true, tarsum.Version1)
 	if err != nil {
-		return
+		return nil,err
 	}
 	if _, err = io.Copy(ioutil.Discard, tarSum); err != nil {
-		return
+		return nil,err
 	}
 	hash := tarSum.Sum(nil)
 	r.Close()
-	return &builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FileInfo: tmpFileSt, FilePath: tmpFileName}, FileHash: hash}, nil
+	return &builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FileInfo: tmpFileSt, FilePath: tmpFileName}, FileHash: hash},nil
+}
+
+func (b *Builder) download(srcURL string) (builder.FileInfo,error) {
+	filename,err:=handleFileName(srcURL)
+	if err!=nil{
+		return
+	}
+	// Initiate the download
+	resp, err := httputils.Download(srcURL)
+	if err != nil {
+		return
+	}
+
+	//// Prepare file in a tmp dir
+	//tmpDir, err := ioutils.TempDir("", "docker-remote")
+	//if err != nil {
+	//	return
+	//}
+	//defer func() {
+	//	if err != nil {
+	//		os.RemoveAll(tmpDir)
+	//	}
+	//}()
+	//tmpFileName := filepath.Join(tmpDir, filename)
+	//tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
+	//if err != nil {
+	//	return
+	//}
+	//
+	//stdoutFormatter := b.Stdout.(*streamformatter.StdoutFormatter)
+	//progressOutput := stdoutFormatter.StreamFormatter.NewProgressOutput(stdoutFormatter.Writer, true)
+	//progressReader := progress.NewProgressReader(resp.Body, progressOutput, resp.ContentLength, "", "Downloading")
+	//// Download and dump result to tmp file
+	//if _, err = io.Copy(tmpFile, progressReader); err != nil {
+	//	tmpFile.Close()
+	//	return
+	//}
+	//fmt.Fprintln(b.Stdout)
+	//// ignoring error because the file was already opened successfully
+	//tmpFileSt, err := tmpFile.Stat()
+	//if err != nil {
+	//	tmpFile.Close()
+	//	return
+	//}
+	//
+	//// Set the mtime to the Last-Modified header value if present
+	//// Otherwise just remove atime and mtime
+	//mTime := time.Time{}
+	//
+	//lastMod := resp.Header.Get("Last-Modified")
+	//if lastMod != "" {
+	//	// If we can't parse it then just let it default to 'zero'
+	//	// otherwise use the parsed time value
+	//	if parsedMTime, err := http.ParseTime(lastMod); err == nil {
+	//		mTime = parsedMTime
+	//	}
+	//}
+	//
+	//tmpFile.Close()
+	//
+	//if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
+	//	return
+	//}
+	//
+	//// Calc the checksum, even if we're using the cache
+	//r, err := archive.Tar(tmpFileName, archive.Uncompressed)
+	//if err != nil {
+	//	return
+	//}
+	//tarSum, err := tarsum.NewTarSum(r, true, tarsum.Version1)
+	//if err != nil {
+	//	return
+	//}
+	//if _, err = io.Copy(ioutil.Discard, tarSum); err != nil {
+	//	return
+	//}
+	//hash := tarSum.Sum(nil)
+	//r.Close()
+	hashedfileinfo,err:=b.downloadFile(filename,resp)
+	if err!=nil{
+		return
+	}
+	return hashedfileinfo, nil
 }
 
 var windowsBlacklist = map[string]bool{
