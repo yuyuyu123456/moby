@@ -344,15 +344,16 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		if !allowRemote {
 			return fmt.Errorf("Source can't be a URL for %s", cmdName)
 		}
-		if !b.options.Usefilecache {
-			cpinfo,err=b.getByDownload(orig)
-			if err!=nil{
-				return  err
-			}
-
-		}else{
+		//if !b.options.Usefilecache {
+		//	cpinfo,err=b.getByDownload(orig)
+		//	if err!=nil{
+		//		return  err
+		//	}
+		//
+		//}else{
+		if b.options.Usefilecache {
 			copyinfos,hit:=fileca.getCopyInfo(orig)
-			cpinfo=copyinfos[0]
+
 			if hit && len(copyinfos)==1{
 
 				//if copyinfo do not have modtime,
@@ -361,6 +362,8 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
 				//
 				//}
+				logrus.Debug("using file cache")
+				cpinfo=copyinfos[0]
 				if ok,err:=b.updateFile(orig,cpinfo);err!=nil{
 					logrus.Debug("update file in cache fail")
 					if ok{
@@ -372,11 +375,18 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 
 					}
 				}
+				*copyinfos = append(*copyinfos,cpinfo)
+				return nil
+			}else {
 
+				if len(copyinfos) != 1 {
+					logrus.Error("the cache copyinfo is mistaken")
+				}
 			}
-			if len(copyinfos)!=1{
-				logrus.Error("the cache copyinfo is mistaken")
-			}
+		}
+		cpinfo,err=b.getByDownload(orig)
+		if err != nil {
+			return err
 		}
 
 		*copyinfos = append(*copyinfos,cpinfo)
