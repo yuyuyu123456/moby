@@ -352,9 +352,9 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		//
 		//}else{
 		if b.options.Usefilecache {
-			copyinfos,hit:=fileca.getCopyInfo(orig)
+			cpinfos,hit:=fileca.getCopyInfo(orig)
 
-			if hit && len(copyinfos)==1{
+			if hit && len(cpinfos)==1{
 
 				//if copyinfo do not have modtime,
 				// use cache fileinfo without check
@@ -363,18 +363,21 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//
 				//}
 				logrus.Debug("using file cache")
-				cpinfo=copyinfos[0]
-				if ok,err:=b.updateFile(orig,cpinfo);err!=nil{
+				fmt.Fprint(b.Stdout, " ---> Using cache\n")
+				cpinfo=cpinfos[0]
+				var ok bool
+				if ok,err=b.updateFile(orig,cpinfo);err!=nil {
 					logrus.Debug("update file in cache fail")
-					if ok{
-						logrus.Debug("get the cache after update")
-						cpinfos,hit:=fileca.getCopyInfo(orig)
-						if hit{
-							cpinfo=cpinfos[0]
-						}
-
-					}
 				}
+				if ok {
+					logrus.Debug("get the cache after update")
+					cpinfos, hit = fileca.getCopyInfo(orig)
+					if hit {
+						cpinfo = cpinfos[0]
+					}
+
+				}
+
 				*copyinfos = append(*copyinfos,cpinfo)
 				return nil
 			}else {
