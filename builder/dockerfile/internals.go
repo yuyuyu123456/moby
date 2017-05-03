@@ -353,7 +353,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		//}else{
 		if b.options.Usefilecache {
 			cpinfos,hit:=fileca.getCopyInfo(orig)
-
+                        logrus.Debug("test test test ")
 			if hit && len(cpinfos)==1{
 
 				//if copyinfo do not have modtime,
