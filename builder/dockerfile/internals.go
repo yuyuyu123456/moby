@@ -365,8 +365,8 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 					logrus.Debug("update file in cache fail")
 					if ok{
 						logrus.Debug("get the cache after update")
-						cpinfos,err:=fileca.getCopyInfo(orig)
-						if err==nil{
+						cpinfos,hit:=fileca.getCopyInfo(orig)
+						if hit{
 							cpinfo=cpinfos[0]
 						}
 
