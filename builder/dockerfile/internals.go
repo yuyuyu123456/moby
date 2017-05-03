@@ -120,7 +120,7 @@ type fileCache struct {
 
 func (filecache *fileCache)getCopyInfo(origins string)([]copyInfo,bool)  {
 
-	if origins==nil || len(origins)==0{
+	if  len(origins)==0{
 		logrus.Error("getCopyInfo: origins key is nil or length is 0")
 		return nil,false
 	}
@@ -172,9 +172,10 @@ func (filecache *fileCache)delCopyInfo(origins []string)(bool,error){
 }
 
 func (filecache *fileCache)getFileCacheInfo(origins []string)(fileCacheInfo,bool){
+	var info fileCacheInfo
 	if origins==nil || len(origins)==0||len(origins)==1{
 		logrus.Error("getFileCacheInfo: origins key is nil or length is 0 oris not complex-valued")
-		return nil,false
+		return info,false
 	}
 
 	sort.Strings(origins)
@@ -185,7 +186,7 @@ func (filecache *fileCache)getFileCacheInfo(origins []string)(fileCacheInfo,bool
 		}
 	}
         logrus.Debug("getFileCacheInfo:origins key not found")
-	return nil,false
+	return info,false
 }
 
 func compareSlice(sli1 []string,sli2 []string)bool{
@@ -364,7 +365,11 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 					logrus.Debug("update file in cache fail")
 					if ok{
 						logrus.Debug("get the cache after update")
-						cpinfo,_=fileca.getCopyInfo(orig)
+						cpinfos,err:=fileca.getCopyInfo(orig)
+						if err==nil{
+							cpinfo=cpinfos[0]
+						}
+
 					}
 				}
 
@@ -388,18 +393,19 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 }
 //download url resourses and save in the cache
 func(b *Builder) getByDownload(orig string)(copyInfo,error){
+	var cpinfo copyInfo
 	fi, err:= b.download(orig)
 	if err != nil {
-		return nil,err
+		return cpinfo,err
 	}
 	//defer os.RemoveAll(filepath.Dir(fi.Path()))
-	copyinfo:=copyInfo{
+	cpinfo=copyInfo{
 		FileInfo:   fi,
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
-	fileca.setCopyInfo(orig,[]copyInfo{copyinfo})
-	return copyinfo,nil
+	fileca.setCopyInfo(orig,[]copyInfo{cpinfo})
+	return cpinfo,nil
 }
 
 func handleSrcHashAndOrigPaths(infos []copyInfo)(origPaths string,srcHash string){
@@ -450,7 +456,7 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 		return false,err
 	}
 	if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
-		client:=&http.DefaultClient
+		client:=http.DefaultClient
 		req,err:=http.NewRequest("GET",srcURL,nil)
 		if err!=nil{
 			return false,err
@@ -488,7 +494,7 @@ func handleFileName(srcURL string)(string,error){
 	// get filename from URL
 	u, err := url.Parse(srcURL)
 	if err != nil {
-		return nil,err
+		return "",err
 	}
 	path := filepath.FromSlash(u.Path) // Ensure in platform semantics
 	if strings.HasSuffix(path, string(os.PathSeparator)) {
@@ -498,16 +504,17 @@ func handleFileName(srcURL string)(string,error){
 	filename := parts[len(parts)-1]
 	if filename == "" {
 		err = fmt.Errorf("cannot determine filename from url: %s", u)
-		return nil,err
+		return "",err
 	}
 	return filename,nil
 
 }
 func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.HashedFileInfo,error){
+	var hashedfileinfo *builder.HashedFileInfo
 	// Prepare file in a tmp dir
 	tmpDir, err := ioutils.TempDir("", "docker-remote")
 	if err != nil {
-		return nil,err
+		return hashedfileinfo,err
 	}
 	defer func() {
 		if err != nil {
@@ -517,7 +524,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	tmpFileName := filepath.Join(tmpDir, filename)
 	tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
 	if err != nil {
-		return nil,err
+		return hashedfileinfo,err
 	}
 
 	stdoutFormatter := b.Stdout.(*streamformatter.StdoutFormatter)
@@ -526,14 +533,14 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	// Download and dump result to tmp file
 	if _, err = io.Copy(tmpFile, progressReader); err != nil {
 		tmpFile.Close()
-		return nil,err
+		return hashedfileinfo,err
 	}
 	fmt.Fprintln(b.Stdout)
 	// ignoring error because the file was already opened successfully
 	tmpFileSt, err := tmpFile.Stat()
 	if err != nil {
 		tmpFile.Close()
-		return
+		return hashedfileinfo,err
 	}
 
 	// Set the mtime to the Last-Modified header value if present
@@ -552,27 +559,28 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	tmpFile.Close()
 
 	if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
-		return nil,err
+		return hashedfileinfo,err
 	}
 
 	// Calc the checksum, even if we're using the cache
 	r, err := archive.Tar(tmpFileName, archive.Uncompressed)
 	if err != nil {
-		return nil,err
+		return hashedfileinfo,err
 	}
 	tarSum, err := tarsum.NewTarSum(r, true, tarsum.Version1)
 	if err != nil {
-		return nil,err
+		return hashedfileinfo,err
 	}
 	if _, err = io.Copy(ioutil.Discard, tarSum); err != nil {
-		return nil,err
+		return hashedfileinfo,err
 	}
 	hash := tarSum.Sum(nil)
 	r.Close()
-	return &builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FileInfo: tmpFileSt, FilePath: tmpFileName}, FileHash: hash},nil
+	hashedfileinfo=&builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FileInfo: tmpFileSt, FilePath: tmpFileName}, FileHash: hash}
+	return hashedfileinfo,nil
 }
 
-func (b *Builder) download(srcURL string) (builder.FileInfo,error) {
+func (b *Builder) download(srcURL string) (fileinfo builder.FileInfo,err error) {
 	filename,err:=handleFileName(srcURL)
 	if err!=nil{
 		return
@@ -648,11 +656,11 @@ func (b *Builder) download(srcURL string) (builder.FileInfo,error) {
 	//}
 	//hash := tarSum.Sum(nil)
 	//r.Close()
-	hashedfileinfo,err:=b.downloadFile(filename,resp)
+	fileinfo,err=b.downloadFile(filename,resp)
 	if err!=nil{
 		return
 	}
-	return hashedfileinfo, nil
+	return fileinfo, nil
 }
 
 var windowsBlacklist = map[string]bool{
