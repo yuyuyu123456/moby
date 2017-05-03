@@ -382,7 +382,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				return nil
 			}else {
 
-				if len(copyinfos) != 1 {
+				if len(cpinfos) != 1 {
 					logrus.Error("the cache copyinfo is mistaken")
 				}
 			}
