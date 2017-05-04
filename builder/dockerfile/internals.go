@@ -563,7 +563,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 			mTime = parsedMTime
 		}
 	}
-
+        logrus.Debug("download file last-modified time",mTime)
 	tmpFile.Close()
 
 	if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
