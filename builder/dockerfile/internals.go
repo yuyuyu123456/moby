@@ -566,13 +566,20 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		}
 	}
         logrus.Debug("download file last-modified time",mTime)
-	tmpFile.Close()
+	//tmpFile.Close()
 
 	if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
 		return hashedfileinfo,err
 	}
         logrus.Debug("tmpfile mtime",tmpFileSt.ModTime())
 	logrus.Debug("tmpfilename",tmpFileName)
+	tmpFileSt, err = tmpFile.Stat()
+	if err!=nil{
+		logrus.Debug("error")
+	}
+	logrus.Debug("tmpfile mtime after",tmpFileSt.ModTime())
+
+	tmpFile.Close()
 	// Calc the checksum, even if we're using the cache
 	r, err := archive.Tar(tmpFileName, archive.Uncompressed)
 	if err != nil {
