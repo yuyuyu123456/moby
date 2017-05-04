@@ -94,8 +94,8 @@ type copyInfo struct {
 }
 
 type fileCacheInter interface{
-     getCopyInfo(origins string) ([]copyInfo,bool)
-     setCopyInfo(origins string,copyinfo []copyInfo)(bool,error)
+     getCopyInfo(origins string)(copyInfoAndLastMod,bool)
+     setCopyInfo(origins string,copyinfoandlastmod copyInfoAndLastMod)(bool,error)
      delCopyInfo(origins []string)(bool,error)
      getFileCacheInfo(origins []string)(fileCacheInfo,bool)
      setFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)(bool,error)
@@ -104,53 +104,58 @@ type fileCacheInter interface{
 }
 
 var fileca=&fileCache{
-	singlefileCacheMap:make(map[string][]copyInfo),
+	singlefileCacheMap:make(map[string]copyInfoAndLastMod),
 	fileCacheMap:make(map[string]fileCacheInfo),
 }
 type fileCacheInfo struct {
-	infos []copyInfo
+	//infos []copyInfo
         srcHash string
 	origPaths string
 }
+type copyInfoAndLastMod struct{
+     infos []copyInfo
+     lastMod string
+}
 
 type fileCache struct {
-	singlefileCacheMap map[string][]copyInfo
+	singlefileCacheMap map[string]copyInfoAndLastMod
 	fileCacheMap map[string]fileCacheInfo
 }
 
-func (filecache *fileCache)getCopyInfo(origins string)([]copyInfo,bool)  {
-
+func (filecache *fileCache)getCopyInfo(origins string)(copyInfoAndLastMod,bool)  {
+        var copyinfoandlastmod copyInfoAndLastMod
 	if  len(origins)==0{
 		logrus.Error("getCopyInfo: origins key is nil or length is 0")
-		return nil,false
+		return copyinfoandlastmod,false
 	}
 
 	if filecache.singlefileCacheMap==nil{
 		logrus.Error("singlefileCacheMap is not initialized")
 		logrus.Debug("initializing singlefileCacheMap")
 		filecache.singlefileCacheMap=make(map[string][]copyInfo)
-		return nil,false
+		return copyinfoandlastmod,false
 	}
 
-	copyinfos,exist:=filecache.singlefileCacheMap[origins]
+	copyinfoandlastmod,exist:=filecache.singlefileCacheMap[origins]
 	if !exist{
 		logrus.Debug("do not find copyinfos")
-		return nil,false
+		return copyinfoandlastmod,false
 	}
-	return copyinfos,true
+
+	return copyinfoandlastmod,true
 }
 
 
-func (filecache *fileCache)setCopyInfo(origins string,copyinfo []copyInfo)(bool,error){
+func (filecache *fileCache)setCopyInfo(origins string,copyinfoandlastmod copyInfoAndLastMod)(bool,error){
 
 	//if !checkFileCacheInfo(origins,filecacheinfo){
 	//	return false,errors.New("filecacheinfo error")
 	//}
-	if len(copyinfo)==0{
+	if len(copyinfoandlastmod.infos)==0{
 		return false,errors.New("copyinfo is empty")
 	}
 
-	filecache.singlefileCacheMap[origins]=copyinfo
+	filecache.singlefileCacheMap[origins]=copyinfoandlastmod
 	return true,nil
 }
 
@@ -352,8 +357,8 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		//
 		//}else{
 		if b.options.Usefilecache {
-			cpinfos,hit:=fileca.getCopyInfo(orig)
-			if hit && len(cpinfos)==1{
+			cpinfosandlastmod,hit:=fileca.getCopyInfo(orig)
+			if hit && len(cpinfosandlastmod.infos)==1{
 
 				//if copyinfo do not have modtime,
 				// use cache fileinfo without check
@@ -363,16 +368,16 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//}
 				logrus.Debug("using file cache")
 				fmt.Fprint(b.Stdout, " ---> Using file cache\n")
-				cpinfo=cpinfos[0]
+				cpinfo=cpinfosandlastmod.infos[0]
 				var ok bool
-				if ok,err=b.updateFile(orig,cpinfo);err!=nil {
+				if ok,err=b.updateFile(orig,cpinfosandlastmod);err!=nil {
 					logrus.Debug("update file in cache fail")
 				}
 				if ok {
 					logrus.Debug("get the cache after update")
-					cpinfos, hit = fileca.getCopyInfo(orig)
+					cpinfosandlastmod, hit = fileca.getCopyInfo(orig)
 					if hit {
-						cpinfo = cpinfos[0]
+						cpinfo = cpinfosandlastmod.infos[0]
 					}
 
 				}
@@ -401,7 +406,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 //download url resourses and save in the cache
 func(b *Builder) getByDownload(orig string)(copyInfo,error){
 	var cpinfo copyInfo
-	fi, err:= b.download(orig)
+	fi,lastmod, err:= b.download(orig)
 	if err != nil {
 		return cpinfo,err
 	}
@@ -411,7 +416,7 @@ func(b *Builder) getByDownload(orig string)(copyInfo,error){
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
-	fileca.setCopyInfo(orig,[]copyInfo{cpinfo})
+	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
 	return cpinfo,nil
 }
 
@@ -442,7 +447,7 @@ func handleSrcHashAndOrigPaths(infos []copyInfo)(origPaths string,srcHash string
 }
 //if the server modified,update filecache return true
 //otherwise return false
-func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
+func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(bool,error){
 	//// get filename from URL
 	//u, err := url.Parse(srcURL)
 	//if err != nil {
@@ -462,16 +467,18 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 	if err!=nil{
 		return false,err
 	}
-	if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
-		logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
+	lastmod:=cpinfoandlastmod.lastMod
+	//cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))
+	if !(lastmod==nil||len(lastmod)==0){
+		//logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
 		logrus.Debug("srcURL is",srcURL)
-		logrus.Debug("file name is",cpinfo.Name())
+		logrus.Debug("file name is",cpinfoandlastmod.infos[0].Name())
 		client:=http.DefaultClient
 		req,err:=http.NewRequest("GET",srcURL,nil)
 		if err!=nil{
 			return false,err
 		}
-		req.Header.Add("If-Modified-Since",cpinfo.ModTime().String())
+		req.Header.Add("If-Modified-Since",lastmod)
 		resp,err:=client.Do(req)
 		if err!=nil{
 			return false,err
@@ -485,7 +492,7 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 		}
 		if resp.StatusCode==200{
 		    fmt.Fprintf(b.Stdout,"downloading modified file  %s and update cache\n",srcURL)
-                    hashedfileinfo,err:=b.downloadFile(filename,resp)
+                    hashedfileinfo,lastmod,err:=b.downloadFile(filename,resp)
 		    if err!=nil{
 			    return false,err
 		    }
@@ -493,7 +500,7 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 				FileInfo:   hashedfileinfo,
 				decompress: false,
 			}
-		    fileca.setCopyInfo(srcURL,[]copyInfo{copyinfo})
+		    fileca.setCopyInfo(srcURL,copyInfoAndLastMod{infos:[]copyInfo{copyinfo},lastMod:lastmod})
 		    return true,nil
 		}
 	}
@@ -519,12 +526,13 @@ func handleFileName(srcURL string)(string,error){
 	return filename,nil
 
 }
-func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.HashedFileInfo,error){
+func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.HashedFileInfo,string,error){
 	var hashedfileinfo *builder.HashedFileInfo
+	var str string
 	// Prepare file in a tmp dir
 	tmpDir, err := ioutils.TempDir("", "docker-remote")
 	if err != nil {
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
 	defer func() {
 		if err != nil {
@@ -534,7 +542,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	tmpFileName := filepath.Join(tmpDir, filename)
 	tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
 	if err != nil {
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
 
 	stdoutFormatter := b.Stdout.(*streamformatter.StdoutFormatter)
@@ -543,14 +551,14 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	// Download and dump result to tmp file
 	if _, err = io.Copy(tmpFile, progressReader); err != nil {
 		tmpFile.Close()
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
 	fmt.Fprintln(b.Stdout)
 	// ignoring error because the file was already opened successfully
 	tmpFileSt, err := tmpFile.Stat()
 	if err != nil {
 		tmpFile.Close()
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
 
 	// Set the mtime to the Last-Modified header value if present
@@ -564,6 +572,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		if parsedMTime, err := http.ParseTime(lastMod); err == nil {
 			mTime = parsedMTime
 		}
+		str=lastMod
 	}
         logrus.Debug("download file last-modified time",mTime)
 	//tmpFile.Close()
@@ -587,18 +596,19 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	}
 	tarSum, err := tarsum.NewTarSum(r, true, tarsum.Version1)
 	if err != nil {
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
 	if _, err = io.Copy(ioutil.Discard, tarSum); err != nil {
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
 	hash := tarSum.Sum(nil)
 	r.Close()
 	hashedfileinfo=&builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FileInfo: tmpFileSt, FilePath: tmpFileName}, FileHash: hash}
-	return hashedfileinfo,nil
+	logrus.Debug("debug:last-modified",str)
+	return hashedfileinfo,str,nil
 }
 
-func (b *Builder) download(srcURL string) (fileinfo builder.FileInfo,err error) {
+func (b *Builder) download(srcURL string) (fileinfo builder.FileInfo,lastmod string,err error) {
 	filename,err:=handleFileName(srcURL)
 	if err!=nil{
 		return
@@ -609,76 +619,11 @@ func (b *Builder) download(srcURL string) (fileinfo builder.FileInfo,err error) 
 		return
 	}
 
-	//// Prepare file in a tmp dir
-	//tmpDir, err := ioutils.TempDir("", "docker-remote")
-	//if err != nil {
-	//	return
-	//}
-	//defer func() {
-	//	if err != nil {
-	//		os.RemoveAll(tmpDir)
-	//	}
-	//}()
-	//tmpFileName := filepath.Join(tmpDir, filename)
-	//tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
-	//if err != nil {
-	//	return
-	//}
-	//
-	//stdoutFormatter := b.Stdout.(*streamformatter.StdoutFormatter)
-	//progressOutput := stdoutFormatter.StreamFormatter.NewProgressOutput(stdoutFormatter.Writer, true)
-	//progressReader := progress.NewProgressReader(resp.Body, progressOutput, resp.ContentLength, "", "Downloading")
-	//// Download and dump result to tmp file
-	//if _, err = io.Copy(tmpFile, progressReader); err != nil {
-	//	tmpFile.Close()
-	//	return
-	//}
-	//fmt.Fprintln(b.Stdout)
-	//// ignoring error because the file was already opened successfully
-	//tmpFileSt, err := tmpFile.Stat()
-	//if err != nil {
-	//	tmpFile.Close()
-	//	return
-	//}
-	//
-	//// Set the mtime to the Last-Modified header value if present
-	//// Otherwise just remove atime and mtime
-	//mTime := time.Time{}
-	//
-	//lastMod := resp.Header.Get("Last-Modified")
-	//if lastMod != "" {
-	//	// If we can't parse it then just let it default to 'zero'
-	//	// otherwise use the parsed time value
-	//	if parsedMTime, err := http.ParseTime(lastMod); err == nil {
-	//		mTime = parsedMTime
-	//	}
-	//}
-	//
-	//tmpFile.Close()
-	//
-	//if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
-	//	return
-	//}
-	//
-	//// Calc the checksum, even if we're using the cache
-	//r, err := archive.Tar(tmpFileName, archive.Uncompressed)
-	//if err != nil {
-	//	return
-	//}
-	//tarSum, err := tarsum.NewTarSum(r, true, tarsum.Version1)
-	//if err != nil {
-	//	return
-	//}
-	//if _, err = io.Copy(ioutil.Discard, tarSum); err != nil {
-	//	return
-	//}
-	//hash := tarSum.Sum(nil)
-	//r.Close()
-	fileinfo,err=b.downloadFile(filename,resp)
+	fileinfo,lastmod,err=b.downloadFile(filename,resp)
 	if err!=nil{
 		return
 	}
-	return fileinfo, nil
+	return
 }
 
 var windowsBlacklist = map[string]bool{
