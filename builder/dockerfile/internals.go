@@ -353,7 +353,6 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		//}else{
 		if b.options.Usefilecache {
 			cpinfos,hit:=fileca.getCopyInfo(orig)
-                        logrus.Debug("test test test ")
 			if hit && len(cpinfos)==1{
 
 				//if copyinfo do not have modtime,
@@ -363,7 +362,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//
 				//}
 				logrus.Debug("using file cache")
-				fmt.Fprint(b.Stdout, " ---> Using cache\n")
+				fmt.Fprint(b.Stdout, " ---> Using file cache\n")
 				cpinfo=cpinfos[0]
 				var ok bool
 				if ok,err=b.updateFile(orig,cpinfo);err!=nil {
@@ -380,11 +379,6 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 
 				*copyinfos = append(*copyinfos,cpinfo)
 				return nil
-			}else {
-
-				if len(cpinfos) != 1 {
-					logrus.Error("the cache copyinfo is mistaken")
-				}
 			}
 		}
 		cpinfo,err=b.getByDownload(orig)
@@ -469,6 +463,7 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 		return false,err
 	}
 	if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
+		logrus.Debug("test test")
 		client:=http.DefaultClient
 		req,err:=http.NewRequest("GET",srcURL,nil)
 		if err!=nil{
@@ -487,7 +482,7 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 			return false,nil
 		}
 		if resp.StatusCode==200{
-		    fmt.Fprintf(b.Stdout,"downloading modified file  %s and update cache",srcURL)
+		    fmt.Fprintf(b.Stdout,"downloading modified file  %s and update cache\n",srcURL)
                     hashedfileinfo,err:=b.downloadFile(filename,resp)
 		    if err!=nil{
 			    return false,err
