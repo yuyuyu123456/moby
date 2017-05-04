@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"moby/builder"
+	"github.com/docker/docker/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -464,6 +464,8 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 	}
 	if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
 		logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
+		logrus.Debug("srcURL is",srcURL)
+		logrus.Debug("file name is",cpinfo.Name())
 		client:=http.DefaultClient
 		req,err:=http.NewRequest("GET",srcURL,nil)
 		if err!=nil{
@@ -570,6 +572,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		return hashedfileinfo,err
 	}
         logrus.Debug("tmpfile mtime",tmpFileSt.ModTime())
+	logrus.Debug("tmpfilename",tmpFileName)
 	// Calc the checksum, even if we're using the cache
 	r, err := archive.Tar(tmpFileName, archive.Uncompressed)
 	if err != nil {
