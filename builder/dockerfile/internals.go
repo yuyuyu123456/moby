@@ -132,7 +132,7 @@ func (filecache *fileCache)getCopyInfo(origins string)(copyInfoAndLastMod,bool) 
 	if filecache.singlefileCacheMap==nil{
 		logrus.Error("singlefileCacheMap is not initialized")
 		logrus.Debug("initializing singlefileCacheMap")
-		filecache.singlefileCacheMap=make(map[string][]copyInfo)
+		filecache.singlefileCacheMap=make(map[string]copyInfoAndLastMod)
 		return copyinfoandlastmod,false
 	}
 
@@ -469,7 +469,7 @@ func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(b
 	}
 	lastmod:=cpinfoandlastmod.lastMod
 	//cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))
-	if !(lastmod==nil||len(lastmod)==0){
+	if !(lastmod==""||len(lastmod)==0){
 		//logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
 		logrus.Debug("srcURL is",srcURL)
 		logrus.Debug("file name is",cpinfoandlastmod.infos[0].Name())
@@ -578,7 +578,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	//tmpFile.Close()
 
 	if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
         logrus.Debug("tmpfile mtime",tmpFileSt.ModTime())
 	logrus.Debug("tmpfilename",tmpFileName)
@@ -592,7 +592,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	// Calc the checksum, even if we're using the cache
 	r, err := archive.Tar(tmpFileName, archive.Uncompressed)
 	if err != nil {
-		return hashedfileinfo,err
+		return hashedfileinfo,str,err
 	}
 	tarSum, err := tarsum.NewTarSum(r, true, tarsum.Version1)
 	if err != nil {
