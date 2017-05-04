@@ -463,7 +463,7 @@ func(b *Builder) updateFile(srcURL string,cpinfo copyInfo)(bool,error){
 		return false,err
 	}
 	if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
-		logrus.Debug("test test %s\n",cpinfo.ModTime().String())
+		logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
 		client:=http.DefaultClient
 		req,err:=http.NewRequest("GET",srcURL,nil)
 		if err!=nil{
