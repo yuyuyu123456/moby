@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -569,7 +569,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	if err = system.Chtimes(tmpFileName, mTime, mTime); err != nil {
 		return hashedfileinfo,err
 	}
-
+        logrus.Debug("tmpfile mtime",tmpFileSt.ModTime())
 	// Calc the checksum, even if we're using the cache
 	r, err := archive.Tar(tmpFileName, archive.Uncompressed)
 	if err != nil {
