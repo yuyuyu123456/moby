@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -429,11 +429,11 @@ func(b *Builder) getByDownload(orig string)(copyInfo,error){
 	}
 	//defer os.RemoveAll(filepath.Dir(fi.Path()))
 	cpinfo=copyInfo{
-		FileInfo:   fi,
+		FileInfo:   *fi,
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
-	info:=fi.(builder.HashedFileInfo)
+	info:=(*fi).(builder.HashedFileInfo)
 	info1:=(info.FileInfo).(builder.PathFileInfo)
 	fmt.Fprintf(b.Stdout,"--->download file in %s\n",info1.FilePath)
 	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
@@ -629,7 +629,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	return hashedfileinfo,str,nil
 }
 
-func (b *Builder) download(srcURL string) (fileinfo builder.FileInfo,lastmod string,err error) {
+func (b *Builder) download(srcURL string) (fileinfo *builder.FileInfo,lastmod string,err error) {
 	filename,err:=handleFileName(srcURL)
 	if err!=nil{
 		return
