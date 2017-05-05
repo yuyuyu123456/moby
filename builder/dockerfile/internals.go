@@ -369,7 +369,8 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				logrus.Debug("using file cache")
 				//fmt.Fprintf(b.Stdout, " ---> Using file cache %s\n")
 				cpinfo=cpinfosandlastmod.infos[0]
-				fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",cpinfo.Name())
+				info:=(cpinfo.FileInfo).(builder.PathFileInfo)
+				fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",info.FilePath)
 				var ok bool
 				if ok,err=b.updateFile(orig,cpinfosandlastmod);err!=nil {
 					logrus.Debug("update file in cache fail")
@@ -417,7 +418,8 @@ func(b *Builder) getByDownload(orig string)(copyInfo,error){
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
-	fmt.Fprintf(b.Stdout,"--->%s\n",fi.Name())
+	info:=fi.(builder.PathFileInfo)
+	fmt.Fprintf(b.Stdout,"--->download file in %s\n",info.FilePath)
 	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
 	return cpinfo,nil
 }
@@ -575,7 +577,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		if parsedMTime, err := http.ParseTime(lastMod); err == nil {
 			mTime = parsedMTime
 		}
-		str=lastMod+"q"
+		//str=lastMod
 	}
         logrus.Debug("download file last-modified time",mTime)
 	//tmpFile.Close()
