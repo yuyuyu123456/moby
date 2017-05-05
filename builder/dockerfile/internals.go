@@ -366,11 +366,12 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//if !(cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))){
 				//
 				//}
-				logrus.Debug("using file cache")
+				logrus.Debug("remote using file cache")
 				//fmt.Fprintf(b.Stdout, " ---> Using file cache %s\n")
 				cpinfo=cpinfosandlastmod.infos[0]
-				info:=(cpinfo.FileInfo).(builder.PathFileInfo)
-				fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",info.FilePath)
+				info:=(cpinfo.FileInfo).(builder.HashedFileInfo)
+				info1:=(info.FileInfo).(builder.PathFileInfo)
+				fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",info1.FilePath)
 				var ok bool
 				if ok,err=b.updateFile(orig,cpinfosandlastmod);err!=nil {
 					logrus.Debug("update file in cache fail")
@@ -396,7 +397,18 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		*copyinfos = append(*copyinfos,cpinfo)
 		return nil
 	}
-	// not a URL
+	// not a URL,do not update yet
+	if b.options.Usefilecache{
+		cpinfosandlastmod,hit:=fileca.getCopyInfo(orig)
+		if hit{
+			logrus.Debug("local using file cache")
+			for _,infosandlastmod:=range cpinfosandlastmod.infos {
+				fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", infosandlastmod.FileInfo.Name())
+			}
+
+		}
+	}
+
 	subInfos, err := b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
 	if err != nil {
 		return err
@@ -418,8 +430,9 @@ func(b *Builder) getByDownload(orig string)(copyInfo,error){
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
-	info:=fi.(builder.PathFileInfo)
-	fmt.Fprintf(b.Stdout,"--->download file in %s\n",info.FilePath)
+	info:=fi.(builder.HashedFileInfo)
+	info1:=(info.FileInfo).(builder.PathFileInfo)
+	fmt.Fprintf(b.Stdout,"--->download file in %s\n",info1.FilePath)
 	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
 	return cpinfo,nil
 }
