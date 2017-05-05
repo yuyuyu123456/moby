@@ -367,8 +367,9 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//
 				//}
 				logrus.Debug("using file cache")
-				fmt.Fprint(b.Stdout, " ---> Using file cache\n")
+				fmt.Fprintf(b.Stdout, " ---> Using file cache %s\n")
 				cpinfo=cpinfosandlastmod.infos[0]
+				fmt.Fprintf(b.Stdout,"--->%s\n",cpinfo.Name())
 				var ok bool
 				if ok,err=b.updateFile(orig,cpinfosandlastmod);err!=nil {
 					logrus.Debug("update file in cache fail")
@@ -416,6 +417,7 @@ func(b *Builder) getByDownload(orig string)(copyInfo,error){
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
+	fmt.Fprintf(b.Stdout,"--->")
 	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
 	return cpinfo,nil
 }
@@ -487,7 +489,7 @@ func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(b
 			return false, fmt.Errorf("Got HTTP status code >= 400: %s", resp.Status)
 		}
 		if resp.StatusCode==304{
-			logrus.Debug("%s server not modified",srcURL)
+			logrus.Debug(" server not modified",srcURL)
 			return false,nil
 		}
 		if resp.StatusCode==200{
