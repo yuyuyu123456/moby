@@ -398,6 +398,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		return nil
 	}
 	// not a URL,do not update yet
+	var subInfos []copyInfo
 	if b.options.Usefilecache{
 		cpinfosandlastmod,hit:=fileca.getCopyInfo(orig)
 		if hit{
@@ -405,11 +406,13 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 			for _,infosandlastmod:=range cpinfosandlastmod.infos {
 				fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", infosandlastmod.FileInfo.Name())
 			}
-
+			subInfos=cpinfosandlastmod.infos
+			*copyinfos = append(*copyinfos, subInfos...)
+			return nil
 		}
 	}
 
-	subInfos, err := b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
+	subInfos, err = b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
 	if err != nil {
 		return err
 	}
