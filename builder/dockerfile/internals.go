@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"moby/builder"
+	"github.com/docker/docker/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -541,6 +541,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 			os.RemoveAll(tmpDir)
 		}
 	}()
+	logrus.Debug("downloadfile tmpdir is ",tmpDir)
 	tmpFileName := filepath.Join(tmpDir, filename)
 	tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
 	if err != nil {
@@ -574,7 +575,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		if parsedMTime, err := http.ParseTime(lastMod); err == nil {
 			mTime = parsedMTime
 		}
-		str=lastMod
+		str=lastMod+"q"
 	}
         logrus.Debug("download file last-modified time",mTime)
 	//tmpFile.Close()
