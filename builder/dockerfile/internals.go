@@ -489,6 +489,7 @@ func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(b
 	}
 	lastmod:=cpinfoandlastmod.lastMod
 	//cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))
+	logrus.Debug("updatefile:lastmodtime is ",lastmod)
 	if !(lastmod==""||len(lastmod)==0){
 		//logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
 		logrus.Debug("srcURL is",srcURL)
@@ -593,7 +594,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		if parsedMTime, err := http.ParseTime(lastMod); err == nil {
 			mTime = parsedMTime
 		}
-		str="Fri, 01 Oct 2013 13:39:09 GMT"
+		str=lastMod
 	}
         logrus.Debug("download file last-modified time",mTime)
 	//tmpFile.Close()
