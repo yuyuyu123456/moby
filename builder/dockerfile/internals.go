@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -367,9 +367,9 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//
 				//}
 				logrus.Debug("using file cache")
-				fmt.Fprintf(b.Stdout, " ---> Using file cache %s\n")
+				//fmt.Fprintf(b.Stdout, " ---> Using file cache %s\n")
 				cpinfo=cpinfosandlastmod.infos[0]
-				fmt.Fprintf(b.Stdout,"--->%s\n",cpinfo.Name())
+				fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",cpinfo.Name())
 				var ok bool
 				if ok,err=b.updateFile(orig,cpinfosandlastmod);err!=nil {
 					logrus.Debug("update file in cache fail")
@@ -417,7 +417,7 @@ func(b *Builder) getByDownload(orig string)(copyInfo,error){
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
-	fmt.Fprintf(b.Stdout,"--->")
+	fmt.Fprintf(b.Stdout,"--->%s\n",fi.Name())
 	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
 	return cpinfo,nil
 }
