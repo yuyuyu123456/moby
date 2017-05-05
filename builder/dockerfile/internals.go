@@ -369,7 +369,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				logrus.Debug("remote using file cache")
 				//fmt.Fprintf(b.Stdout, " ---> Using file cache %s\n")
 				cpinfo=cpinfosandlastmod.infos[0]
-				info:=(cpinfo.FileInfo).(builder.HashedFileInfo)
+				info:=(cpinfo.FileInfo).(*builder.HashedFileInfo)
 				info1:=(info.FileInfo).(builder.PathFileInfo)
 				fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",info1.FilePath)
 				var ok bool
@@ -429,11 +429,11 @@ func(b *Builder) getByDownload(orig string)(copyInfo,error){
 	}
 	//defer os.RemoveAll(filepath.Dir(fi.Path()))
 	cpinfo=copyInfo{
-		FileInfo:   *fi,
+		FileInfo:   fi,
 		decompress: false,
 	}
 	logrus.Debug("setCopyInfo :saving in the cache")
-	info:=(*fi).(builder.HashedFileInfo)
+	info:=fi.(*builder.HashedFileInfo)
 	info1:=(info.FileInfo).(builder.PathFileInfo)
 	fmt.Fprintf(b.Stdout,"--->download file in %s\n",info1.FilePath)
 	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
@@ -629,7 +629,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 	return hashedfileinfo,str,nil
 }
 
-func (b *Builder) download(srcURL string) (fileinfo *builder.FileInfo,lastmod string,err error) {
+func (b *Builder) download(srcURL string) (fileinfo builder.FileInfo,lastmod string,err error) {
 	filename,err:=handleFileName(srcURL)
 	if err!=nil{
 		return
