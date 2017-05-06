@@ -374,6 +374,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				var ok bool
 				if ok,err=b.updateFile(orig,cpinfosandlastmod);err!=nil {
 					logrus.Debug("update file in cache fail")
+					logrus.Debug(err)
 				}
 				if ok {
 					logrus.Debug("get the cache after update")
