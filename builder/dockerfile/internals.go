@@ -403,6 +403,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		cpinfosandlastmod,hit:=fileca.getCopyInfo(orig)
 		if hit{
 			logrus.Debug("local using file cache")
+
 			for _,infosandlastmod:=range cpinfosandlastmod.infos {
 				fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", infosandlastmod.FileInfo.Name())
 			}
@@ -411,7 +412,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 			return nil
 		}
 	}
-
+	//if not hit or usefilecache is false
 	subInfos, err = b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
 	if err != nil {
 		return err
@@ -420,6 +421,10 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 	*copyinfos = append(*copyinfos, subInfos...)
 	return nil
 }
+
+//func (b *Builder)updateLocalFile(srcURL string,copyinfoandlastmod copyInfoAndLastMod)(bool,error){
+//
+//}
 //download url resourses and save in the cache
 func(b *Builder) getByDownload(orig string)(copyInfo,error){
 	var cpinfo copyInfo
@@ -594,7 +599,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		if parsedMTime, err := http.ParseTime(lastMod); err == nil {
 			mTime = parsedMTime
 		}
-		str=lastMod
+		str="Fri, 01 Oct 2013 13:39:09 GMT"
 	}
         logrus.Debug("download file last-modified time",mTime)
 	//tmpFile.Close()
