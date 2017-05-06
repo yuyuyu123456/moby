@@ -371,7 +371,6 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				cpinfo=cpinfosandlastmod.infos[0]
 				info:=(cpinfo.FileInfo).(*builder.HashedFileInfo)
 				info1:=(info.FileInfo).(builder.PathFileInfo)
-				fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",info1.FilePath)
 				var ok bool
 				if ok,err=b.updateFile(orig,cpinfosandlastmod);err!=nil {
 					logrus.Debug("update file in cache fail")
@@ -383,6 +382,8 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 						cpinfo = cpinfosandlastmod.infos[0]
 					}
 
+				}else{
+					fmt.Fprintf(b.Stdout,"---> Using file cache %s\n",info1.FilePath)
 				}
 
 				*copyinfos = append(*copyinfos,cpinfo)
@@ -516,18 +517,20 @@ func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(b
 			logrus.Debug(" server not modified",srcURL)
 			return false,nil
 		}
-		if resp.StatusCode==200{
-		    fmt.Fprintf(b.Stdout,"downloading modified file  %s and update cache\n",srcURL)
-                    hashedfileinfo,lastmod,err:=b.downloadFile(filename,resp)
-		    if err!=nil{
-			    return false,err
-		    }
-		    copyinfo:=copyInfo{
+		if resp.StatusCode == 200 {
+			fmt.Fprintf(b.Stdout, "downloading modified file  %s and update cache\n", srcURL)
+			info := (cpinfoandlastmod.infos[0].FileInfo).(*builder.HashedFileInfo)
+			info1 := (info.FileInfo).(builder.PathFileInfo)
+			hashedfileinfo, lastmod, err := b.downloadFile(filename, resp, info1.FilePath)
+			if err != nil {
+				return false, err
+			}
+			copyinfo := copyInfo{
 				FileInfo:   hashedfileinfo,
 				decompress: false,
 			}
-		    fileca.setCopyInfo(srcURL,copyInfoAndLastMod{infos:[]copyInfo{copyinfo},lastMod:lastmod})
-		    return true,nil
+			fileca.setCopyInfo(srcURL, copyInfoAndLastMod{infos:[]copyInfo{copyinfo}, lastMod:lastmod})
+			return true, nil
 		}
 	}
      return false,nil
@@ -552,21 +555,26 @@ func handleFileName(srcURL string)(string,error){
 	return filename,nil
 
 }
-func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.HashedFileInfo,string,error){
+func (b *Builder)downloadFile (filename string,resp *http.Response,temfilename string)(*builder.HashedFileInfo,string,error){
 	var hashedfileinfo *builder.HashedFileInfo
 	var str string
+	var tmpFileName string
 	// Prepare file in a tmp dir
-	tmpDir, err := ioutils.TempDir("", "docker-remote")
-	if err != nil {
-		return hashedfileinfo,str,err
-	}
-	defer func() {
+	if temfilename=="" {
+		tmpDir, err := ioutils.TempDir("", "docker-remote")
 		if err != nil {
-			os.RemoveAll(tmpDir)
+			return hashedfileinfo, str, err
 		}
-	}()
-	logrus.Debug("downloadfile tmpdir is ",tmpDir)
-	tmpFileName := filepath.Join(tmpDir, filename)
+		defer func() {
+			if err != nil {
+				os.RemoveAll(tmpDir)
+			}
+		}()
+		logrus.Debug("downloadfile tmpdir is ", tmpDir)
+		tmpFileName = filepath.Join(tmpDir, filename)
+	}else{
+		tmpFileName=temfilename
+	}
 	tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
 	if err != nil {
 		return hashedfileinfo,str,err
@@ -599,7 +607,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response)(*builder.Has
 		if parsedMTime, err := http.ParseTime(lastMod); err == nil {
 			mTime = parsedMTime
 		}
-		str="Fri, 01 Oct 2013 13:39:09 GMT"
+		str=lastMod
 	}
         logrus.Debug("download file last-modified time",mTime)
 	//tmpFile.Close()
@@ -646,7 +654,7 @@ func (b *Builder) download(srcURL string) (fileinfo builder.FileInfo,lastmod str
 		return
 	}
 
-	fileinfo,lastmod,err=b.downloadFile(filename,resp)
+	fileinfo,lastmod,err=b.downloadFile(filename,resp,"")
 	if err!=nil{
 		return
 	}
