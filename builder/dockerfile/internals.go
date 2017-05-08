@@ -775,13 +775,16 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 
 	// Must be a dir or a file
 	statPath, fi, err := context.Stat(origPath)
+
+	if err != nil {
+		return nil, err
+	}
+	fileinfo:=fi.(*builder.HashedFileInfo)
+	logrus.Debug("calccopyfileinfo:",fileinfo.FileHash)
 	logrus.Debug("calcCopyFileinfo: origPath",origPath)
 	logrus.Debug("statpath",statPath)
 	logrus.Debug("fileinfo name",fi.Name())
 	logrus.Debug("fileinfo path",fi.Path())
-	if err != nil {
-		return nil, err
-	}
 
 	copyInfos := []copyInfo{{FileInfo: fi, decompress: allowLocalDecompression}}
 	//lastmod:=fi.ModTime().Format("2006-01-02 15:04:05")
