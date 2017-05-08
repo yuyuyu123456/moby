@@ -152,10 +152,10 @@ func (c *tarSumContext) Walk(root string, walkFn WalkFunc) error {
 }
 
 func (c *tarSumContext) Remove(path string) error {
-	_, fullpath, err := c.normalize(path)
-	if err != nil {
-		return err
-	}
+	//_, fullpath, err := c.normalize(path)
+	//if err != nil {
+	//	return err
+	//}
 	//return os.RemoveAll(fullpath)
 	return nil
 }
