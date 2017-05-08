@@ -11,7 +11,7 @@ import (
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/docker/docker/pkg/symlink"
 	"github.com/docker/docker/pkg/tarsum"
-	"github.com/opencontainers/runc/vendor/github.com/Sirupsen/logrus"
+	"github.com/Sirupsen/logrus"
 )
 
 type tarSumContext struct {
