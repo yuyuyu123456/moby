@@ -19,7 +19,8 @@ type tarSumContext struct {
 }
 
 func (c *tarSumContext) Close() error {
-	return os.RemoveAll(c.root)
+	//return os.RemoveAll(c.root)
+	return nil
 }
 
 func convertPathError(err error, cleanpath string) error {
@@ -155,5 +156,6 @@ func (c *tarSumContext) Remove(path string) error {
 	if err != nil {
 		return err
 	}
-	return os.RemoveAll(fullpath)
+	//return os.RemoveAll(fullpath)
+	return nil
 }

@@ -438,7 +438,6 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 func (b *Builder)updateLocalFile(orig string,cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
 	//orig is file or dir do not contain pattern
         subinfos=[]copyInfo{cpinfo}
-	orig="dir/aaa"
 	_,fileinfo, err := b.context.Stat(orig)
 	if err!=nil{
 		return
