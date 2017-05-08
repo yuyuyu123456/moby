@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -428,7 +428,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 	}
         logrus.Debug("calculating local fileinfo")
 	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s\n",orig)
-	logrus.Debug("local fileinfo path",subInfos[0].Path())
+	//logrus.Debug("local fileinfo path",subInfos[0].Path())
 	_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subInfos})
 
 	*copyinfos = append(*copyinfos, subInfos...)
@@ -438,6 +438,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 func (b *Builder)updateLocalFile(orig string,cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
 	//orig is file or dir do not contain pattern
         subinfos=[]copyInfo{cpinfo}
+	orig="dir/aaa"
 	_,fileinfo, err := b.context.Stat(orig)
 	if err!=nil{
 		return
@@ -780,7 +781,9 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 		return nil, err
 	}
 	fileinfo:=fi.(*builder.HashedFileInfo)
-	logrus.Debug("calccopyfileinfo:",fileinfo.FileHash)
+	fileinfo1:=(fileinfo.FileInfo).(builder.PathFileInfo)
+	logrus.Debug("calccopyfileinfo:",fileinfo1.FileName)
+	logrus.Debug("calccopyfileinfo:",fileinfo1.FilePath)
 	logrus.Debug("calcCopyFileinfo: origPath",origPath)
 	logrus.Debug("statpath",statPath)
 	logrus.Debug("fileinfo name",fi.Name())
