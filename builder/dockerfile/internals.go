@@ -399,34 +399,69 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		*copyinfos = append(*copyinfos,cpinfo)
 		return nil
 	}
-	// not a URL,do not update yet
+	// not a URL
 	var subInfos []copyInfo
-	if b.options.Usefilecache{
-		cpinfosandlastmod,hit:=fileca.getCopyInfo(orig)
-		if hit{
-			logrus.Debug("local using file cache")
+	if b.options.Usefilecache {
+		cpinfosandlastmod, hit := fileca.getCopyInfo(orig)
+		if hit {
 
-			for _,infosandlastmod:=range cpinfosandlastmod.infos {
-				fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", infosandlastmod.FileInfo.Name())
+			//info := cpinfosandlastmod.infos[0]
+			//if orig has pattern or not
+			for _, info := range cpinfosandlastmod.infos {
+				if subInfos, err = b.updateLocalFile(info.Name(), cpinfosandlastmod.infos, cmdName, allowLocalDecompression, imageSource); err != nil {
+					return err
+				}
+				*copyinfos = append(*copyinfos, subInfos...)
 			}
-			subInfos=cpinfosandlastmod.infos
-			*copyinfos = append(*copyinfos, subInfos...)
+
 			return nil
+
 		}
 	}
+
+
 	//if not hit or usefilecache is false
 	subInfos, err = b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
 	if err != nil {
 		return err
 	}
+        logrus.Debug("calculating local fileinfo")
+	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s",orig)
+	_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subInfos})
 
 	*copyinfos = append(*copyinfos, subInfos...)
 	return nil
 }
 
-//func (b *Builder)updateLocalFile(srcURL string,copyinfoandlastmod copyInfoAndLastMod)(bool,error){
-//
-//}
+func (b *Builder)updateLocalFile(orig string,cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
+	//orig is file or dir do not contain pattern
+        subinfos=[]copyInfo{cpinfo}
+	fileinfo, err := os.Stat(orig)
+	if err!=nil{
+		return
+	}
+
+	//if modified
+	if fileinfo.ModTime().After(cpinfo.ModTime()) {
+		logrus.Debug("updating local fileinfo ", orig)
+		fmt.Fprintf(b.Stdout, "---> Updating fileinfo  cache %s\n", orig)
+		logrus.Debug("get after update", orig)
+		subinfos, err = b.calcCopyInfo(cmdName, orig, allowLocalDecompression, true, imageSource)
+		if err != nil {
+			return
+		}
+		//mod := fileinfo.ModTime().Format("2006-01-02 15:04:05")
+		_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subinfos})
+		if err != nil {
+			return
+		}
+	}else {
+		logrus.Debug("local using file cache")
+		fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", orig)
+	}
+	return
+
+}
 //download url resourses and save in the cache
 func(b *Builder) getByDownload(orig string)(copyInfo,error){
 	var cpinfo copyInfo
@@ -576,7 +611,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response,temfilename s
 	}else{
 		tmpFileName=temfilename
 	}
-	tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0600)
+	tmpFile, err := os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE, 0600)
 	if err != nil {
 		return hashedfileinfo,str,err
 	}
@@ -744,6 +779,9 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	}
 
 	copyInfos := []copyInfo{{FileInfo: fi, decompress: allowLocalDecompression}}
+	//lastmod:=fi.ModTime().Format("2006-01-02 15:04:05")
+	//logrus.Debug("set in local fileinfo cache")
+	//fileca.setCopyInfo(origPath,copyInfoAndLastMod{infos:copyInfos,lastMod:lastmod})
 
 	hfi, handleHash := fi.(builder.Hashed)
 	if !handleHash {
