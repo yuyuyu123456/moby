@@ -411,6 +411,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				if subInfos, err = b.updateLocalFile(info.Name(), info, cmdName, allowLocalDecompression, imageSource); err != nil {
 					return err
 				}
+				logrus.Debug("local file name")
 				*copyinfos = append(*copyinfos, subInfos...)
 			}
 
@@ -426,7 +427,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		return err
 	}
         logrus.Debug("calculating local fileinfo")
-	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s",orig)
+	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s\n",orig)
 	_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subInfos})
 
 	*copyinfos = append(*copyinfos, subInfos...)
@@ -436,7 +437,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 func (b *Builder)updateLocalFile(orig string,cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
 	//orig is file or dir do not contain pattern
         subinfos=[]copyInfo{cpinfo}
-	fileinfo, err := os.Stat(orig)
+	_,fileinfo, err := b.context.Stat(orig)
 	if err!=nil{
 		return
 	}
