@@ -408,7 +408,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 			//info := cpinfosandlastmod.infos[0]
 			//if orig has pattern or not
 			for _, info := range cpinfosandlastmod.infos {
-				if subInfos, err = b.updateLocalFile(info.Name(), cpinfosandlastmod.infos, cmdName, allowLocalDecompression, imageSource); err != nil {
+				if subInfos, err = b.updateLocalFile(info.Name(), info, cmdName, allowLocalDecompression, imageSource); err != nil {
 					return err
 				}
 				*copyinfos = append(*copyinfos, subInfos...)
