@@ -411,7 +411,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				if subInfos, err = b.updateLocalFile(info.Name(), info, cmdName, allowLocalDecompression, imageSource); err != nil {
 					return err
 				}
-				logrus.Debug("local file name")
+				logrus.Debug("local file name",info.Name())
 				*copyinfos = append(*copyinfos, subInfos...)
 			}
 
@@ -428,6 +428,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 	}
         logrus.Debug("calculating local fileinfo")
 	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s\n",orig)
+	logrus.Debug("local fileinfo path",subInfos[0].Path())
 	_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subInfos})
 
 	*copyinfos = append(*copyinfos, subInfos...)
@@ -774,6 +775,10 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 
 	// Must be a dir or a file
 	statPath, fi, err := context.Stat(origPath)
+	logrus.Debug("calcCopyFileinfo: origPath",origPath)
+	logrus.Debug("statpath",statPath)
+	logrus.Debug("fileinfo name",fi.Name())
+	logrus.Debug("fileinfo path",fi.Path())
 	if err != nil {
 		return nil, err
 	}
