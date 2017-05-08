@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -408,7 +408,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 			//info := cpinfosandlastmod.infos[0]
 			//if orig has pattern or not
 			for _, info := range cpinfosandlastmod.infos {
-				if subInfos, err = b.updateLocalFile(info.Name(), info, cmdName, allowLocalDecompression, imageSource); err != nil {
+				if subInfos, err = b.updateLocalFile(info, cmdName, allowLocalDecompression, imageSource); err != nil {
 					return err
 				}
 				logrus.Debug("local file name",info.Name())
@@ -435,9 +435,13 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 	return nil
 }
 
-func (b *Builder)updateLocalFile(orig string,cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
+func (b *Builder)updateLocalFile(cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
 	//orig is file or dir do not contain pattern
         subinfos=[]copyInfo{cpinfo}
+	orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
+	if err!=nil{
+		return
+	}
 	_,fileinfo, err := b.context.Stat(orig)
 	if err!=nil{
 		return

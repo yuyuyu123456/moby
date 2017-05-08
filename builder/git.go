@@ -22,7 +22,7 @@ func MakeGitContext(gitURL string) (ModifiableContext, error) {
 	defer func() {
 		// TODO: print errors?
 		c.Close()
-		os.RemoveAll(root)
+		//os.RemoveAll(root)
 	}()
 	return MakeTarSumContext(c)
 }

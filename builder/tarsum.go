@@ -11,6 +11,7 @@ import (
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/docker/docker/pkg/symlink"
 	"github.com/docker/docker/pkg/tarsum"
+	"github.com/opencontainers/runc/vendor/github.com/Sirupsen/logrus"
 )
 
 type tarSumContext struct {
@@ -81,6 +82,7 @@ func (c *tarSumContext) Stat(path string) (string, FileInfo, error) {
 // Closing tarStream has to be done by the caller.
 func MakeTarSumContext(tarStream io.Reader) (ModifiableContext, error) {
 	root, err := ioutils.TempDir("", "docker-builder")
+	logrus.Debug("debug debug debug :tmpdir is ",root)
 	if err != nil {
 		return nil, err
 	}

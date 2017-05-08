@@ -902,9 +902,9 @@ loop:
 			}
 
 			if !(fi.IsDir() && hdr.Typeflag == tar.TypeDir) {
-				if err := os.RemoveAll(path); err != nil {
-					return err
-				}
+				//if err := os.RemoveAll(path); err != nil {
+				//	return err
+				//}
 			}
 		}
 		trBuf.Reset(tr)
