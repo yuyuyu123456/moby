@@ -23,7 +23,7 @@ import (
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	"github.com/docker/docker/builder/dockerfile/parser"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/httputils"
@@ -438,11 +438,11 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 func (b *Builder)updateLocalFile(cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
 	//orig is file or dir do not contain pattern
         subinfos=[]copyInfo{cpinfo}
-	orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
+	//orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
 	if err!=nil{
 		return
 	}
-	_,fileinfo, err := b.context.Stat(orig)
+	_,fileinfo, err := b.context.Stat(cpinfo.Path())
 	if err!=nil{
 		return
 	}
