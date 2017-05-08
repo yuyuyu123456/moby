@@ -88,11 +88,11 @@ func (bm *BuildManager) BuildFromContext(ctx context.Context, src io.ReadCloser,
 	if err != nil {
 		return "", err
 	}
-	defer func() {
-		if err := buildContext.Close(); err != nil {
-			logrus.Debugf("[BUILDER] failed to remove temporary context: %v", err)
-		}
-	}()
+	//defer func() {
+	//	if err := buildContext.Close(); err != nil {
+	//		logrus.Debugf("[BUILDER] failed to remove temporary context: %v", err)
+	//	}
+	//}()
 
 	if len(dockerfileName) > 0 {
 		buildOptions.Dockerfile = dockerfileName
