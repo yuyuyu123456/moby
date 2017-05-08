@@ -1,7 +1,7 @@
 package builder
 
 import (
-	"os"
+	//"os"
 
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/gitutils"
