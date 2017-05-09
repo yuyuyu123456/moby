@@ -5,6 +5,7 @@ import (
 
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/gitutils"
+	"os"
 )
 
 // MakeGitContext returns a Context from gitURL that is cloned in a temporary directory.
