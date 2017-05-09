@@ -408,13 +408,16 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 			//info := cpinfosandlastmod.infos[0]
 			//if orig has pattern or not
 			for _, info := range cpinfosandlastmod.infos {
-				if subInfos, err = b.updateLocalFile(info, cmdName, allowLocalDecompression, imageSource); err != nil {
+				var infos []copyInfo
+				if infos, err= b.updateLocalFile(info, cmdName, allowLocalDecompression, imageSource); err != nil {
 					return err
 				}
 				logrus.Debug("local file name",info.Name())
-				*copyinfos = append(*copyinfos, subInfos...)
-			}
+				subInfos=append(subInfos,infos...)
 
+			}
+			fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:subInfos})
+			*copyinfos = append(*copyinfos, subInfos...)
 			return nil
 
 		}
@@ -434,15 +437,18 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 	*copyinfos = append(*copyinfos, subInfos...)
 	return nil
 }
-
+//if file or dir modified ,calculate file and update cache
+//if orig has pattern,one file modified ,update
 func (b *Builder)updateLocalFile(cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
 	//orig is file or dir do not contain pattern
         subinfos=[]copyInfo{cpinfo}
-	//orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
+	orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
+	strs:=strings.Split(orig,"/")
+	orig=strings.Join(strs[1:],"/")
 	if err!=nil{
 		return
 	}
-	_,fileinfo, err := b.context.Stat(cpinfo.Path())
+	_,fileinfo, err := b.context.Stat(orig)
 	if err!=nil{
 		return
 	}
@@ -457,10 +463,10 @@ func (b *Builder)updateLocalFile(cpinfo copyInfo,cmdName string,allowLocalDecomp
 			return
 		}
 		//mod := fileinfo.ModTime().Format("2006-01-02 15:04:05")
-		_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subinfos})
-		if err != nil {
-			return
-		}
+		//_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subinfos})
+		//if err != nil {
+		//	return
+		//}
 	}else {
 		logrus.Debug("local using file cache")
 		fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", orig)
