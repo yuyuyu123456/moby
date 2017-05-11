@@ -73,6 +73,7 @@ var (
 type Daemon struct {
 	ID                        string
 	repository                string
+	filecache                 string
 	containers                container.Store
 	execCommands              *exec.Store
 	referenceStore            refstore.Store
@@ -573,7 +574,14 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 	if err := idtools.MkdirAllAs(daemonRepo, 0700, rootUID, rootGID); err != nil && !os.IsExist(err) {
 		return nil, err
 	}
-
+	filecache:=filepath.Join(config.Root,"filecachejson")
+	if err := idtools.MkdirAllAs(filecache, 0700, rootUID, rootGID); err != nil && !os.IsExist(err) {
+		return nil, err
+	}
+	remotefiles:=filepath.Join(config.Root,"remotefile")
+	if err := idtools.MkdirAllAs(remotefiles, 0700, rootUID, rootGID); err != nil && !os.IsExist(err) {
+		return nil, err
+	}
 	if runtime.GOOS == "windows" {
 		if err := system.MkdirAll(filepath.Join(config.Root, "credentialspecs"), 0); err != nil && !os.IsExist(err) {
 			return nil, err
@@ -691,6 +699,7 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 
 	d.ID = trustKey.PublicKey().KeyID()
 	d.repository = daemonRepo
+	d.filecache=filecache
 	d.containers = container.NewMemoryStore()
 	d.execCommands = exec.NewStore()
 	d.referenceStore = referenceStore

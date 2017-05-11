@@ -609,15 +609,16 @@ func (b *Builder)downloadFile (filename string,resp *http.Response,temfilename s
 	var tmpFileName string
 	// Prepare file in a tmp dir
 	if temfilename=="" {
-		tmpDir, err := ioutils.TempDir("", "docker-remote")
-		if err != nil {
-			return hashedfileinfo, str, err
-		}
-		defer func() {
-			if err != nil {
-				os.RemoveAll(tmpDir)
-			}
-		}()
+		//tmpDir, err := ioutils.TempDir("", "docker-remote")
+		//if err != nil {
+		//	return hashedfileinfo, str, err
+		//}
+		//defer func() {
+		//	if err != nil {
+		//		os.RemoveAll(tmpDir)
+		//	}
+		//}()
+		tmpDir:="/var/lib/docker/remotefile"
 		logrus.Debug("downloadfile tmpdir is ", tmpDir)
 		tmpFileName = filepath.Join(tmpDir, filename)
 	}else{
