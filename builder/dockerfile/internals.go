@@ -88,55 +88,55 @@ func (b *Builder) commit(id string, autoCmd strslice.StrSlice, comment string) e
 	return nil
 }
 
-type copyInfo struct {
+type CopyInfo struct {
 	builder.FileInfo
-	decompress bool
+	Decompress bool
 }
 
-type fileCacheInter interface{
-     getCopyInfo(origins string)(copyInfoAndLastMod,bool)
-     setCopyInfo(origins string,copyinfoandlastmod copyInfoAndLastMod)(bool,error)
-     delCopyInfo(origins []string)(bool,error)
-     getFileCacheInfo(origins []string)(fileCacheInfo,bool)
-     setFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)(bool,error)
-     delFileCacheInfo(origins []string)	(bool,error)
-     delAll()
+type FileCacheInter interface{
+     GetCopyInfo(origins string)(CopyInfoAndLastMod,bool)
+     SetCopyInfo(origins string,copyinfoandlastmod CopyInfoAndLastMod)(bool,error)
+     DelCopyInfo(origins []string)(bool,error)
+     GetFileCacheInfo(origins []string)(FileCacheInfo,bool)
+     SetFileCacheInfo(origins []string,filecacheinfo FileCacheInfo)(bool,error)
+     DelFileCacheInfo(origins []string)	(bool,error)
+     DelAll()
 }
 
-var fileca=&fileCache{
-	singlefileCacheMap:make(map[string]copyInfoAndLastMod),
-	fileCacheMap:make(map[string]fileCacheInfo),
+var fileca=&FileCache{
+	SingleFileCacheMap:make(map[string]CopyInfoAndLastMod),
+	FileCacheMap:make(map[string]FileCacheInfo),
 }
-type fileCacheInfo struct {
+type FileCacheInfo struct {
 	//infos []copyInfo
-        srcHash string
-	origPaths string
+	SrcHash   string
+	OrigPaths string
 }
-type copyInfoAndLastMod struct{
-     infos []copyInfo
-     lastMod string
-}
-
-type fileCache struct {
-	singlefileCacheMap map[string]copyInfoAndLastMod
-	fileCacheMap map[string]fileCacheInfo
+type CopyInfoAndLastMod struct{
+	Infos   []CopyInfo
+	LastMod string
 }
 
-func (filecache *fileCache)getCopyInfo(origins string)(copyInfoAndLastMod,bool)  {
-        var copyinfoandlastmod copyInfoAndLastMod
+type FileCache struct {
+	SingleFileCacheMap map[string]CopyInfoAndLastMod
+	FileCacheMap       map[string]FileCacheInfo
+}
+
+func (filecache *FileCache)GetCopyInfo(origins string)(CopyInfoAndLastMod,bool)  {
+        var copyinfoandlastmod CopyInfoAndLastMod
 	if  len(origins)==0{
-		logrus.Error("getCopyInfo: origins key is nil or length is 0")
+		logrus.Error("GetCopyInfo: origins key is nil or length is 0")
 		return copyinfoandlastmod,false
 	}
 
-	if filecache.singlefileCacheMap==nil{
-		logrus.Error("singlefileCacheMap is not initialized")
-		logrus.Debug("initializing singlefileCacheMap")
-		filecache.singlefileCacheMap=make(map[string]copyInfoAndLastMod)
+	if filecache.SingleFileCacheMap ==nil{
+		logrus.Error("singleFileCacheMap is not initialized")
+		logrus.Debug("initializing singleFileCacheMap")
+		filecache.SingleFileCacheMap =make(map[string]CopyInfoAndLastMod)
 		return copyinfoandlastmod,false
 	}
 
-	copyinfoandlastmod,exist:=filecache.singlefileCacheMap[origins]
+	copyinfoandlastmod,exist:=filecache.SingleFileCacheMap[origins]
 	if !exist{
 		logrus.Debug("do not find copyinfos")
 		return copyinfoandlastmod,false
@@ -146,51 +146,51 @@ func (filecache *fileCache)getCopyInfo(origins string)(copyInfoAndLastMod,bool) 
 }
 
 
-func (filecache *fileCache)setCopyInfo(origins string,copyinfoandlastmod copyInfoAndLastMod)(bool,error){
+func (filecache *FileCache)SetCopyInfo(origins string,copyinfoandlastmod CopyInfoAndLastMod)(bool,error){
 
 	//if !checkFileCacheInfo(origins,filecacheinfo){
 	//	return false,errors.New("filecacheinfo error")
 	//}
-	if len(copyinfoandlastmod.infos)==0{
+	if len(copyinfoandlastmod.Infos)==0{
 		return false,errors.New("copyinfo is empty")
 	}
 
-	filecache.singlefileCacheMap[origins]=copyinfoandlastmod
+	filecache.SingleFileCacheMap[origins]=copyinfoandlastmod
 	return true,nil
 }
 
-func (filecache *fileCache)delCopyInfo(origins []string)(bool,error){
+func (filecache *FileCache)DelCopyInfo(origins []string)(bool,error){
 
 	if origins==nil|| len(origins)==0{
 		return false,errors.New("key args is nil")
 	}
 	for _,orgin:=range origins{
-		_,exist:=filecache.getCopyInfo(orgin)
+		_,exist:=filecache.GetCopyInfo(orgin)
 		if !exist{
-			logrus.Debug("delCopyInfo:key origin in singlefileCacheMap not found,do nothing")
+			logrus.Debug("DelCopyInfo:key origin in singleFileCacheMap not found,do nothing")
 		}else{
-			logrus.Debug("delCopyInfo:key origin in singlefileCacheMap deleting")
-			delete(filecache.singlefileCacheMap,orgin)
+			logrus.Debug("DelCopyInfo:key origin in singleFileCacheMap deleting")
+			delete(filecache.SingleFileCacheMap,orgin)
 		}
 	}
 	return true,nil
 }
 
-func (filecache *fileCache)getFileCacheInfo(origins []string)(fileCacheInfo,bool){
-	var info fileCacheInfo
+func (filecache *FileCache)GetFileCacheInfo(origins []string)(FileCacheInfo,bool){
+	var info FileCacheInfo
 	if origins==nil || len(origins)==0||len(origins)==1{
-		logrus.Error("getFileCacheInfo: origins key is nil or length is 0 oris not complex-valued")
+		logrus.Error("GetFileCacheInfo: origins key is nil or length is 0 oris not complex-valued")
 		return info,false
 	}
 
 	sort.Strings(origins)
-	for key,value:=range filecache.fileCacheMap{
+	for key,value:=range filecache.FileCacheMap{
 		keys:=strings.Split(key,",")
 		if compareSlice(origins,keys){
 			return value,true
 		}
 	}
-        logrus.Debug("getFileCacheInfo:origins key not found")
+        logrus.Debug("GetFileCacheInfo:origins key not found")
 	return info,false
 }
 
@@ -206,49 +206,49 @@ func compareSlice(sli1 []string,sli2 []string)bool{
 	return true
 }
 
-func (filecache *fileCache)setFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)(bool,error){
+func (filecache *FileCache)SetFileCacheInfo(origins []string,filecacheinfo FileCacheInfo)(bool,error){
         if !checkFileCacheInfo(origins,filecacheinfo){
-		return false,errors.New("setFileCacheInfo failure")
+		return false,errors.New("SetFileCacheInfo failure")
 	}
 
 	sort.Strings(origins)
 	key:=strings.Join(origins,",")
-	filecache.fileCacheMap[key]=filecacheinfo
+	filecache.FileCacheMap[key]=filecacheinfo
 	return true,nil
 }
-func(filecache *fileCache) delFileCacheInfo(origins []string)	(bool,error)  {
+func(filecache *FileCache) DelFileCacheInfo(origins []string)	(bool,error)  {
 	if origins==nil|| len(origins)==0||len(origins)==1 {
 		return false,errors.New("key args is nil")
 	}
 
-	_, exist := filecache.getFileCacheInfo(origins)
+	_, exist := filecache.GetFileCacheInfo(origins)
 	if !exist {
-		logrus.Debug("delFileCacheInfo:key origin in fileCacheMap not found,do nothing")
+		logrus.Debug("DelFileCacheInfo:key origin in fileCacheMap not found,do nothing")
 	} else {
-		logrus.Debug("delFileCacheInfo:key origin in fileCacheMap deleting")
+		logrus.Debug("DelFileCacheInfo:key origin in fileCacheMap deleting")
 		sort.Strings(origins)
 		value:=strings.Join(origins,",")
-		delete(filecache.fileCacheMap,value)
+		delete(filecache.FileCacheMap,value)
 	}
 
 	return true,nil
 }
 
-func checkFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)bool{
+func checkFileCacheInfo(origins []string,filecacheinfo FileCacheInfo)bool{
 
 	if origins == nil || len(origins) == 0 || len(origins) == 1 {
-		logrus.Error("setFileCacheInfo: origins key is nil or length is 0 or is not complex-valued")
+		logrus.Error("SetFileCacheInfo: origins key is nil or length is 0 or is not complex-valued")
 		return false
 	}
 
-	srcHash := strings.Replace(filecacheinfo.srcHash, " ", "", -1)
+	srcHash := strings.Replace(filecacheinfo.SrcHash, " ", "", -1)
 	if srcHash == "" {
-		logrus.Error("setFileCacheInfo:srcHash is  empty")
+		logrus.Error("SetFileCacheInfo:srcHash is  empty")
 		return false
 	}
-	originPaths := strings.Replace(filecacheinfo.origPaths, " ", "", -1)
+	originPaths := strings.Replace(filecacheinfo.OrigPaths, " ", "", -1)
 	if originPaths == "" {
-		logrus.Error("setFileCacheInfo:originPaths is empty")
+		logrus.Error("SetFileCacheInfo:originPaths is empty")
 		return false
 	}
 
@@ -256,13 +256,13 @@ func checkFileCacheInfo(origins []string,filecacheinfo fileCacheInfo)bool{
 
 }
 
-func (filecache *fileCache) delAll(){
-      for k,_:=range filecache.singlefileCacheMap{
-	      delete(filecache.singlefileCacheMap,k)
+func (filecache *FileCache) DelAll(){
+      for k,_:=range filecache.SingleFileCacheMap {
+	      delete(filecache.SingleFileCacheMap,k)
       }
 
-      for k,_:=range filecache.fileCacheMap{
-	      delete(filecache.fileCacheMap,k)
+      for k,_:=range filecache.FileCacheMap{
+	      delete(filecache.FileCacheMap,k)
       }
 
 }
@@ -277,7 +277,7 @@ func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalD
 
 	b.runConfig.Image = b.image
 
-	var infos []copyInfo
+	var infos []CopyInfo
 
 	// Loop through each src file and calculate the info we need to
 	// do the copy (e.g. hash value if cached).  Don't actually do
@@ -331,7 +331,7 @@ func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalD
 	}
 
 	for _, info := range infos {
-		if err := b.docker.CopyOnBuild(container.ID, dest, info.FileInfo, info.decompress); err != nil {
+		if err := b.docker.CopyOnBuild(container.ID, dest, info.FileInfo, info.Decompress); err != nil {
 			return err
 		}
 	}
@@ -339,12 +339,12 @@ func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalD
 	return b.commit(container.ID, cmd, comment)
 }
 
-func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allowLocalDecompression bool,imageSource *imageMount,copyinfos *[]copyInfo)error{
+func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allowLocalDecompression bool,imageSource *imageMount,copyinfos *[]CopyInfo)error{
 	// Loop through each src file and calculate the info we need to
 	// do the copy (e.g. hash value if cached).  Don't actually do
 	// the copy until we've looked at all src files
 	var err error
-	var cpinfo copyInfo
+	var cpinfo CopyInfo
 	if urlutil.IsURL(orig) {
 		if !allowRemote {
 			return fmt.Errorf("Source can't be a URL for %s", cmdName)
@@ -357,8 +357,8 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		//
 		//}else{
 		if b.options.Usefilecache {
-			cpinfosandlastmod,hit:=fileca.getCopyInfo(orig)
-			if hit && len(cpinfosandlastmod.infos)==1{
+			cpinfosandlastmod,hit:=fileca.GetCopyInfo(orig)
+			if hit && len(cpinfosandlastmod.Infos)==1{
 
 				//if copyinfo do not have modtime,
 				// use cache fileinfo without check
@@ -368,7 +368,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				//}
 				logrus.Debug("remote using file cache")
 				//fmt.Fprintf(b.Stdout, " ---> Using file cache %s\n")
-				cpinfo=cpinfosandlastmod.infos[0]
+				cpinfo=cpinfosandlastmod.Infos[0]
 				info:=(cpinfo.FileInfo).(*builder.HashedFileInfo)
 				info1:=(info.FileInfo).(builder.PathFileInfo)
 				var ok bool
@@ -378,9 +378,9 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				}
 				if ok {
 					logrus.Debug("get the cache after update")
-					cpinfosandlastmod, hit = fileca.getCopyInfo(orig)
+					cpinfosandlastmod, hit = fileca.GetCopyInfo(orig)
 					if hit {
-						cpinfo = cpinfosandlastmod.infos[0]
+						cpinfo = cpinfosandlastmod.Infos[0]
 					}
 
 				}else{
@@ -400,15 +400,15 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		return nil
 	}
 	// not a URL
-	var subInfos []copyInfo
+	var subInfos []CopyInfo
 	if b.options.Usefilecache {
-		cpinfosandlastmod, hit := fileca.getCopyInfo(orig)
+		cpinfosandlastmod, hit := fileca.GetCopyInfo(orig)
 		if hit {
 
 			//info := cpinfosandlastmod.infos[0]
 			//if orig has pattern or not
-			for _, info := range cpinfosandlastmod.infos {
-				var infos []copyInfo
+			for _, info := range cpinfosandlastmod.Infos {
+				var infos []CopyInfo
 				if infos, err= b.updateLocalFile(info, cmdName, allowLocalDecompression, imageSource); err != nil {
 					return err
 				}
@@ -416,7 +416,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				subInfos=append(subInfos,infos...)
 
 			}
-			fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:subInfos})
+			fileca.SetCopyInfo(orig, CopyInfoAndLastMod{Infos:subInfos})
 			*copyinfos = append(*copyinfos, subInfos...)
 			return nil
 
@@ -432,16 +432,16 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
         logrus.Debug("calculating local fileinfo")
 	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s\n",orig)
 	//logrus.Debug("local fileinfo path",subInfos[0].Path())
-	_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subInfos})
+	_, err = fileca.SetCopyInfo(orig, CopyInfoAndLastMod{Infos:subInfos})
 
 	*copyinfos = append(*copyinfos, subInfos...)
 	return nil
 }
 //if file or dir modified ,calculate file and update cache
 //if orig has pattern,one file modified ,update
-func (b *Builder)updateLocalFile(cpinfo copyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []copyInfo,err error){
+func (b *Builder)updateLocalFile(cpinfo CopyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []CopyInfo,err error){
 	//orig is file or dir do not contain pattern
-        subinfos=[]copyInfo{cpinfo}
+        subinfos=[]CopyInfo{cpinfo}
 	orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
 	strs:=strings.Split(orig,"/")
 	orig=strings.Join(strs[1:],"/")
@@ -463,7 +463,7 @@ func (b *Builder)updateLocalFile(cpinfo copyInfo,cmdName string,allowLocalDecomp
 			return
 		}
 		//mod := fileinfo.ModTime().Format("2006-01-02 15:04:05")
-		//_, err = fileca.setCopyInfo(orig, copyInfoAndLastMod{infos:subinfos})
+		//_, err = fileca.SetCopyInfo(orig, copyInfoAndLastMod{infos:subinfos})
 		//if err != nil {
 		//	return
 		//}
@@ -475,26 +475,26 @@ func (b *Builder)updateLocalFile(cpinfo copyInfo,cmdName string,allowLocalDecomp
 
 }
 //download url resourses and save in the cache
-func(b *Builder) getByDownload(orig string)(copyInfo,error){
-	var cpinfo copyInfo
+func(b *Builder) getByDownload(orig string)(CopyInfo,error){
+	var cpinfo CopyInfo
 	fi,lastmod, err:= b.download(orig)
 	if err != nil {
 		return cpinfo,err
 	}
 	//defer os.RemoveAll(filepath.Dir(fi.Path()))
-	cpinfo=copyInfo{
+	cpinfo= CopyInfo{
 		FileInfo:   fi,
-		decompress: false,
+		Decompress: false,
 	}
-	logrus.Debug("setCopyInfo :saving in the cache")
+	logrus.Debug("SetCopyInfo :saving in the cache")
 	info:=fi.(*builder.HashedFileInfo)
 	info1:=(info.FileInfo).(builder.PathFileInfo)
 	fmt.Fprintf(b.Stdout,"--->download file in %s\n",info1.FilePath)
-	fileca.setCopyInfo(orig,copyInfoAndLastMod{infos:[]copyInfo{cpinfo},lastMod:lastmod})
+	fileca.SetCopyInfo(orig, CopyInfoAndLastMod{Infos:[]CopyInfo{cpinfo}, LastMod:lastmod})
 	return cpinfo,nil
 }
 
-func handleSrcHashAndOrigPaths(infos []copyInfo)(origPaths string,srcHash string){
+func handleSrcHashAndOrigPaths(infos []CopyInfo)(origPaths string,srcHash string){
 	if len(infos) == 1 {
 		fi := infos[0].FileInfo
 		origPaths = fi.Name()
@@ -521,7 +521,7 @@ func handleSrcHashAndOrigPaths(infos []copyInfo)(origPaths string,srcHash string
 }
 //if the server modified,update filecache return true
 //otherwise return false
-func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(bool,error){
+func(b *Builder) updateFile(srcURL string,cpinfoandlastmod CopyInfoAndLastMod)(bool,error){
 	//// get filename from URL
 	//u, err := url.Parse(srcURL)
 	//if err != nil {
@@ -541,13 +541,13 @@ func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(b
 	if err!=nil{
 		return false,err
 	}
-	lastmod:=cpinfoandlastmod.lastMod
+	lastmod:=cpinfoandlastmod.LastMod
 	//cpinfo.ModTime().IsZero() ||cpinfo.ModTime().Equal(time.Unix(0, 0))
 	logrus.Debug("updatefile:lastmodtime is ",lastmod)
 	if !(lastmod==""||len(lastmod)==0){
 		//logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
 		logrus.Debug("srcURL is",srcURL)
-		logrus.Debug("file name is",cpinfoandlastmod.infos[0].Name())
+		logrus.Debug("file name is",cpinfoandlastmod.Infos[0].Name())
 		client:=http.DefaultClient
 		req,err:=http.NewRequest("GET",srcURL,nil)
 		if err!=nil{
@@ -567,17 +567,17 @@ func(b *Builder) updateFile(srcURL string,cpinfoandlastmod copyInfoAndLastMod)(b
 		}
 		if resp.StatusCode == 200 {
 			fmt.Fprintf(b.Stdout, "downloading modified file  %s and update cache\n", srcURL)
-			info := (cpinfoandlastmod.infos[0].FileInfo).(*builder.HashedFileInfo)
+			info := (cpinfoandlastmod.Infos[0].FileInfo).(*builder.HashedFileInfo)
 			info1 := (info.FileInfo).(builder.PathFileInfo)
 			hashedfileinfo, lastmod, err := b.downloadFile(filename, resp, info1.FilePath)
 			if err != nil {
 				return false, err
 			}
-			copyinfo := copyInfo{
+			copyinfo := CopyInfo{
 				FileInfo:   hashedfileinfo,
-				decompress: false,
+				Decompress: false,
 			}
-			fileca.setCopyInfo(srcURL, copyInfoAndLastMod{infos:[]copyInfo{copyinfo}, lastMod:lastmod})
+			fileca.SetCopyInfo(srcURL, CopyInfoAndLastMod{Infos:[]CopyInfo{copyinfo}, LastMod:lastmod})
 			return true, nil
 		}
 	}
@@ -715,7 +715,7 @@ var windowsBlacklist = map[string]bool{
 	"c:\\windows": true,
 }
 
-func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression, allowWildcards bool, imageSource *imageMount) ([]copyInfo, error) {
+func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression, allowWildcards bool, imageSource *imageMount) ([]CopyInfo, error) {
 
 	// Work in daemon-specific OS filepath semantics
 	origPath = filepath.FromSlash(origPath)
@@ -757,7 +757,7 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 
 	// Deal with wildcards
 	if allowWildcards && containsWildcards(origPath) {
-		var copyInfos []copyInfo
+		var copyInfos []CopyInfo
 		if err := context.Walk("", func(path string, info builder.FileInfo, err error) error {
 			if err != nil {
 				return err
@@ -799,10 +799,10 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("fileinfo name",fi.Name())
 	logrus.Debug("fileinfo path",fi.Path())
 
-	copyInfos := []copyInfo{{FileInfo: fi, decompress: allowLocalDecompression}}
+	copyInfos := []CopyInfo{{FileInfo: fi, Decompress: allowLocalDecompression}}
 	//lastmod:=fi.ModTime().Format("2006-01-02 15:04:05")
 	//logrus.Debug("set in local fileinfo cache")
-	//fileca.setCopyInfo(origPath,copyInfoAndLastMod{infos:copyInfos,lastMod:lastmod})
+	//fileca.SetCopyInfo(origPath,copyInfoAndLastMod{infos:copyInfos,lastMod:lastmod})
 
 	hfi, handleHash := fi.(builder.Hashed)
 	if !handleHash {
