@@ -801,7 +801,7 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 	dec := json.NewDecoder(jsonSource)
 
 	// Load container settings
-	if err= dec.Decode(filemetadata); err= nil {
+	if err= dec.Decode(filemetadata); err!=nil {
 		return
 	}
 
