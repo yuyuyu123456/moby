@@ -18,7 +18,8 @@ import (
 	"github.com/docker/docker/pkg/urlutil"
 	"net/url"
 	"fmt"
-	"Sirupsen/logrus"
+
+	"github.com/Sirupsen/logrus"
 )
 
 type CopyInfo struct {
