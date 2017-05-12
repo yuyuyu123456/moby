@@ -15,7 +15,6 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/image"
 	"golang.org/x/net/context"
-	"github.com/docker/docker/builder/dockerfile"
 )
 
 const (
@@ -151,8 +150,9 @@ type Backend interface {
 	// MountImage returns mounted path with rootfs of an image.
 	MountImage(name string) (string, func() error, error)
 
-	GetFileCache()dockerfile.FileCacheInter
+	GetFileCache()FileCacheInter
 }
+
 
 // Image represents a Docker image used by the builder.
 type Image interface {

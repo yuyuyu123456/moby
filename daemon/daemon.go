@@ -59,8 +59,8 @@ import (
 	nwconfig "github.com/docker/libnetwork/config"
 	"github.com/docker/libtrust"
 	"github.com/pkg/errors"
-	"github.com/docker/docker/builder/dockerfile"
 	"encoding/json"
+	"github.com/docker/docker/builder"
 )
 
 var (
@@ -76,7 +76,7 @@ type Daemon struct {
 	ID                        string
 	repository                string
 	filecachedir              string
-	filecache                 dockerfile.FileCacheInter
+	filecache                 builder.FileCacheInter
 	containers                container.Store
 	execCommands              *exec.Store
 	referenceStore            refstore.Store
@@ -703,7 +703,7 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 	d.ID = trustKey.PublicKey().KeyID()
 	d.repository = daemonRepo
 	d.filecachedir=filecache
-	d.filecache=dockerfile.NewFileCache()
+	d.filecache=builder.NewFileCache()
 	d.containers = container.NewMemoryStore()
 	d.execCommands = exec.NewStore()
 	d.referenceStore = referenceStore
@@ -768,7 +768,7 @@ func (daemon *Daemon) loadFileCache()error{
 	i:=0
         //load DefaultCapacity filecache when start a daemon
 	for _, v := range dir {
-		if i>dockerfile.DefaultCapacity{
+		if i>builder.DefaultCapacity{
 			break
 		}
 		filename := v.Name()
@@ -787,10 +787,10 @@ func (daemon *Daemon) loadFileCache()error{
 	}
 	return nil
 }
-func (daemon *Daemon)GetFileCache()dockerfile.FileCacheInter{
+func (daemon *Daemon)GetFileCache()builder.FileCacheInter{
 	return daemon.filecache
 }
-func (daemon *Daemon)FromDisk(filename string)(filemetadata *dockerfile.FileMetaData,err error){
+func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaData,err error){
 	pth:=filepath.Join(daemon.filecachedir,filename)
 	jsonSource, err := os.Open(pth)
 	if err != nil {
