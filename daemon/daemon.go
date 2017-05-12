@@ -59,6 +59,8 @@ import (
 	nwconfig "github.com/docker/libnetwork/config"
 	"github.com/docker/libtrust"
 	"github.com/pkg/errors"
+	"github.com/docker/docker/builder/dockerfile"
+	"encoding/json"
 )
 
 var (
@@ -73,7 +75,8 @@ var (
 type Daemon struct {
 	ID                        string
 	repository                string
-	filecache                 string
+	filecachedir              string
+	filecache                 dockerfile.FileCacheInter
 	containers                container.Store
 	execCommands              *exec.Store
 	referenceStore            refstore.Store
@@ -699,7 +702,8 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 
 	d.ID = trustKey.PublicKey().KeyID()
 	d.repository = daemonRepo
-	d.filecache=filecache
+	d.filecachedir=filecache
+	d.filecache=dockerfile.NewFileCache()
 	d.containers = container.NewMemoryStore()
 	d.execCommands = exec.NewStore()
 	d.referenceStore = referenceStore
@@ -733,6 +737,9 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 	if err := d.restore(); err != nil {
 		return nil, err
 	}
+	if err=d.loadFileCache();err!=nil{
+		return nil,err
+	}
 
 	// FIXME: this method never returns an error
 	info, _ := d.SystemInfo()
@@ -750,7 +757,56 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 
 	return d, nil
 }
+func (daemon *Daemon) loadFileCache()error{
 
+	logrus.Info("Loading filecache: start.")
+
+	dir, err := ioutil.ReadDir(daemon.filecachedir)
+	if err != nil {
+		return err
+	}
+	i:=0
+        //load DefaultCapacity filecache when start a daemon
+	for _, v := range dir {
+		if i>dockerfile.DefaultCapacity{
+			break
+		}
+		filename := v.Name()
+		filemetadata, err := daemon.FromDisk(filename)
+		if err != nil {
+			logrus.Errorf("Failed to load filecache %v: %v", filename, err)
+			continue
+		}
+		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,filemetadata.Copyinfoandlastmod)
+		if err!=nil{
+			logrus.Errorf("Failed to SetCopyInfo %v:%v",filename,err)
+			continue
+		}
+		i++
+
+	}
+	return nil
+}
+func (daemon *Daemon)GetFileCache()dockerfile.FileCacheInter{
+	return daemon.filecache
+}
+func (daemon *Daemon)FromDisk(filename string)(filemetadata *dockerfile.FileMetaData,err error){
+	pth:=filepath.Join(daemon.filecachedir,filename)
+	jsonSource, err := os.Open(pth)
+	if err != nil {
+		return
+	}
+	defer jsonSource.Close()
+
+	dec := json.NewDecoder(jsonSource)
+
+	// Load container settings
+	if err := dec.Decode(filemetadata); err != nil {
+		return
+	}
+
+	return
+}
 func (daemon *Daemon) shutdownContainer(c *container.Container) error {
 	stopTimeout := c.StopTimeout()
 	// TODO(windows): Handle docker restart with paused containers
