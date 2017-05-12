@@ -777,7 +777,7 @@ func (daemon *Daemon) loadFileCache()error{
 			logrus.Errorf("Failed to load filecache %v: %v", filename, err)
 			continue
 		}
-		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,filemetadata.Copyinfoandlastmod)
+		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,filemetadata.Copyinfoandlastmod,false)
 		if err!=nil{
 			logrus.Errorf("Failed to SetCopyInfo %v:%v",filename,err)
 			continue
@@ -801,8 +801,8 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 	dec := json.NewDecoder(jsonSource)
 
 	// Load container settings
-	if err := dec.Decode(filemetadata); err != nil {
-		return
+	if err1:= dec.Decode(filemetadata); err1 != nil {
+		return err1
 	}
 
 	return
