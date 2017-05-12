@@ -255,9 +255,9 @@ func (fileMetaData *FileMetaData)checkFileMetaData()error{
 	if fileMetaData.Orig==""{
 		return errors.New("FileMetaData orig is empty")
 	}
-	if fileMetaData.Copyinfoandlastmod.Infos==nil ||
+	if fileMetaData.Copyinfoandlastmod.Infos==nil &&
 		(fileMetaData.Filecacheinfo.SrcHash==""&&fileMetaData.Filecacheinfo.OrigPaths==""){
-		return errors.New("FileMetaData coppyinfoandlastmod or filecacheinfo is empty")
+		return errors.New("FileMetaData coppyinfoandlastmod and filecacheinfo is empty")
 	}
 	return nil
 }
