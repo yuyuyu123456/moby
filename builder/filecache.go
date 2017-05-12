@@ -168,6 +168,7 @@ func (fileMetaData *FileMetaData)ToDisk()error{
 	defer jsonSource.Close()
 
 	enc := json.NewEncoder(jsonSource)
+	logrus.Debug("save filecache json to disk")
 
 	// Save filecache settings
 	if err := enc.Encode(fileMetaData); err != nil {
@@ -284,7 +285,7 @@ func (filecache *FileCache)GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,e
 		logrus.Debug("trying find copyinfos in disk")
 		fileMetaData:=&FileMetaData{Orig:origins}
 		if err=fileMetaData.FromDisk();err!=nil{
-			return copyinfoandlastmod,false,nil
+			return copyinfoandlastmod,false,err
 		}
 		logrus.Debug("copyinfos find in disk and trying set data from disk ")
 		copyinfoandlastmod=fileMetaData.Copyinfoandlastmod
@@ -332,15 +333,17 @@ func (filecache *FileCache)SetCopyInfo(origins string,copyinfoandlastmod CopyInf
 	return true,nil
 }
 
-func (filecache *FileCache)DelCopyInfo(origins []string)(b bool,err error){
+func (filecache *FileCache)DelCopyInfo(origins []string)(bool,error){
+	var b bool
+	var err error
 	if origins==nil|| len(origins)==0{
 		err=errors.New("key args is nil")
-		return
+		return b,err
 	}
 	for _,orgin:=range origins{
-		_,exist,err1:=filecache.GetCopyInfo(orgin)
-		if err1!=nil{
-			return
+		_,exist,err:=filecache.GetCopyInfo(orgin)
+		if err!=nil{
+			return b,err
 		}
 		if !exist{
 			logrus.Debug("DelCopyInfo:key origin in singleFileCacheMap not found,do nothing")
@@ -353,7 +356,7 @@ func (filecache *FileCache)DelCopyInfo(origins []string)(b bool,err error){
 			}
 		}
 	}
-	return
+	return b,err
 }
 
 func (filecache *FileCache)GetFileCacheInfo(origins []string)(FileCacheInfo,bool){

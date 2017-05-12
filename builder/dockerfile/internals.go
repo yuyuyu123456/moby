@@ -181,6 +181,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		//
 		//}else{
 		if b.options.Usefilecache {
+			logrus.Debug("filecache:",b.docker.GetFileCache())
 			cpinfosandlastmod,hit,err:=b.docker.GetFileCache().GetCopyInfo(orig)
 			if err!=nil{
 				return err
