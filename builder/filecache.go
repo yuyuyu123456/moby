@@ -67,10 +67,10 @@ type LruCache struct{
 	cacheMap map[string]*list.Element
 }
 type CopyInfoAndLastModMap struct{
-	LruCache
+	Copyinfolrucache *LruCache
 }
 type FileCacheInfoMap struct {
-	LruCache
+	FileCacheInfolrucache *LruCache
 }
 type FileCache struct {
 	SingleFileCacheMap CopyInfoAndLastModMap
@@ -338,8 +338,8 @@ func (filecache *FileCache)DelCopyInfo(origins []string)(b bool,err error){
 		return
 	}
 	for _,orgin:=range origins{
-		_,exist,err:=filecache.GetCopyInfo(orgin)
-		if err!=nil{
+		_,exist,err1:=filecache.GetCopyInfo(orgin)
+		if err1!=nil{
 			return
 		}
 		if !exist{
