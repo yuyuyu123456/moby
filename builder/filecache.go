@@ -44,8 +44,8 @@ type FileCacheInter interface{
 
 func NewFileCache()FileCacheInter{
 	return &FileCache{
-		SingleFileCacheMap:NewDefaultLruCache(),
-		FileCacheMap:NewDefaultLruCache(),
+		SingleFileCacheMap:CopyInfoAndLastModMap{NewDefaultLruCache()},
+		FileCacheMap:FileCacheInfoMap{NewDefaultLruCache()},
 	}
 }
 type FileCacheInfo struct {
@@ -216,15 +216,15 @@ func removeDiskFile(orig string)(err error){
 	//remove json file ,and must remove content file
 	//remote url must remove local file
 	if urlutil.IsURL(orig){
-		filename,err:=handleFileName(orig)
-		if err!=nil{
-			return
+		filename,err1:=handleFileName(orig)
+		if err1!=nil{
+			return err1
 		}
 		tmpDir:="/var/lib/docker/remotefile"
 		tmpFileName:= filepath.Join(tmpDir, filename)
 		logrus.Debug("remove file from disk tmpfilename is ", tmpFileName)
-		if err=os.Remove(tmpFileName);err!=nil{
-			return
+		if err1=os.Remove(tmpFileName);err1!=nil{
+			return err1
 		}
 
 	}
@@ -275,7 +275,7 @@ func (filecache *FileCache)GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,e
 	//}
 
 	//copyinfoandlastmod,exist:=filecache.SingleFileCacheMap[origins]
-	copyinfoandlastmod,exist,err:=filecache.SingleFileCacheMap.Get(origins)
+	v,exist,err:=filecache.SingleFileCacheMap.Get(origins)
 	if err!=nil{
 		return copyinfoandlastmod,false,err
 	}
@@ -292,7 +292,12 @@ func (filecache *FileCache)GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,e
 			logrus.Debug("copyinfos find in disk but setcopyinfo fail err:%v",err)
 			return copyinfoandlastmod,true,err
 		}
-
+		return copyinfoandlastmod,true,nil
+	}
+	if v,ok:=v.(CopyInfoAndLastMod);!ok{
+		logrus.Warn("filecache.SingleFileCacheMap get origins is  not type CopyInfoAndLastMod")
+	}else{
+		copyinfoandlastmod=v
 	}
 
 	return copyinfoandlastmod,true,nil
@@ -329,7 +334,8 @@ func (filecache *FileCache)SetCopyInfo(origins string,copyinfoandlastmod CopyInf
 
 func (filecache *FileCache)DelCopyInfo(origins []string)(b bool,err error){
 	if origins==nil|| len(origins)==0{
-		return false,errors.New("key args is nil")
+		err=errors.New("key args is nil")
+		return
 	}
 	for _,orgin:=range origins{
 		_,exist,err:=filecache.GetCopyInfo(orgin)
@@ -361,7 +367,11 @@ func (filecache *FileCache)GetFileCacheInfo(origins []string)(FileCacheInfo,bool
 	for key,value:=range filecache.FileCacheMap.cacheMap{
 		keys:=strings.Split(key,",")
 		if compareSlice(origins,keys){
-			return value,true
+			v:=value.Value
+			if info,ok:=v.(FileCacheInfo);ok{
+				return info,true
+			}
+
 		}
 	}
 	logrus.Debug("GetFileCacheInfo:origins key not found")
