@@ -163,7 +163,7 @@ func (b *Builder) runContextCommand(args []string, allowRemote bool, allowLocalD
 	return b.commit(container.ID, cmd, comment)
 }
 
-func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allowLocalDecompression bool,imageSource *imageMount,copyinfos *[]CopyInfo)error{
+func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allowLocalDecompression bool,imageSource *imageMount,copyinfos *[]builder.CopyInfo)error{
 	// Loop through each src file and calculate the info we need to
 	// do the copy (e.g. hash value if cached).  Don't actually do
 	// the copy until we've looked at all src files
@@ -552,7 +552,7 @@ var windowsBlacklist = map[string]bool{
 	"c:\\windows": true,
 }
 
-func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression, allowWildcards bool, imageSource *imageMount) ([]CopyInfo, error) {
+func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression, allowWildcards bool, imageSource *imageMount) ([]builder.CopyInfo, error) {
 
 	// Work in daemon-specific OS filepath semantics
 	origPath = filepath.FromSlash(origPath)
