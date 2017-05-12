@@ -275,7 +275,7 @@ func (filecache *FileCache)GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,e
 	//}
 
 	//copyinfoandlastmod,exist:=filecache.SingleFileCacheMap[origins]
-	v,exist,err:=filecache.SingleFileCacheMap.Get(origins)
+	v,exist,err:=filecache.SingleFileCacheMap.Copyinfolrucache.Get(origins)
 	if err!=nil{
 		return copyinfoandlastmod,false,err
 	}
@@ -314,7 +314,7 @@ func (filecache *FileCache)SetCopyInfo(origins string,copyinfoandlastmod CopyInf
 	}
 
 	//filecache.SingleFileCacheMap[origins]=copyinfoandlastmod
-	if err:=filecache.SingleFileCacheMap.Set(origins,copyinfoandlastmod);err!=nil{
+	if err:=filecache.SingleFileCacheMap.Copyinfolrucache.Set(origins,copyinfoandlastmod);err!=nil{
 		logrus.Debug("setcopyinfo :SingleFileCacheMap.Set error",err)
 		return false,err
 	}
@@ -347,7 +347,7 @@ func (filecache *FileCache)DelCopyInfo(origins []string)(b bool,err error){
 		}else{
 			logrus.Debug("DelCopyInfo:key origin in singleFileCacheMap deleting")
 			//delete(filecache.SingleFileCacheMap,orgin)
-			b=filecache.SingleFileCacheMap.Remove(orgin)
+			b=filecache.SingleFileCacheMap.Copyinfolrucache.Remove(orgin)
 			if err=removeDiskFile(orgin);err!=nil{
 				logrus.Warn("remove", orgin,"local file err",err)
 			}
@@ -364,7 +364,7 @@ func (filecache *FileCache)GetFileCacheInfo(origins []string)(FileCacheInfo,bool
 	}
 
 	sort.Strings(origins)
-	for key,value:=range filecache.FileCacheMap.cacheMap{
+	for key,value:=range filecache.FileCacheMap.FileCacheInfolrucache.cacheMap{
 		keys:=strings.Split(key,",")
 		if compareSlice(origins,keys){
 			v:=value.Value
@@ -398,7 +398,7 @@ func (filecache *FileCache)SetFileCacheInfo(origins []string,filecacheinfo FileC
 	sort.Strings(origins)
 	key:=strings.Join(origins,",")
 	//filecache.FileCacheMap[key]=filecacheinfo
-	filecache.FileCacheMap.Set(key,filecacheinfo)
+	filecache.FileCacheMap.FileCacheInfolrucache.Set(key,filecacheinfo)
 	return true,nil
 }
 func(filecache *FileCache) DelFileCacheInfo(origins []string)	(bool,error)  {
@@ -414,7 +414,7 @@ func(filecache *FileCache) DelFileCacheInfo(origins []string)	(bool,error)  {
 		sort.Strings(origins)
 		value:=strings.Join(origins,",")
 		//delete(filecache.FileCacheMap,value)
-		filecache.FileCacheMap.Remove(value)
+		filecache.FileCacheMap.FileCacheInfolrucache.Remove(value)
 	}
 
 	return true,nil
@@ -443,14 +443,14 @@ func checkFileCacheInfo(origins []string,filecacheinfo FileCacheInfo)bool{
 }
 
 func (filecache *FileCache) DelAll(){
-	for k,_:=range filecache.SingleFileCacheMap.cacheMap {
+	for k,_:=range filecache.SingleFileCacheMap.Copyinfolrucache.cacheMap {
 		//delete(filecache.SingleFileCacheMap,k)
-		filecache.SingleFileCacheMap.Remove(k)
+		filecache.SingleFileCacheMap.Copyinfolrucache.Remove(k)
 	}
 
-	for k,_:=range filecache.FileCacheMap.cacheMap{
+	for k,_:=range filecache.FileCacheMap.FileCacheInfolrucache.cacheMap{
 		// delete(filecache.FileCacheMap,k)
-		filecache.FileCacheMap.Remove(k)
+		filecache.FileCacheMap.FileCacheInfolrucache.Remove(k)
 	}
 
 }
