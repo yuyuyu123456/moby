@@ -816,6 +816,7 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 		copyinfos[i].Decompress=v.Decompress
 		var fileinfo os.FileInfo
 		//if urlutil.IsURL(filemetadata.Orig){
+		logrus.Debug("get fileinfo of filepath:",v.FilePath)
 		fileinfo, err = os.Stat(v.FilePath)
 		if err != nil {
 			return
