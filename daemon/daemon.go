@@ -60,7 +60,7 @@ import (
 	"github.com/docker/libtrust"
 	"github.com/pkg/errors"
 	"encoding/json"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 )
 
 var (
@@ -806,7 +806,8 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 		return
 	}
         filemetadata.Orig=filemetadatajson.Orig
-	var copyinfos []builder.CopyInfo
+	//var  []builder.CopyInfo
+	copyinfos:=make([]builder.CopyInfo,len(filemetadatajson.CopyInfoAndLastMod.Infos))
 	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
 		copyinfos[i].Decompress=v.Decompress
 		copyinfos[i].FileInfo=&builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FilePath: v.FilePath}, FileHash: v.FileHash}

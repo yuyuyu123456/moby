@@ -234,7 +234,7 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 		return err,false
 	}
 	fileMetaData.Orig=filemetadatajson.Orig
-	var copyinfos []CopyInfo
+	copyinfos:=make([]CopyInfo,len(filemetadatajson.CopyInfoAndLastMod.Infos))
 	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
 		copyinfos[i].Decompress=v.Decompress
 		copyinfos[i].FileInfo=&HashedFileInfo{FileInfo: PathFileInfo{FilePath: v.FilePath}, FileHash: v.FileHash}
