@@ -777,13 +777,7 @@ func (daemon *Daemon) loadFileCache()error{
 			logrus.Errorf("Failed to load filecache %v: %v", filename, err)
 			continue
 		}
-		var cpinfoandlastmod builder.CopyInfoAndLastMod
-		cpinfos:=cpinfoandlastmod.Infos
-		for i,v:=range filemetadata.Copyinfoandlastmod.Infos{
-			cpinfos[i].Decompress=v.Decompress
-			cpinfos[i].FileInfo=v.HashedPathFileInfo
-		}
-		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,cpinfoandlastmod,false)
+		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,filemetadata.Copyinfoandlastmod,false)
 		if err!=nil{
 			logrus.Errorf("Failed to SetCopyInfo %v:%v",filename,err)
 			continue
@@ -796,7 +790,7 @@ func (daemon *Daemon) loadFileCache()error{
 func (daemon *Daemon)GetFileCache()builder.FileCacheInter{
 	return daemon.filecache
 }
-func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.HashedFileMetaData,err error){
+func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaData,err error){
 	pth:=filepath.Join(daemon.filecachedir,filename)
 	jsonSource, err := os.Open(pth)
 	if err != nil {
@@ -805,12 +799,23 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.HashedFileM
 	defer jsonSource.Close()
 
 	dec := json.NewDecoder(jsonSource)
-	filemetadata=&builder.HashedFileMetaData{}
+	filemetadatajson:=&builder.FileMetaDataJson{}
+	filemetadata=&builder.FileMetaData{}
 	// Load file settings
-	if err= dec.Decode(filemetadata); err!=nil {
+	if err= dec.Decode(filemetadatajson); err!=nil {
 		return
 	}
-
+        filemetadata.Orig=filemetadatajson.Orig
+	var copyinfos []builder.CopyInfo
+	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
+		copyinfos[i].Decompress=v.Decompress
+		copyinfos[i].FileInfo=v.HashedPathFileInfo
+	}
+	filemetadata.Copyinfoandlastmod=builder.CopyInfoAndLastMod{
+		LastMod:filemetadatajson.CopyInfoAndLastMod.LastMod,
+		Infos:copyinfos,
+	}
+	filemetadata.Filecacheinfo=filemetadatajson.Filecacheinfo
 	return
 }
 func (daemon *Daemon) shutdownContainer(c *container.Container) error {

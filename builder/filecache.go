@@ -20,7 +20,7 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	"time"
+	//"time"
 )
 
 type CopyInfo struct {
@@ -32,17 +32,21 @@ type CopyHashedFileInfo struct{
       HashedPathFileInfo
       Decompress bool
 }
-type FileStat struct {
-	Name1    string
-	Size1    int64
-	Mode1   os.FileMode
-	ModTime1 time.Time
-	Sys1     interface{}
+type CopyHashedFileInfoAndLastMod struct {
+	Infos   []CopyHashedFileInfo
+	LastMod string
 }
-func (fs *FileStat) Size() int64        { return fs.Size1 }
-func (fs *FileStat) Mode() os.FileMode     { return fs.Mode1 }
-func (fs *FileStat) ModTime() time.Time { return fs.ModTime1 }
-func (fs *FileStat) Sys() interface{}   { return fs.Sys1 }
+//type FileStat struct {
+//	Name1    string
+//	Size1    int64
+//	Mode1   os.FileMode
+//	ModTime1 time.Time
+//	Sys1     interface{}
+//}
+//func (fs *FileStat) Size() int64        { return fs.Size1 }
+//func (fs *FileStat) Mode() os.FileMode     { return fs.Mode1 }
+//func (fs *FileStat) ModTime() time.Time { return fs.ModTime1 }
+//func (fs *FileStat) Sys() interface{}   { return fs.Sys1 }
 type FileCacheInter interface{
 	GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,error)
 	SetCopyInfo(origins string,copyinfoandlastmod CopyInfoAndLastMod,todisk bool)(bool,error)
@@ -73,10 +77,10 @@ type CopyInfoAndLastMod struct{
 	Infos   []CopyInfo
 	LastMod string
 }
-type CopyHashedFileInfoAndLastMod struct {
-	Infos []CopyHashedFileInfo
-	LastMod string
-}
+//type CopyHashedFileInfoAndLastMod struct {
+//	Infos []CopyHashedFileInfo
+//	LastMod string
+//}
 /*
 list 保存数据维护顺序
 map 查找
@@ -101,11 +105,16 @@ type FileMetaData struct {
 	Copyinfoandlastmod CopyInfoAndLastMod
 	Filecacheinfo      FileCacheInfo
 }
-type HashedFileMetaData struct {
-	Orig               string
-	Copyinfoandlastmod CopyHashedFileInfoAndLastMod
-	Filecacheinfo      FileCacheInfo
+type FileMetaDataJson struct {
+	Orig string
+	CopyInfoAndLastMod CopyHashedFileInfoAndLastMod
+	Filecacheinfo FileCacheInfo
 }
+//type HashedFileMetaData struct {
+//	Orig               string
+//	Copyinfoandlastmod CopyHashedFileInfoAndLastMod
+//	Filecacheinfo      FileCacheInfo
+//}
 type LruCacheNode struct {
 	key string
 	value interface{}
@@ -219,11 +228,22 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 	defer jsonSource.Close()
 
 	dec := json.NewDecoder(jsonSource)
-
+	filemetadatajson:=&FileMetaDataJson{}
 	// Load container settings
-	if err := dec.Decode(fileMetaData); err != nil {
+	if err := dec.Decode(filemetadatajson); err != nil {
 		return err,false
 	}
+	fileMetaData.Orig=filemetadatajson.Orig
+	var copyinfos []CopyInfo
+	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
+		copyinfos[i].Decompress=v.Decompress
+		copyinfos[i].FileInfo=v.HashedPathFileInfo
+	}
+	fileMetaData.Copyinfoandlastmod=CopyInfoAndLastMod{
+		LastMod:filemetadatajson.CopyInfoAndLastMod.LastMod,
+		Infos:copyinfos,
+	}
+	fileMetaData.Filecacheinfo=filemetadatajson.Filecacheinfo
 	if err:=fileMetaData.checkFileMetaData();err!=nil{
 		return err,false
 	}

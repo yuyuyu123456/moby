@@ -59,7 +59,7 @@ type FileInfo interface {
 
 // PathFileInfo is a convenience struct that implements the FileInfo interface.
 type PathFileInfo struct {
-	os.FileInfo
+	os.FileInfo `json:",omitempty"`
 	// FilePath holds the absolute path to the file.
 	FilePath string
 	// FileName holds the basename for the file.
@@ -93,11 +93,10 @@ type HashedFileInfo struct {
 	FileHash string
 }
 type HashedPathFileInfo struct {
-	PathFileInfoStat
+	PathFileInfoWithoutFileInfo
         FileHash string
 }
-type PathFileInfoStat struct {
-	FileStat
+type PathFileInfoWithoutFileInfo struct {
 	// FilePath holds the absolute path to the file.
 	FilePath string
 	// FileName holds the basename for the file.
