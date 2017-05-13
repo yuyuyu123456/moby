@@ -21,7 +21,8 @@ type tarSumContext struct {
 
 func (c *tarSumContext) Close() error {
 
-	return os.RemoveAll(c.root)
+	//return os.RemoveAll(c.root)
+	return nil
 
 }
 

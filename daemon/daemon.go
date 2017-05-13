@@ -61,6 +61,7 @@ import (
 	"github.com/pkg/errors"
 	"encoding/json"
 	"github.com/docker/docker/builder"
+	"github.com/docker/docker/pkg/urlutil"
 )
 
 var (
@@ -524,11 +525,12 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 		return nil, err
 	}
 
-	// set up the tmpDir to use a canonical path
+	 //set up the tmpDir to use a canonical path
 	tmp, err := prepareTempDir(config.Root, rootUID, rootGID)
 	if err != nil {
 		return nil, fmt.Errorf("Unable to get the TempDir under %s: %s", config.Root, err)
 	}
+
 	realTmp, err := fileutils.ReadSymlinkedDirectory(tmp)
 	if err != nil {
 		return nil, fmt.Errorf("Unable to get the full path to the TempDir (%s): %s", tmp, err)
@@ -809,9 +811,23 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
         filemetadata.Orig=filemetadatajson.Orig
 	//var  []builder.CopyInfo
 	copyinfos:=make([]builder.CopyInfo,len(filemetadatajson.CopyInfoAndLastMod.Infos))
+
 	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
 		copyinfos[i].Decompress=v.Decompress
-		copyinfos[i].FileInfo=&builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FilePath: v.FilePath}, FileHash: v.FileHash}
+		var fileinfo os.FileInfo
+		//if urlutil.IsURL(filemetadata.Orig){
+		fileinfo, err = os.Stat(v.FilePath)
+		if err != nil {
+			return
+		}
+		//}else{
+		//	var orig string
+		//	orig,err=filepath.Rel("/var/lib/docker/tmp",v.FilePath)
+		//	strs:=strings.Split(orig,"/")
+		//	orig=strings.Join(strs[1:],"/")
+		//	fileinfo,err=os.Stat(orig)
+		//}
+		copyinfos[i].FileInfo=&builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FilePath: v.FilePath,FileName:v.FileName,FileInfo:fileinfo}, FileHash: v.FileHash}
 			//v.HashedPathFileInfo
 	}
 	filemetadata.Copyinfoandlastmod=builder.CopyInfoAndLastMod{
@@ -1033,23 +1049,24 @@ func prepareTempDir(rootDir string, rootUID, rootGID int) (string, error) {
 	var tmpDir string
 	if tmpDir = os.Getenv("DOCKER_TMPDIR"); tmpDir == "" {
 		tmpDir = filepath.Join(rootDir, "tmp")
-		newName := tmpDir + "-old"
-		if err := os.Rename(tmpDir, newName); err == nil {
-			go func() {
-				if err := os.RemoveAll(newName); err != nil {
-					logrus.Warnf("failed to delete old tmp directory: %s", newName)
-				}
-			}()
-		} else {
-			logrus.Warnf("failed to rename %s for background deletion: %s. Deleting synchronously", tmpDir, err)
-			if err := os.RemoveAll(tmpDir); err != nil {
-				logrus.Warnf("failed to delete old tmp directory: %s", tmpDir)
-			}
-		}
+		//newName := tmpDir + "-old"
+		//if err := os.Rename(tmpDir, newName); err == nil {
+		//	go func() {
+		//		if err := os.RemoveAll(newName); err != nil {
+		//			logrus.Warnf("failed to delete old tmp directory: %s", newName)
+		//		}
+		//	}()
+		//} else {
+		//	logrus.Warnf("failed to rename %s for background deletion: %s. Deleting synchronously", tmpDir, err)
+		//	if err := os.RemoveAll(tmpDir); err != nil {
+		//		logrus.Warnf("failed to delete old tmp directory: %s", tmpDir)
+		//	}
+		//}
 	}
 	// We don't remove the content of tmpdir if it's not the default,
 	// it may hold things that do not belong to us.
-	return tmpDir, idtools.MkdirAllAs(tmpDir, 0700, rootUID, rootGID)
+	//return tmpDir, idtools.MkdirAllAs(tmpDir, 0700, rootUID, rootGID)
+	return tmpDir,nil
 }
 
 func (daemon *Daemon) setupInitLayer(initPath string) error {
