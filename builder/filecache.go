@@ -33,11 +33,11 @@ type CopyHashedFileInfo struct{
       Decompress bool
 }
 type FileStat struct {
-	Name    string
-	Size    int64
-	Mode    os.FileMode
-	ModTime time.Time
-	Sys     interface{}
+	Name1    string
+	Size1    int64
+	Mode1   os.FileMode
+	ModTime1 time.Time
+	Sys1     interface{}
 }
 func (fs *FileStat) Size() int64        { return fs.Size }
 func (fs *FileStat) Mode() os.FileMode     { return fs.Mode }
