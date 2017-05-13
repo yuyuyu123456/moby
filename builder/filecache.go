@@ -29,7 +29,7 @@ type CopyInfo struct {
 	Decompress bool
 }
 type CopyHashedFileInfo struct{
-      HashedPathFileInfo
+      *HashedPathFileInfo
       Decompress bool
 }
 type CopyHashedFileInfoAndLastMod struct {
@@ -203,9 +203,25 @@ func (fileMetaData *FileMetaData)ToDisk()error{
 
 	enc := json.NewEncoder(jsonSource)
 	logrus.Debug("save filecache json to disk")
+	infos:=make([]CopyHashedFileInfo,len(fileMetaData.Copyinfoandlastmod.Infos))
+	for i,v:=range fileMetaData.Copyinfoandlastmod.Infos{
+		info:=(v.FileInfo).(*HashedFileInfo)
+		info1:=(info.FileInfo).(PathFileInfo)
+		infos[i].Decompress=v.Decompress
+		infos[i].HashedPathFileInfo=&HashedPathFileInfo{
+			FileHash:info.FileHash,
+			PathFileInfoWithoutFileInfo:PathFileInfoWithoutFileInfo{FileName:info1.FileName,FilePath:info1.FilePath}}
+	}
+	filemetadatajson:=&FileMetaDataJson{
+		Orig:fileMetaData.Orig,
+		Filecacheinfo:fileMetaData.Filecacheinfo,
+		CopyInfoAndLastMod:CopyHashedFileInfoAndLastMod{
+			LastMod:fileMetaData.Copyinfoandlastmod.LastMod,
+			Infos:infos},
+	}
 
 	// Save filecache settings
-	if err := enc.Encode(fileMetaData); err != nil {
+	if err := enc.Encode(filemetadatajson); err != nil {
 		return err
 	}
 
