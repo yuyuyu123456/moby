@@ -20,6 +20,7 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
+	"time"
 )
 
 type CopyInfo struct {
@@ -31,7 +32,13 @@ type CopyHashedFileInfo struct{
       HashedPathFileInfo
       Decompress bool
 }
-
+type FileStat struct {
+	Name    string
+	Size    int64
+	Mode    os.FileMode
+	ModTime time.Time
+	Sys     interface{}
+}
 type FileCacheInter interface{
 	GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,error)
 	SetCopyInfo(origins string,copyinfoandlastmod CopyInfoAndLastMod,todisk bool)(bool,error)

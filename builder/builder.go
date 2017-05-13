@@ -93,10 +93,16 @@ type HashedFileInfo struct {
 	FileHash string
 }
 type HashedPathFileInfo struct {
-	PathFileInfo
+	PathFileInfoStat
         FileHash string
 }
-
+type PathFileInfoStat struct {
+	FileStat
+	// FilePath holds the absolute path to the file.
+	FilePath string
+	// FileName holds the basename for the file.
+	FileName string
+}
 // Hash returns the hash of a file.
 func (fi HashedFileInfo) Hash() string {
 	return fi.FileHash
