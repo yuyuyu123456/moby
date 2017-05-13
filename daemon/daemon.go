@@ -809,7 +809,8 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 	var copyinfos []builder.CopyInfo
 	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
 		copyinfos[i].Decompress=v.Decompress
-		copyinfos[i].FileInfo=v.HashedPathFileInfo
+		copyinfos[i].FileInfo=&builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FilePath: v.FilePath}, FileHash: v.FileHash}
+			//v.HashedPathFileInfo
 	}
 	filemetadata.Copyinfoandlastmod=builder.CopyInfoAndLastMod{
 		LastMod:filemetadatajson.CopyInfoAndLastMod.LastMod,
