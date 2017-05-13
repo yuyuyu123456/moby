@@ -39,6 +39,10 @@ type FileStat struct {
 	ModTime time.Time
 	Sys     interface{}
 }
+func (fs *FileStat) Size() int64        { return fs.Size }
+func (fs *FileStat) Mode() os.FileMode     { return fs.Mode }
+func (fs *FileStat) ModTime() time.Time { return fs.ModTime }
+func (fs *FileStat) Sys() interface{}   { return fs.Sys }
 type FileCacheInter interface{
 	GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,error)
 	SetCopyInfo(origins string,copyinfoandlastmod CopyInfoAndLastMod,todisk bool)(bool,error)
