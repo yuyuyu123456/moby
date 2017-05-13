@@ -777,6 +777,7 @@ func (daemon *Daemon) loadFileCache()error{
 			logrus.Errorf("Failed to load filecache %v: %v", filename, err)
 			continue
 		}
+		logrus.Debug("load file cache",filename)
 		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,filemetadata.Copyinfoandlastmod,false)
 		if err!=nil{
 			logrus.Errorf("Failed to SetCopyInfo %v:%v",filename,err)

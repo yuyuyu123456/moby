@@ -73,10 +73,11 @@ func (fi PathFileInfo) Path() string {
 
 // Name returns the basename of the file.
 func (fi PathFileInfo) Name() string {
-	if fi.FileName != "" {
-		return fi.FileName
-	}
-	return fi.FileInfo.Name()
+	//if fi.FileName != "" {
+	//	return fi.FileName
+	//}
+	//return fi.FileInfo.Name()
+	return fi.FileName
 }
 
 // Hashed defines an extra method intended for implementations of os.FileInfo.
