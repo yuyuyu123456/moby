@@ -60,7 +60,7 @@ import (
 	"github.com/docker/libtrust"
 	"github.com/pkg/errors"
 	"encoding/json"
-	"moby/builder"
+	"github.com/docker/docker/builder"
 )
 
 var (
