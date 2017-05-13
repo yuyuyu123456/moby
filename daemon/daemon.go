@@ -777,7 +777,13 @@ func (daemon *Daemon) loadFileCache()error{
 			logrus.Errorf("Failed to load filecache %v: %v", filename, err)
 			continue
 		}
-		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,filemetadata.Copyinfoandlastmod,false)
+		var cpinfoandlastmod builder.CopyInfoAndLastMod
+		cpinfos:=cpinfoandlastmod.Infos
+		for i,v:=range filemetadata.Copyinfoandlastmod.Infos{
+			cpinfos[i].Decompress=v.Decompress
+			cpinfos[i].FileInfo=v.HashedPathFileInfo
+		}
+		_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,cpinfoandlastmod,false)
 		if err!=nil{
 			logrus.Errorf("Failed to SetCopyInfo %v:%v",filename,err)
 			continue
@@ -790,7 +796,7 @@ func (daemon *Daemon) loadFileCache()error{
 func (daemon *Daemon)GetFileCache()builder.FileCacheInter{
 	return daemon.filecache
 }
-func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaData,err error){
+func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.HashedFileMetaData,err error){
 	pth:=filepath.Join(daemon.filecachedir,filename)
 	jsonSource, err := os.Open(pth)
 	if err != nil {
@@ -799,7 +805,7 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 	defer jsonSource.Close()
 
 	dec := json.NewDecoder(jsonSource)
-	filemetadata=&builder.FileMetaData{}
+	filemetadata=&builder.HashedFileMetaData{}
 	// Load file settings
 	if err= dec.Decode(filemetadata); err!=nil {
 		return

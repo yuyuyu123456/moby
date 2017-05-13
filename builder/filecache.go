@@ -87,6 +87,11 @@ type FileCache struct {
 }
 type FileMetaData struct {
 	Orig               string
+	Copyinfoandlastmod CopyInfoAndLastMod
+	Filecacheinfo      FileCacheInfo
+}
+type HashedFileMetaData struct {
+	Orig               string
 	Copyinfoandlastmod CopyHashedFileInfoAndLastMod
 	Filecacheinfo      FileCacheInfo
 }
