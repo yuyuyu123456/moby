@@ -24,7 +24,12 @@ import (
 
 type CopyInfo struct {
 	FileInfo
+	//HashedFileInfo
 	Decompress bool
+}
+type CopyHashedFileInfo struct{
+      HashedPathFileInfo
+      Decompress bool
 }
 
 type FileCacheInter interface{
@@ -57,6 +62,10 @@ type CopyInfoAndLastMod struct{
 	Infos   []CopyInfo
 	LastMod string
 }
+type CopyHashedFileInfoAndLastMod struct {
+	Infos []CopyHashedFileInfo
+	LastMod string
+}
 /*
 list 保存数据维护顺序
 map 查找
@@ -78,7 +87,7 @@ type FileCache struct {
 }
 type FileMetaData struct {
 	Orig               string
-	Copyinfoandlastmod CopyInfoAndLastMod
+	Copyinfoandlastmod CopyHashedFileInfoAndLastMod
 	Filecacheinfo      FileCacheInfo
 }
 type LruCacheNode struct {
@@ -178,7 +187,7 @@ func (fileMetaData *FileMetaData)ToDisk()error{
 	return nil
 }
 
-func (fileMetaData *FileMetaData)FromDisk()error{
+func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 	hash := sha256.New()
 	hash.Write([]byte(fileMetaData.Orig))
 	md := hash.Sum(nil)
@@ -186,7 +195,10 @@ func (fileMetaData *FileMetaData)FromDisk()error{
 	pth:=filepath.Join(filecachejsonpath,mdStr)
 	jsonSource, err := os.Open(pth)
 	if err != nil {
-		return err
+		if os.IsNotExist(err){
+			return nil,false
+		}
+		return err,false
 	}
 	defer jsonSource.Close()
 
@@ -194,12 +206,12 @@ func (fileMetaData *FileMetaData)FromDisk()error{
 
 	// Load container settings
 	if err := dec.Decode(fileMetaData); err != nil {
-		return err
+		return err,false
 	}
 	if err:=fileMetaData.checkFileMetaData();err!=nil{
-		return err
+		return err,false
 	}
-	return nil
+	return nil,true
 }
 func removeDiskFile(orig string)(err error){
 	hash := sha256.New()
@@ -284,8 +296,11 @@ func (filecache *FileCache)GetCopyInfo(origins string)(CopyInfoAndLastMod,bool,e
 		logrus.Debug("do not find copyinfos in memory")
 		logrus.Debug("trying find copyinfos in disk")
 		fileMetaData:=&FileMetaData{Orig:origins}
-		if err=fileMetaData.FromDisk();err!=nil{
+		if err,b:=fileMetaData.FromDisk();err!=nil{
 			return copyinfoandlastmod,false,err
+		}else if !b{
+			logrus.Debug("copyinfos do not find in disk")
+			return copyinfoandlastmod,false,nil
 		}
 		logrus.Debug("copyinfos find in disk and trying set data from disk ")
 		copyinfoandlastmod=fileMetaData.Copyinfoandlastmod

@@ -92,6 +92,10 @@ type HashedFileInfo struct {
 	// FileHash represents the hash of a file.
 	FileHash string
 }
+type HashedPathFileInfo struct {
+	PathFileInfo
+        FileHash string
+}
 
 // Hash returns the hash of a file.
 func (fi HashedFileInfo) Hash() string {
