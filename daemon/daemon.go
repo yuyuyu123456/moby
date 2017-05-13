@@ -60,7 +60,7 @@ import (
 	"github.com/docker/libtrust"
 	"github.com/pkg/errors"
 	"encoding/json"
-	"github.com/docker/docker/builder"
+	"moby/builder"
 	//"github.com/docker/docker/pkg/urlutil"
 )
 
@@ -808,6 +808,7 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 	if err= dec.Decode(filemetadatajson); err!=nil {
 		return
 	}
+	logrus.Debug("read json file:",filemetadatajson)
         filemetadata.Orig=filemetadatajson.Orig
 	//var  []builder.CopyInfo
 	copyinfos:=make([]builder.CopyInfo,len(filemetadatajson.CopyInfoAndLastMod.Infos))
