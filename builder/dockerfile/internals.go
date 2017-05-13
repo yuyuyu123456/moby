@@ -385,7 +385,7 @@ func(b *Builder) updateFile(srcURL string,cpinfoandlastmod builder.CopyInfoAndLa
 	if !(lastmod==""||len(lastmod)==0){
 		//logrus.Debug("test test modtime is %s\n",cpinfo.ModTime().String())
 		logrus.Debug("srcURL is",srcURL)
-		logrus.Debug("file name is",cpinfoandlastmod.Infos[0].Name())
+		//logrus.Debug("file name is",cpinfoandlastmod.Infos[0].Name())
 		client:=http.DefaultClient
 		req,err:=http.NewRequest("GET",srcURL,nil)
 		if err!=nil{
