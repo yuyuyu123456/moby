@@ -770,7 +770,7 @@ func (daemon *Daemon) loadFileCache()error{
 	i:=0
         //load DefaultCapacity filecache when start a daemon
 	for _, v := range dir {
-		if i>builder.DefaultCapacity{
+		if i>=builder.DefaultCapacity{
 			break
 		}
 		filename := v.Name()
