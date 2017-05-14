@@ -287,7 +287,7 @@ func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLoc
 		return
 	}
 	//if cpinfo.ModTime()
-
+	logrus.Debug("cpinfo modtime :",cpinfo.ModTime())
 	//if modified
 	if fileinfo.ModTime().After(cpinfo.ModTime()) {
 		logrus.Debug("updating local fileinfo ", orig)
