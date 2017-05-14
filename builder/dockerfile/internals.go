@@ -286,7 +286,7 @@ func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLoc
 	if err!=nil{
 		return
 	}
-	if cpinfo.ModTime()
+	//if cpinfo.ModTime()
 
 	//if modified
 	if fileinfo.ModTime().After(cpinfo.ModTime()) {
