@@ -258,7 +258,7 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 		logrus.Debug("get fileinfo of filepath:",v.FilePath)
 		fileinfo, err = os.Stat(v.FilePath)
 		if err != nil {
-			return
+			return err,false
 		}
 		copyinfos[i].FileInfo=&HashedFileInfo{FileInfo:PathFileInfo{FilePath: v.FilePath,FileName:v.FileName,FileInfo:fileinfo}, FileHash: v.FileHash}
 	}
