@@ -119,7 +119,7 @@ type LruCacheNode struct {
 	key string
 	value interface{}
 }
-const DefaultCapacity =20
+const DefaultCapacity =2
 func NewDefaultLruCache()(*LruCache){
 	return &LruCache{
 		capacity:DefaultCapacity,
