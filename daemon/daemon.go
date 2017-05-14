@@ -822,13 +822,6 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 		if err != nil {
 			return
 		}
-		//}else{
-		//	var orig string
-		//	orig,err=filepath.Rel("/var/lib/docker/tmp",v.FilePath)
-		//	strs:=strings.Split(orig,"/")
-		//	orig=strings.Join(strs[1:],"/")
-		//	fileinfo,err=os.Stat(orig)
-		//}
 		copyinfos[i].FileInfo=&builder.HashedFileInfo{FileInfo: builder.PathFileInfo{FilePath: v.FilePath,FileName:v.FileName,FileInfo:fileinfo}, FileHash: v.FileHash}
 			//v.HashedPathFileInfo
 	}

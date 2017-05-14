@@ -253,7 +253,14 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 	copyinfos:=make([]CopyInfo,len(filemetadatajson.CopyInfoAndLastMod.Infos))
 	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
 		copyinfos[i].Decompress=v.Decompress
-		copyinfos[i].FileInfo=&HashedFileInfo{FileInfo: PathFileInfo{FilePath: v.FilePath}, FileHash: v.FileHash}
+		var fileinfo os.FileInfo
+		//if urlutil.IsURL(filemetadata.Orig){
+		logrus.Debug("get fileinfo of filepath:",v.FilePath)
+		fileinfo, err = os.Stat(v.FilePath)
+		if err != nil {
+			return
+		}
+		copyinfos[i].FileInfo=&HashedFileInfo{FileInfo:PathFileInfo{FilePath: v.FilePath,FileName:v.FileName,FileInfo:fileinfo}, FileHash: v.FileHash}
 	}
 	fileMetaData.Copyinfoandlastmod=CopyInfoAndLastMod{
 		LastMod:filemetadatajson.CopyInfoAndLastMod.LastMod,
