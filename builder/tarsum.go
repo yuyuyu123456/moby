@@ -116,7 +116,8 @@ func MakeTarSumContext(tarStream io.Reader) (ModifiableContext, error) {
 
 	tsc.sums = sum.GetSums()
 	for i,v:=range tsc.sums{
-		logrus.Debug(i+": tarsum sums "+v)
+		logrus.Debug(i)
+		logrus.Debug(": tarsum sums "+v)
 	}
 
 	return tsc, nil
