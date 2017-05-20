@@ -583,7 +583,7 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 	if err := idtools.MkdirAllAs(filecache, 0700, rootUID, rootGID); err != nil && !os.IsExist(err) {
 		return nil, err
 	}
-	remotefiles:=filepath.Join(config.Root,"remotefile")
+	remotefiles:=filepath.Join(config.Root,"cachefile")
 	if err := idtools.MkdirAllAs(remotefiles, 0700, rootUID, rootGID); err != nil && !os.IsExist(err) {
 		return nil, err
 	}
@@ -1044,19 +1044,19 @@ func prepareTempDir(rootDir string, rootUID, rootGID int) (string, error) {
 	var tmpDir string
 	if tmpDir = os.Getenv("DOCKER_TMPDIR"); tmpDir == "" {
 		tmpDir = filepath.Join(rootDir, "tmp")
-		//newName := tmpDir + "-old"
-		//if err := os.Rename(tmpDir, newName); err == nil {
-		//	go func() {
-		//		if err := os.RemoveAll(newName); err != nil {
-		//			logrus.Warnf("failed to delete old tmp directory: %s", newName)
-		//		}
-		//	}()
-		//} else {
-		//	logrus.Warnf("failed to rename %s for background deletion: %s. Deleting synchronously", tmpDir, err)
-		//	if err := os.RemoveAll(tmpDir); err != nil {
-		//		logrus.Warnf("failed to delete old tmp directory: %s", tmpDir)
-		//	}
-		//}
+		newName := tmpDir + "-old"
+		if err := os.Rename(tmpDir, newName); err == nil {
+			go func() {
+				if err := os.RemoveAll(newName); err != nil {
+					logrus.Warnf("failed to delete old tmp directory: %s", newName)
+				}
+			}()
+		} else {
+			logrus.Warnf("failed to rename %s for background deletion: %s. Deleting synchronously", tmpDir, err)
+			if err := os.RemoveAll(tmpDir); err != nil {
+				logrus.Warnf("failed to delete old tmp directory: %s", tmpDir)
+			}
+		}
 	}
 	// We don't remove the content of tmpdir if it's not the default,
 	// it may hold things that do not belong to us.

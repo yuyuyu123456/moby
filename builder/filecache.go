@@ -256,7 +256,16 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 		var fileinfo os.FileInfo
 		//if urlutil.IsURL(filemetadata.Orig){
 		logrus.Debug("get fileinfo of filepath:",v.FilePath)
-		fileinfo, err = os.Stat(v.FilePath)
+		//fileinfo, err = os.Stat(v.FilePath)
+		orig,err:=filepath.Rel("/var/lib/docker/tmp",v.FilePath)
+		strs:=strings.Split(orig,"/")
+		orig=strings.Join(strs[1:],"/")
+		s:=filemetadatajson.CopyInfoAndLastMod.LastMod+orig
+		hash := sha256.New()
+		hash.Write([]byte(s))
+		md := hash.Sum(nil)
+		s = hex.EncodeToString(md)
+		fileinfo,err=os.Stat(filepath.Join("/var/lib/docker/cachefile",s))
 		if err != nil {
 			return err,false
 		}
@@ -292,7 +301,7 @@ func removeDiskFile(orig string)(err error){
 		if err1!=nil{
 			return err1
 		}
-		tmpDir:="/var/lib/docker/remotefile"
+		tmpDir:="/var/lib/docker/cachefile"
 		tmpFileName:= filepath.Join(tmpDir, filename)
 		logrus.Debug("remove file from disk tmpfilename is ", tmpFileName)
 		if err1=os.Remove(tmpFileName);err1!=nil{

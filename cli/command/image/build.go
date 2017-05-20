@@ -193,7 +193,7 @@ func runBuild(dockerCli *command.DockerCli, options buildOptions) error {
 	}
 
 	if tempDir != "" {
-		//defer os.RemoveAll(tempDir)
+		defer os.RemoveAll(tempDir)
 		contextDir = tempDir
 	}
 

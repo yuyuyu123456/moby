@@ -40,6 +40,7 @@ import (
 	//"encoding/json"
 	//"github.com/docker/docker/pkg/ioutils"
 	//"container/list"
+	"hash"
 )
 
 func (b *Builder) commit(id string, autoCmd strslice.StrSlice, comment string) error {
@@ -230,10 +231,10 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		*copyinfos = append(*copyinfos,cpinfo)
 		return nil
 	}
-	// not a URL
+	// not a URL,cache key is context sum +orig
 	var subInfos []builder.CopyInfo
 	if b.options.Usefilecache {
-		cpinfosandlastmod, hit ,err:= b.docker.GetFileCache().GetCopyInfo(orig)
+		cpinfosandlastmod, hit ,err:= b.docker.GetFileCache().GetCopyInfo(b.getCopyKey(orig))
 		if err!=nil{
 			return err
 		}
@@ -266,10 +267,22 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
         logrus.Debug("calculating local fileinfo")
 	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s\n",orig)
 	//logrus.Debug("local fileinfo path",subInfos[0].Path())
-	_, err = b.docker.GetFileCache().SetCopyInfo(orig, builder.CopyInfoAndLastMod{Infos:subInfos},true)
+	_, err = b.docker.GetFileCache().SetCopyInfo(b.getCopyKey(orig), builder.CopyInfoAndLastMod{Infos:subInfos,LastMod:b.getCopyKey("")},true)
 
 	*copyinfos = append(*copyinfos, subInfos...)
 	return nil
+}
+func (b *Builder)getCopyKey(orig string)(s string){
+	ok,s:=b.context.IsTarSumContext()
+	if ok {
+		s+=orig
+		hash := sha256.New()
+		hash.Write([]byte(s))
+		md := hash.Sum(nil)
+		s = hex.EncodeToString(md)
+		//filename = filepath.Join("/var/lib/docker/cachefile", mdStr)
+	}
+	return
 }
 //if file or dir modified ,calculate file and update cache
 //if orig has pattern,one file modified ,update
@@ -457,7 +470,7 @@ func (b *Builder)downloadFile (filename string,resp *http.Response,temfilename s
 		//		os.RemoveAll(tmpDir)
 		//	}
 		//}()
-		tmpDir:="/var/lib/docker/remotefile"
+		tmpDir:="/var/lib/docker/cachefile"
 		logrus.Debug("downloadfile tmpdir is ", tmpDir)
 		tmpFileName = filepath.Join(tmpDir, filename)
 	}else{
@@ -636,7 +649,49 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("calcCopyFileinfo: origPath",origPath)
 	logrus.Debug("statpath",statPath)
 	logrus.Debug("fileinfo name",fi.Name())
-	logrus.Debug("fileinfo path",fi.Path())
+	logrus.Debug("fileinfo path", fi.Path())
+
+	//copy file to cachefile ,filename is decided by context and orig
+	originalFile, err := os.Open(fileinfo1.FilePath)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer originalFile.Close()
+	mdStr:=b.getCopyKey(origPath)
+	if mdStr!=""{
+		logrus.Debug("mdstr is ",mdStr)
+	}
+	mdStr=b.getCopyKey(mdStr)
+	logrus.Debug("mdstr is ",mdStr)
+	//s:=filemetadatajson.CopyInfoAndLastMod.LastMod+filemetadatajson.Orig
+	//hash := sha256.New()
+	//hash.Write([]byte(s))
+	//md := hash.Sum(nil)
+	//s = hex.EncodeToString(md)
+	filename := filepath.Join("/var/lib/docker/cachefile", mdStr)
+	// Create new file
+	newFile, err := os.Create(filename)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	defer newFile.Close()
+
+	// Copy the bytes to destination from source
+	bytesWritten, err := io.Copy(newFile, originalFile)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Debug("Copied %d bytes.", bytesWritten)
+
+	// Commit the file contents
+	// Flushes memory to disk
+	err = newFile.Sync()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	if err = system.Chtimes(filename, fi.ModTime(), fi.ModTime()); err != nil {
+		logrus.Error("set modtime error")
+	}
 
 	copyInfos := []builder.CopyInfo{{FileInfo: fi, Decompress: allowLocalDecompression}}
 	//lastmod:=fi.ModTime().Format("2006-01-02 15:04:05")

@@ -21,8 +21,8 @@ type tarSumContext struct {
 
 func (c *tarSumContext) Close() error {
 
-	//return os.RemoveAll(c.root)
-	return nil
+	return os.RemoveAll(c.root)
+	//return nil
 
 }
 
@@ -167,4 +167,15 @@ func (c *tarSumContext) Remove(path string) error {
 		return err
 	}
 	return os.RemoveAll(fullpath)
+}
+
+func(context Context)IsTarSumContext()(bool,string) {
+	var ss string
+	if tarsumcontext,ok:=context.(tarSumContext);ok{
+		for _,v:=range tarsumcontext.sums{
+			ss+=v.Sum()
+		}
+		return true,ss
+	}
+	return false,ss
 }
