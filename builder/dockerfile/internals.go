@@ -40,7 +40,6 @@ import (
 	//"encoding/json"
 	//"github.com/docker/docker/pkg/ioutils"
 	//"container/list"
-	"hash"
 )
 
 func (b *Builder) commit(id string, autoCmd strslice.StrSlice, comment string) error {
