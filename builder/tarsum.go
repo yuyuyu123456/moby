@@ -169,7 +169,7 @@ func (c *tarSumContext) Remove(path string) error {
 	return os.RemoveAll(fullpath)
 }
 
-func(context Context)IsTarSumContext()(bool,string) {
+func IsTarSumContext(context Context)(bool,string) {
 	var ss string
 	if tarsumcontext,ok:=context.(*tarSumContext);ok{
 		for _,v:=range tarsumcontext.sums{

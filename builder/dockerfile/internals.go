@@ -273,7 +273,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 	return nil
 }
 func (b *Builder)getCopyKey(orig string)(s string){
-	ok,s:=b.context.IsTarSumContext()
+	ok,s:=builder.IsTarSumContext(b.context)
 	if ok {
 		s+=orig
 		hash := sha256.New()
