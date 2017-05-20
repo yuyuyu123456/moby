@@ -230,10 +230,10 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 		*copyinfos = append(*copyinfos,cpinfo)
 		return nil
 	}
-	// not a URL,cache key is context sum +orig
+	// not a URL
 	var subInfos []builder.CopyInfo
 	if b.options.Usefilecache {
-		cpinfosandlastmod, hit ,err:= b.docker.GetFileCache().GetCopyInfo(b.getCopyKey(orig))
+		cpinfosandlastmod, hit ,err:= b.docker.GetFileCache().GetCopyInfo(orig)
 		if err!=nil{
 			return err
 		}
@@ -266,22 +266,10 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
         logrus.Debug("calculating local fileinfo")
 	fmt.Fprintf(b.Stdout,"--->calculating local fileinfo %s\n",orig)
 	//logrus.Debug("local fileinfo path",subInfos[0].Path())
-	_, err = b.docker.GetFileCache().SetCopyInfo(b.getCopyKey(orig), builder.CopyInfoAndLastMod{Infos:subInfos,LastMod:b.getCopyKey("")},true)
+	_, err = b.docker.GetFileCache().SetCopyInfo(orig, builder.CopyInfoAndLastMod{Infos:subInfos},true)
 
 	*copyinfos = append(*copyinfos, subInfos...)
 	return nil
-}
-func (b *Builder)getCopyKey(orig string)(s string){
-	ok,s:=builder.IsTarSumContext(b.context)
-	if ok {
-		s+=orig
-		hash := sha256.New()
-		hash.Write([]byte(s))
-		md := hash.Sum(nil)
-		s = hex.EncodeToString(md)
-		//filename = filepath.Join("/var/lib/docker/cachefile", mdStr)
-	}
-	return
 }
 //if file or dir modified ,calculate file and update cache
 //if orig has pattern,one file modified ,update
@@ -648,26 +636,13 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("calcCopyFileinfo: origPath",origPath)
 	logrus.Debug("statpath",statPath)
 	logrus.Debug("fileinfo name",fi.Name())
-	logrus.Debug("fileinfo path", fi.Path())
-
-	//copy file to cachefile ,filename is decided by context and orig
+	logrus.Debug("fileinfo path",fi.Path())
 	originalFile, err := os.Open(fileinfo1.FilePath)
 	if err != nil {
 		logrus.Fatal(err)
 	}
 	defer originalFile.Close()
-	mdStr:=b.getCopyKey(origPath)
-	if mdStr!=""{
-		logrus.Debug("mdstr is ",mdStr)
-	}
-	mdStr=b.getCopyKey(mdStr)
-	logrus.Debug("mdstr is ",mdStr)
-	//s:=filemetadatajson.CopyInfoAndLastMod.LastMod+filemetadatajson.Orig
-	//hash := sha256.New()
-	//hash.Write([]byte(s))
-	//md := hash.Sum(nil)
-	//s = hex.EncodeToString(md)
-	filename := filepath.Join("/var/lib/docker/cachefile", mdStr)
+	filename := filepath.Join("/var/lib/docker/cachefile", origPath)
 	// Create new file
 	newFile, err := os.Create(filename)
 	if err != nil {

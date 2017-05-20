@@ -254,18 +254,21 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 	for i,v:=range filemetadatajson.CopyInfoAndLastMod.Infos{
 		copyinfos[i].Decompress=v.Decompress
 		var fileinfo os.FileInfo
-		//if urlutil.IsURL(filemetadata.Orig){
 		logrus.Debug("get fileinfo of filepath:",v.FilePath)
-		//fileinfo, err = os.Stat(v.FilePath)
-		orig,err:=filepath.Rel("/var/lib/docker/tmp",v.FilePath)
-		strs:=strings.Split(orig,"/")
-		orig=strings.Join(strs[1:],"/")
-		s:=filemetadatajson.CopyInfoAndLastMod.LastMod+orig
-		hash := sha256.New()
-		hash.Write([]byte(s))
-		md := hash.Sum(nil)
-		s = hex.EncodeToString(md)
-		fileinfo,err=os.Stat(filepath.Join("/var/lib/docker/cachefile",s))
+		var filename string
+		if urlutil.IsURL(filemetadatajson.Orig){
+			filename=v.FilePath
+		}else {
+			orig, err := filepath.Rel("/var/lib/docker/tmp", v.FilePath)
+			if err!=nil{
+				return err,false
+			}
+			strs := strings.Split(orig, "/")
+			orig = strings.Join(strs[1:], "/")
+			filename = filepath.Join("/var/lib/docker/cachefile", orig)
+		}
+		logrus.Debug("from disk filename is ",filename)
+		fileinfo, err = os.Stat(filename)
 		if err != nil {
 			return err,false
 		}
