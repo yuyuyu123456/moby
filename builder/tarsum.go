@@ -171,7 +171,7 @@ func (c *tarSumContext) Remove(path string) error {
 
 func(context Context)IsTarSumContext()(bool,string) {
 	var ss string
-	if tarsumcontext,ok:=context.(tarSumContext);ok{
+	if tarsumcontext,ok:=context.(*tarSumContext);ok{
 		for _,v:=range tarsumcontext.sums{
 			ss+=v.Sum()
 		}
