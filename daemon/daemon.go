@@ -826,7 +826,7 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 		}else {
 			orig, err := filepath.Rel("/var/lib/docker/tmp", v.FilePath)
 			if err!=nil{
-				return err,false
+				return
 			}
 			strs := strings.Split(orig, "/")
 			orig = strings.Join(strs[1:], "/")

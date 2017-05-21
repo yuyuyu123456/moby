@@ -637,41 +637,44 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("statpath",statPath)
 	logrus.Debug("fileinfo name",fi.Name())
 	logrus.Debug("fileinfo path",fi.Path())
-	originalFile, err := os.Open(fileinfo1.FilePath)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	defer originalFile.Close()
-	filename := filepath.Join("/var/lib/docker/cachefile", origPath)
-	// Create new file
-	dir:=filepath.Dir(filename)
-	err=os.MkdirAll(dir,0777)
-	if err!=nil{
-		logrus.Fatal(err)
-	}
-	newFile, err := os.Create(filename)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	defer newFile.Close()
+	if fi.IsDir(){
 
-	// Copy the bytes to destination from source
-	bytesWritten, err := io.Copy(newFile, originalFile)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Debug("Copied %d bytes.", bytesWritten)
+	}else {
+		originalFile, err := os.Open(fileinfo1.FilePath)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		defer originalFile.Close()
+		filename := filepath.Join("/var/lib/docker/cachefile", origPath)
+		// Create new file
+		dir := filepath.Dir(filename)
+		err = os.MkdirAll(dir, 0777)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		newFile, err := os.Create(filename)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		defer newFile.Close()
 
-	// Commit the file contents
-	// Flushes memory to disk
-	err = newFile.Sync()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	if err = system.Chtimes(filename, fi.ModTime(), fi.ModTime()); err != nil {
-		logrus.Error("set modtime error")
-	}
+		// Copy the bytes to destination from source
+		bytesWritten, err := io.Copy(newFile, originalFile)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		logrus.Debug("Copied %d bytes.", bytesWritten)
 
+		// Commit the file contents
+		// Flushes memory to disk
+		err = newFile.Sync()
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		if err = system.Chtimes(filename, fi.ModTime(), fi.ModTime()); err != nil {
+			logrus.Error("set modtime error")
+		}
+	}
 	copyInfos := []builder.CopyInfo{{FileInfo: fi, Decompress: allowLocalDecompression}}
 	//lastmod:=fi.ModTime().Format("2006-01-02 15:04:05")
 	//logrus.Debug("set in local fileinfo cache")
