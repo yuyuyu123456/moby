@@ -62,6 +62,7 @@ import (
 	"encoding/json"
 	"github.com/docker/docker/builder"
 	//"github.com/docker/docker/pkg/urlutil"
+	"github.com/docker/docker/pkg/urlutil"
 )
 
 var (
@@ -817,7 +818,22 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 		var fileinfo os.FileInfo
 		//if urlutil.IsURL(filemetadata.Orig){
 		logrus.Debug("get fileinfo of filepath:",v.FilePath)
-		fileinfo, err = os.Stat(v.FilePath)
+		//fileinfo, err = os.Stat(v.FilePath)
+		logrus.Debug("get fileinfo of filepath:",v.FilePath)
+		var filename string
+		if urlutil.IsURL(filemetadatajson.Orig){
+			filename=v.FilePath
+		}else {
+			orig, err := filepath.Rel("/var/lib/docker/tmp", v.FilePath)
+			if err!=nil{
+				return err,false
+			}
+			strs := strings.Split(orig, "/")
+			orig = strings.Join(strs[1:], "/")
+			filename = filepath.Join("/var/lib/docker/cachefile", orig)
+		}
+		logrus.Debug("from disk filename is ",filename)
+		fileinfo, err = os.Stat(filename)
 		if err != nil {
 			return
 		}
