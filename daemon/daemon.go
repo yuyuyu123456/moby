@@ -824,7 +824,8 @@ func (daemon *Daemon)FromDisk(filename string)(filemetadata *builder.FileMetaDat
 		if urlutil.IsURL(filemetadatajson.Orig){
 			filename=v.FilePath
 		}else {
-			orig, err := filepath.Rel("/var/lib/docker/tmp", v.FilePath)
+			var orig string
+			orig, err = filepath.Rel("/var/lib/docker/tmp", v.FilePath)
 			if err!=nil{
 				return
 			}
