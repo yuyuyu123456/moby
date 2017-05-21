@@ -525,12 +525,11 @@ func NewDaemon(config *config.Config, registryService registry.Service, containe
 		return nil, err
 	}
 
-	 //set up the tmpDir to use a canonical path
+	// set up the tmpDir to use a canonical path
 	tmp, err := prepareTempDir(config.Root, rootUID, rootGID)
 	if err != nil {
 		return nil, fmt.Errorf("Unable to get the TempDir under %s: %s", config.Root, err)
 	}
-
 	realTmp, err := fileutils.ReadSymlinkedDirectory(tmp)
 	if err != nil {
 		return nil, fmt.Errorf("Unable to get the full path to the TempDir (%s): %s", tmp, err)
@@ -1061,7 +1060,6 @@ func prepareTempDir(rootDir string, rootUID, rootGID int) (string, error) {
 	// We don't remove the content of tmpdir if it's not the default,
 	// it may hold things that do not belong to us.
 	return tmpDir, idtools.MkdirAllAs(tmpDir, 0700, rootUID, rootGID)
-	//return tmpDir,nil
 }
 
 func (daemon *Daemon) setupInitLayer(initPath string) error {
