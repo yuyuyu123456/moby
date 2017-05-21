@@ -644,6 +644,11 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	defer originalFile.Close()
 	filename := filepath.Join("/var/lib/docker/cachefile", origPath)
 	// Create new file
+	dir:=filepath.Dir(filename)
+	err=os.MkdirAll(dir,0777)
+	if err!=nil{
+		logrus.Fatal(err)
+	}
 	newFile, err := os.Create(filename)
 	if err != nil {
 		logrus.Fatal(err)
