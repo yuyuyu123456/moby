@@ -1060,8 +1060,8 @@ func prepareTempDir(rootDir string, rootUID, rootGID int) (string, error) {
 	}
 	// We don't remove the content of tmpdir if it's not the default,
 	// it may hold things that do not belong to us.
-	//return tmpDir, idtools.MkdirAllAs(tmpDir, 0700, rootUID, rootGID)
-	return tmpDir,nil
+	return tmpDir, idtools.MkdirAllAs(tmpDir, 0700, rootUID, rootGID)
+	//return tmpDir,nil
 }
 
 func (daemon *Daemon) setupInitLayer(initPath string) error {
