@@ -283,6 +283,7 @@ func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLoc
 	if err!=nil{
 		return
 	}
+	logrus.Debug("udpate local file orig is ",orig)
 	_,fileinfo, err := b.context.Stat(orig)
 	if err!=nil{
 		return
