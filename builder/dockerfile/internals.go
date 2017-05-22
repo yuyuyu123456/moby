@@ -278,8 +278,13 @@ func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLoc
 	//orig is file or dir do not contain pattern
         subinfos=[]builder.CopyInfo{cpinfo}
 	orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
-	strs:=strings.Split(orig,"/")
-	orig=strings.Join(strs[1:],"/")
+	logrus.Debug("updatelocalfile cpinfo name",cpinfo.Name())
+	if cpinfo.Name()=="."{
+              orig="."
+	}else {
+		strs := strings.Split(orig, "/")
+		orig = strings.Join(strs[1:], "/")
+	}
 	if err!=nil{
 		return
 	}
@@ -648,7 +653,7 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 				des += "/"
 			}
 		}else{
-			//des
+			des="/var/lib/docker/cachefile/buildcontext"
 		}
 		err=os.MkdirAll(des,0777)
 		if err!=nil{

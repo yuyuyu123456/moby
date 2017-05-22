@@ -260,6 +260,8 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 		var filename string
 		if urlutil.IsURL(filemetadatajson.Orig){
 			filename=v.FilePath
+		}else if filemetadatajson.Orig=="."{
+			filename="/var/lib/docker/cachefile/buildcontext"
 		}else {
 			orig, err := filepath.Rel("/var/lib/docker/tmp", v.FilePath)
 			if err!=nil{
