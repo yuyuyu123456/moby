@@ -639,7 +639,16 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("fileinfo name",fi.Name())
 	logrus.Debug("fileinfo path",fi.Path())
 	if fi.IsDir(){
-		des:=filepath.Join("/var/lib/docker/cachefile",origPath)
+		var des string
+		if origPath!="." {
+			des = filepath.Join("/var/lib/docker/cachefile", origPath)
+			bytes := []byte(des)
+			if bytes[len(des) - 1] != '/' {
+				des += "/"
+			}
+		}else{
+			//des
+		}
 		err=os.MkdirAll(des,0777)
 		if err!=nil{
 			logrus.Error(err)
