@@ -40,7 +40,7 @@ import (
 	//"encoding/json"
 	//"github.com/docker/docker/pkg/ioutils"
 	//"container/list"
-	//"os/exec"
+	"os/exec"
 )
 
 func (b *Builder) commit(id string, autoCmd strslice.StrSlice, comment string) error {
@@ -638,29 +638,29 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("statpath",statPath)
 	logrus.Debug("fileinfo name",fi.Name())
 	logrus.Debug("fileinfo path",fi.Path())
-	//if fi.IsDir(){
-	//	des:=filepath.Join("/var/lib/docker/cachefile",origPath)
-	//	err=os.MkdirAll(des,0777)
-	//	if err!=nil{
-	//		fmt.Println(err)
-	//	}else{
-	//		logrus.Debug("mkdir success")
-	//	}
-	//	//if runtime.GOOS == "linux" {
-	//	//	cpCmd := exec.Command("cp", "-rf",fileinfo1.FilePath , des)
-	//	//	err=cpCmd.Run()
-	//	//	if err!=nil{
-	//	//		logrus.Debug(err)
-	//	//	}
-	//	//}
-	//	//if runtime.GOOS == "windows" {
-	//	//	cpCmd := exec.Command("xcopy",  fileinfo1.FilePath,des , "/s/e/y")
-	//	//	cpCmd.Run()
-	//	//	if err!=nil{
-	//	//		logrus.Debug(err)
-	//	//	}
-	//	//}
-	//}else {
+	if fi.IsDir(){
+		des:=filepath.Join("/var/lib/docker/cachefile",origPath)
+		err=os.MkdirAll(des,0777)
+		if err!=nil{
+			logrus.Error(err)
+		}else{
+			logrus.Debug("mkdir success")
+		}
+		if runtime.GOOS == "linux" {
+			cpCmd := exec.Command("cp", "-rf",fileinfo1.FilePath , des)
+			err=cpCmd.Run()
+			if err!=nil{
+				logrus.Debug(err)
+			}
+		}
+		if runtime.GOOS == "windows" {
+			cpCmd := exec.Command("xcopy",  fileinfo1.FilePath,des , "/s/e/y")
+			cpCmd.Run()
+			if err!=nil{
+				logrus.Debug(err)
+			}
+		}
+	}else {
 	originalFile, err := os.Open(fileinfo1.FilePath)
 	if err != nil {
 		logrus.Fatal(err)
@@ -695,7 +695,7 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	if err = system.Chtimes(filename, fi.ModTime(), fi.ModTime()); err != nil {
 		logrus.Error("set modtime error")
 	}
-	//}
+	}
 	copyInfos := []builder.CopyInfo{{FileInfo: fi, Decompress: allowLocalDecompression}}
 	//lastmod:=fi.ModTime().Format("2006-01-02 15:04:05")
 	//logrus.Debug("set in local fileinfo cache")
