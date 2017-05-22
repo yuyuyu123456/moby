@@ -90,7 +90,7 @@ type LruCache struct{
 	capacity int
 	list *list.List
 	cacheMap map[string]*list.Element
-        rwMutex sync.RWMutex
+        sync.RWMutex
 }
 type CopyInfoAndLastModMap struct{
 	Copyinfolrucache *LruCache
@@ -140,8 +140,12 @@ func (lruCache *LruCache)Set(k string,value interface{})(error){
 	if lruCache.list == nil {
 		return errors.New("LruCache结构体未初始化.")
 	}
-
-	if element,ok := lruCache.cacheMap[k]; ok {
+	lruCache.RLock()
+	element,ok := lruCache.cacheMap[k]
+	lruCache.RUnlock()
+	lruCache.Lock()
+	defer lruCache.Unlock()
+	if  ok {
 		lruCache.list.MoveToFront(element)
 		element.Value.(*LruCacheNode).value= value
 		return nil
@@ -167,9 +171,13 @@ func (lruCache *LruCache)Get(k string)(v interface{},ret bool,err error){
 	if lruCache.cacheMap == nil {
 		return v,false,errors.New("LRUCache结构体未初始化.")
 	}
-
-	if element,ok := lruCache.cacheMap[k]; ok {
+        lruCache.RLock()
+	element,ok := lruCache.cacheMap[k]
+	lruCache.RUnlock()
+	if ok {
+		lruCache.Lock()
 		lruCache.list.MoveToFront(element)
+		lruCache.Unlock()
 		return element.Value.(*LruCacheNode).value,true,nil
 	}
 	return v,false,nil
@@ -179,10 +187,14 @@ func (lruCache *LruCache)Remove(k string)(bool){
 	if lruCache.cacheMap == nil {
 		return false
 	}
-
-	if pElement,ok := lruCache.cacheMap[k]; ok {
+	lruCache.RLock()
+	pElement,ok := lruCache.cacheMap[k]
+	lruCache.RUnlock()
+	if ok {
+		lruCache.Lock()
 		delete(lruCache.cacheMap,k)
 		lruCache.list.Remove(pElement)
+		lruCache.Unlock()
 		return true
 	}
 	return false
