@@ -48,6 +48,8 @@ func (c *tarSumContext) Open(path string) (io.ReadCloser, error) {
 
 func (c *tarSumContext) Stat(path string) (string, FileInfo, error) {
 	cleanpath, fullpath, err := c.normalize(path)
+	logrus.Debug("stat cleanpath:",cleanpath)
+	logrus.Debug("stat fullpath:",fullpath)
 	if err != nil {
 		return "", nil, err
 	}
