@@ -707,9 +707,9 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	if err != nil {
 		logrus.Fatal(err)
 	}
+	}
 	if err = system.Chtimes(filename, fi.ModTime(), fi.ModTime()); err != nil {
 		logrus.Error("set modtime error")
-	}
 	}
 	copyInfos := []builder.CopyInfo{{FileInfo: fi, Decompress: allowLocalDecompression}}
 	//lastmod:=fi.ModTime().Format("2006-01-02 15:04:05")
