@@ -644,6 +644,7 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("statpath",statPath)
 	logrus.Debug("fileinfo name",fi.Name())
 	logrus.Debug("fileinfo path",fi.Path())
+	logrus.Debug("fileinfo modtime",fi.ModTime())
 	if fi.IsDir(){
 		logrus.Debug("fi is dir")
 		var des string
