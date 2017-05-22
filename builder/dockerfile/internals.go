@@ -645,6 +645,7 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 	logrus.Debug("fileinfo name",fi.Name())
 	logrus.Debug("fileinfo path",fi.Path())
 	if fi.IsDir(){
+		logrus.Debug("fi is dir")
 		var des string
 		if origPath!="." {
 			des = filepath.Join("/var/lib/docker/cachefile", origPath)
@@ -676,13 +677,13 @@ func (b *Builder) calcCopyInfo(cmdName, origPath string, allowLocalDecompression
 			}
 		}
 	}else {
+	logrus.Debug("fi is not dir")
 	originalFile, err := os.Open(fileinfo1.FilePath)
 	if err != nil {
 		logrus.Fatal(err)
 	}
 	defer originalFile.Close()
 	filename := filepath.Join("/var/lib/docker/cachefile", origPath)
-	// Create new file
 	dir := filepath.Dir(filename)
 	err = os.MkdirAll(dir, 0777)
 	if err != nil {
