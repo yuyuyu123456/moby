@@ -21,6 +21,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	//"time"
+	"sync"
 )
 
 type CopyInfo struct {
@@ -89,7 +90,7 @@ type LruCache struct{
 	capacity int
 	list *list.List
 	cacheMap map[string]*list.Element
-
+        rwMutex sync.RWMutex
 }
 type CopyInfoAndLastModMap struct{
 	Copyinfolrucache *LruCache
