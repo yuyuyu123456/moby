@@ -256,6 +256,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 				subInfos=append(subInfos,infos...)
 
 			}
+			logrus.Debug("update or not",update)
 			if update{
 				b.docker.GetFileCache().SetCopyInfo(orig, builder.CopyInfoAndLastMod{Infos:subInfos},true)
 			}
@@ -320,6 +321,7 @@ func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLoc
 		logrus.Debug("local using file cache")
 		fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", orig)
 	}
+	logrus.Debug("is update :",isupdate)
 	return
 }
 //download url resourses and save in the cache
