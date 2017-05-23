@@ -61,8 +61,6 @@ import (
 	"github.com/pkg/errors"
 	"encoding/json"
 	"github.com/docker/docker/builder"
-	//"github.com/docker/docker/pkg/urlutil"
-	"github.com/docker/docker/pkg/urlutil"
 )
 
 var (
