@@ -277,13 +277,12 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []builder.CopyInfo,err error){
 	//orig is file or dir do not contain pattern
         subinfos=[]builder.CopyInfo{cpinfo}
-	orig,err:=filepath.Rel("/var/lib/docker/tmp",cpinfo.Path())
 	logrus.Debug("updatelocalfile cpinfo name",cpinfo.Name())
+	var orig string
 	if cpinfo.Name()=="."{
               orig="."
 	}else {
-		strs := strings.Split(orig, "/")
-		orig = strings.Join(strs[1:], "/")
+		orig,err=filepath.Rel("/var/lib/docker/cachefile",cpinfo.Path())
 	}
 	if err!=nil{
 		return
