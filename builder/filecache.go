@@ -222,9 +222,23 @@ func (fileMetaData *FileMetaData)ToDisk()error{
 		info:=(v.FileInfo).(*HashedFileInfo)
 		info1:=(info.FileInfo).(PathFileInfo)
 		infos[i].Decompress=v.Decompress
+		var filePath string
+		if urlutil.IsURL(fileMetaData.Orig){
+			filePath=info1.FilePath
+		}else if fileMetaData.Orig=="."{
+			filePath="/var/lib/docker/cachefile/buildcontext"
+		}else {
+			orig, err := filepath.Rel("/var/lib/docker/tmp", info1.FilePath)
+			if err!=nil{
+				return err,false
+			}
+			strs := strings.Split(orig, "/")
+			orig = strings.Join(strs[1:], "/")
+			filePath= filepath.Join("/var/lib/docker/cachefile", orig)
+		}
 		infos[i].HashedPathFileInfo=&HashedPathFileInfo{
 			FileHash:info.FileHash,
-			PathFileInfoWithoutFileInfo:PathFileInfoWithoutFileInfo{FileName:info1.FileName,FilePath:info1.FilePath}}
+			PathFileInfoWithoutFileInfo:PathFileInfoWithoutFileInfo{FileName:info1.FileName,FilePath:filePath}}
 	}
 	filemetadatajson:=&FileMetaDataJson{
 		Orig:fileMetaData.Orig,
@@ -270,19 +284,20 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 		var fileinfo os.FileInfo
 		logrus.Debug("get fileinfo of filepath:",v.FilePath)
 		var filename string
-		if urlutil.IsURL(filemetadatajson.Orig){
-			filename=v.FilePath
-		}else if filemetadatajson.Orig=="."{
-			filename="/var/lib/docker/cachefile/buildcontext"
-		}else {
-			orig, err := filepath.Rel("/var/lib/docker/tmp", v.FilePath)
-			if err!=nil{
-				return err,false
-			}
-			strs := strings.Split(orig, "/")
-			orig = strings.Join(strs[1:], "/")
-			filename = filepath.Join("/var/lib/docker/cachefile", orig)
-		}
+		//if urlutil.IsURL(filemetadatajson.Orig){
+		//	filename=v.FilePath
+		//}else if filemetadatajson.Orig=="."{
+		//	filename="/var/lib/docker/cachefile/buildcontext"
+		//}else {
+		//	orig, err := filepath.Rel("/var/lib/docker/tmp", v.FilePath)
+		//	if err!=nil{
+		//		return err,false
+		//	}
+		//	strs := strings.Split(orig, "/")
+		//	orig = strings.Join(strs[1:], "/")
+		//	filename = filepath.Join("/var/lib/docker/cachefile", orig)
+		//}
+		filename=v.FilePath
 		logrus.Debug("from disk filename is ",filename)
 		fileinfo, err = os.Stat(filename)
 		if err != nil {
