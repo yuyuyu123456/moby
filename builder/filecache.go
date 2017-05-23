@@ -230,7 +230,7 @@ func (fileMetaData *FileMetaData)ToDisk()error{
 		}else {
 			orig, err := filepath.Rel("/var/lib/docker/tmp", info1.FilePath)
 			if err!=nil{
-				return err,false
+				return err
 			}
 			strs := strings.Split(orig, "/")
 			orig = strings.Join(strs[1:], "/")
