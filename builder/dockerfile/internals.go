@@ -242,16 +242,23 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 
 			//info := cpinfosandlastmod.infos[0]
 			//if orig has pattern or not
+			var update bool
 			for _, info := range cpinfosandlastmod.Infos {
 				var infos []builder.CopyInfo
-				if infos, err= b.updateLocalFile(info, cmdName, allowLocalDecompression, imageSource); err != nil {
+				var isupdate bool
+				if infos, err,isupdate= b.updateLocalFile(info, cmdName, allowLocalDecompression, imageSource); err != nil {
 					return err
+				}
+				if isupdate{
+					update=true
 				}
 				logrus.Debug("local file name",info.Name())
 				subInfos=append(subInfos,infos...)
 
 			}
-			b.docker.GetFileCache().SetCopyInfo(orig, builder.CopyInfoAndLastMod{Infos:subInfos},true)
+			if update{
+				b.docker.GetFileCache().SetCopyInfo(orig, builder.CopyInfoAndLastMod{Infos:subInfos},true)
+			}
 			*copyinfos = append(*copyinfos, subInfos...)
 			return nil
 
@@ -274,7 +281,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 }
 //if file or dir modified ,calculate file and update cache
 //if orig has pattern,one file modified ,update
-func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []builder.CopyInfo,err error){
+func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []builder.CopyInfo,err error,b bool){
 	//orig is file or dir do not contain pattern
         subinfos=[]builder.CopyInfo{cpinfo}
 	logrus.Debug("updatelocalfile cpinfo name",cpinfo.Name())
@@ -308,6 +315,7 @@ func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLoc
 		//if err != nil {
 		//	return
 		//}
+		b=true
 	}else {
 		logrus.Debug("local using file cache")
 		fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", orig)
