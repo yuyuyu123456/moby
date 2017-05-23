@@ -281,7 +281,7 @@ func handleFileInfos(orig string,b *Builder,allowRemote bool,cmdName string,allo
 }
 //if file or dir modified ,calculate file and update cache
 //if orig has pattern,one file modified ,update
-func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []builder.CopyInfo,err error,b bool){
+func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLocalDecompression bool,imageSource *imageMount)(subinfos []builder.CopyInfo,err error,isupdate bool){
 	//orig is file or dir do not contain pattern
         subinfos=[]builder.CopyInfo{cpinfo}
 	logrus.Debug("updatelocalfile cpinfo name",cpinfo.Name())
@@ -315,13 +315,12 @@ func (b *Builder)updateLocalFile(cpinfo builder.CopyInfo,cmdName string,allowLoc
 		//if err != nil {
 		//	return
 		//}
-		b=true
+		isupdate=true
 	}else {
 		logrus.Debug("local using file cache")
 		fmt.Fprintf(b.Stdout, "---> Using fileinfo  cache %s\n", orig)
 	}
 	return
-
 }
 //download url resourses and save in the cache
 func(b *Builder) getByDownload(orig string)(builder.CopyInfo,error){
