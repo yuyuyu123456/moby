@@ -26,6 +26,7 @@ type ImageContext struct {
 	Digest bool
 }
 
+
 func isDangling(image types.ImageSummary) bool {
 	return len(image.RepoTags) == 1 && image.RepoTags[0] == "<none>:<none>" && len(image.RepoDigests) == 1 && image.RepoDigests[0] == "<none>@<none>"
 }

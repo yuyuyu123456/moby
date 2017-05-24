@@ -28,6 +28,7 @@ type CommonAPIClient interface {
 	SecretAPIClient
 	SystemAPIClient
 	VolumeAPIClient
+	FilecacheAPIClient
 	ClientVersion() string
 	ServerVersion(ctx context.Context) (types.Version, error)
 	UpdateClientVersion(v string)
@@ -84,6 +85,10 @@ type ImageAPIClient interface {
 	ImageSave(ctx context.Context, images []string) (io.ReadCloser, error)
 	ImageTag(ctx context.Context, image, ref string) error
 	ImagesPrune(ctx context.Context, pruneFilter filters.Args) (types.ImagesPruneReport, error)
+}
+
+type FilecacheAPIClient interface {
+	FileCacheList(ctx context.Context, options types.FileCachesOptions)([]types.FileCacheSummary, error)
 }
 
 // NetworkAPIClient defines API client methods for the networks

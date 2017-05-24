@@ -9,6 +9,7 @@ import (
 	"github.com/docker/docker/cli/command/formatter"
 	"github.com/docker/docker/opts"
 	"github.com/spf13/cobra"
+	"github.com/opencontainers/runc/vendor/github.com/Sirupsen/logrus"
 )
 
 type imagesOptions struct {
@@ -79,6 +80,7 @@ func runImages(dockerCli *command.DockerCli, opts imagesOptions) error {
 	if len(format) == 0 {
 		if len(dockerCli.ConfigFile().ImagesFormat) > 0 && !opts.quiet {
 			format = dockerCli.ConfigFile().ImagesFormat
+			logrus.Debug(dockerCli.ConfigFile())
 		} else {
 			format = formatter.TableFormatKey
 		}

@@ -213,6 +213,9 @@ type ImageListOptions struct {
 	Filters filters.Args
 }
 
+type FileCachesOptions struct {
+	Filters filters.Args
+}
 // ImageLoadResponse returns information to the client about a load process.
 type ImageLoadResponse struct {
 	// Body must be closed to avoid a resource leak

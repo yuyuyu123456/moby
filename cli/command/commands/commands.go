@@ -18,6 +18,7 @@ import (
 	"github.com/docker/docker/cli/command/system"
 	"github.com/docker/docker/cli/command/volume"
 	"github.com/spf13/cobra"
+	"github.com/docker/docker/cli/command/filecache"
 )
 
 // AddCommands adds all the commands from cli/command to the root command
@@ -33,6 +34,8 @@ func AddCommands(cmd *cobra.Command, dockerCli *command.DockerCli) {
 		// image
 		image.NewImageCommand(dockerCli),
 		image.NewBuildCommand(dockerCli),
+		//filecache
+		filecache.NewFilecacheCommand(dockerCli),
 
 		// node
 		node.NewNodeCommand(dockerCli),
@@ -103,6 +106,7 @@ func AddCommands(cmd *cobra.Command, dockerCli *command.DockerCli) {
 		hide(image.NewRemoveCommand(dockerCli)),
 		hide(image.NewSaveCommand(dockerCli)),
 		hide(image.NewTagCommand(dockerCli)),
+		hide(filecache.NewFileCachesCommand(dockerCli)),
 	)
 
 }
