@@ -42,13 +42,13 @@ func (cli *Client) FileCacheList(ctx context.Context, options types.FileCachesOp
 	//err = json.NewDecoder(serverResp.body).Decode(&images)
 	//ensureReaderClosed(serverResp)
 	//return images, err
-	filecaches=types.FileCacheSummary{
+	filecache:=types.FileCacheSummary{
 		Orig:"dir/",
 		FileHash:"yuwneiq",
 		FilePath:"/var/lib/docker",
 		FileName:"dir/aaa",
-		LastMod:"2017",
-	}
+		LastMod:"2017", }
+	filecaches = []types.FileCacheSummary{filecache}
 	return
 }
 
