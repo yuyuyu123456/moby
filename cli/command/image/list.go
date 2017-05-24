@@ -9,7 +9,7 @@ import (
 	"github.com/docker/docker/cli/command/formatter"
 	"github.com/docker/docker/opts"
 	"github.com/spf13/cobra"
-	"Sirupsen/logrus"
+	"github.com/Sirupsen/logrus"
 )
 
 type imagesOptions struct {
