@@ -13,7 +13,7 @@ import (
 	"golang.org/x/net/context"
 	"net/url"
 	"encoding/json"
-	"github.com/opencontainers/runc/vendor/github.com/Sirupsen/logrus"
+	"github.com/Sirupsen/logrus"
 )
 
 // FilecahceList returns a list of filecaches in the docker host.
