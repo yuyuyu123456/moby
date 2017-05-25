@@ -321,28 +321,46 @@ func removeDiskFile(orig string)(err error){
 	md := hash.Sum(nil)
 	mdStr := hex.EncodeToString(md)
 	pth:=filepath.Join(Filecachejsonpath,mdStr)
-	//filemetadata:=&FileMetaData{Orig:orig}
-	//if err=filemetadata.FromDisk();err!=nil{
-	//	return
-	//}
+
+	_,err=os.Stat(pth)
+	if os.IsNotExist(err){
+		logrus.Debug("removeDiskFile json file is not exist ",orig)
+		return
+	}
+	filemetadata:=&FileMetaData{Orig:orig}
+	if err,_=filemetadata.FromDisk();err!=nil{
+		logrus.Debug("removeDiskFile from disk error :",err)
+		return
+	}
+	//remove json file
 	if err=os.Remove(pth);err!=nil{
 		return
 	}
+	//remove content file
+	for _,v:=range filemetadata.Copyinfoandlastmod.Infos{
+		fileinfo:=v.FileInfo.(*HashedFileInfo)
+		fileinfo1:=(fileinfo.FileInfo).(PathFileInfo)
+		if err=os.Remove(fileinfo1.FilePath);err!=nil{
+			logrus.Debug("remove content file ",fileinfo1.FilePath," error:",err)
+			return
+		}
+	}
+
 	//remove json file ,and must remove content file
 	//remote url must remove local file
-	if urlutil.IsURL(orig){
-		filename,err1:=handleFileName(orig)
-		if err1!=nil{
-			return err1
-		}
-		tmpDir:="/var/lib/docker/cachefile"
-		tmpFileName:= filepath.Join(tmpDir, filename)
-		logrus.Debug("remove file from disk tmpfilename is ", tmpFileName)
-		if err1=os.Remove(tmpFileName);err1!=nil{
-			return err1
-		}
-
-	}
+	//if urlutil.IsURL(orig){
+	//	filename,err1:=handleFileName(orig)
+	//	if err1!=nil{
+	//		return err1
+	//	}
+	//	tmpDir:="/var/lib/docker/cachefile"
+	//	tmpFileName:= filepath.Join(tmpDir, filename)
+	//	logrus.Debug("remove file from disk tmpfilename is ", tmpFileName)
+	//	if err1=os.Remove(tmpFileName);err1!=nil{
+	//		return err1
+	//	}
+	//
+	//}
 	return
 
 
@@ -463,14 +481,15 @@ func (filecache *FileCache)DelCopyInfo(origins []string)(bool,error){
 			return b,err
 		}
 		if !exist{
-			logrus.Debug("DelCopyInfo:key origin in singleFileCacheMap not found,do nothing")
+			logrus.Debug("DelCopyInfo:key origin in singleFileCacheMap not found")
 		}else{
 			logrus.Debug("DelCopyInfo:key origin in singleFileCacheMap deleting")
 			//delete(filecache.SingleFileCacheMap,orgin)
 			b=filecache.SingleFileCacheMap.Copyinfolrucache.Remove(orgin)
-			if err=removeDiskFile(orgin);err!=nil{
-				logrus.Warn("remove", orgin,"local file err",err)
-			}
+
+		}
+		if err=removeDiskFile(orgin);err!=nil{
+			logrus.Warn("remove", orgin,"local file err",err)
 		}
 	}
 	return b,err

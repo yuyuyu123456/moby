@@ -17,7 +17,7 @@ import (
 
 
 // NewRemoveCommand creates a new `docker remove` command
-func NewRemoveCommand(dockerCli *command.DockerCli) *cobra.Command {
+func NewFileCacheRemoveCommand(dockerCli *command.DockerCli) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "rmf FileCache [FileCache...]",
@@ -33,7 +33,7 @@ func NewRemoveCommand(dockerCli *command.DockerCli) *cobra.Command {
 }
 
 func newRemoveCommand(dockerCli *command.DockerCli) *cobra.Command {
-	cmd := *NewRemoveCommand(dockerCli)
+	cmd := *NewFileCacheRemoveCommand(dockerCli)
 	cmd.Aliases = []string{"rmf", "remove"}
 	cmd.Use = "rm FileCache [FileCache...]"
 	return &cmd
