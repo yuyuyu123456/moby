@@ -12,7 +12,6 @@ import (
 	"github.com/docker/docker/builder"
 	"os"
 	"github.com/Sirupsen/logrus"
-	"docker/pkg/filenotify"
 )
 
 func (daemon *Daemon) FileCacheDelete(Orig string)(deleteresponses []*types.FileCacheDeleteResponseItem,err error){
