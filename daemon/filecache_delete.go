@@ -11,7 +11,7 @@ import (
 	"crypto/sha256"
 	"github.com/docker/docker/builder"
 	"os"
-	"Sirupsen/logrus"
+	"github.com/Sirupsen/logrus"
 )
 
 func (daemon *Daemon) FileCacheDelete(Orig string)(deleteresponses []*types.FileCacheDeleteResponseItem,err error){
