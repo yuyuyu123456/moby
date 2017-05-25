@@ -13,6 +13,7 @@ import (
 	"golang.org/x/net/context"
 	"net/url"
 	"encoding/json"
+	"github.com/opencontainers/runc/vendor/github.com/Sirupsen/logrus"
 )
 
 // FilecahceList returns a list of filecaches in the docker host.
@@ -37,10 +38,14 @@ func (cli *Client) FileCacheList(ctx context.Context, options types.FileCachesOp
 
 	serverResp, err := cli.get(ctx, "/filecaches/json", query, nil)
 	if err != nil {
+		logrus.Debug("FileCacheList get response error:",err)
 		return
 	}
 
 	err = json.NewDecoder(serverResp.body).Decode(&filecaches)
+	if err!=nil{
+		logrus.Debug("FileCacheList json decode error:",err)
+	}
 	ensureReaderClosed(serverResp)
 	//return images, err
 	//filecache:=types.FileCacheSummary{
