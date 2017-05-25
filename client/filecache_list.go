@@ -37,6 +37,7 @@ func (cli *Client) FileCacheList(ctx context.Context, options types.FileCachesOp
 	//}
 
 	serverResp, err := cli.get(ctx, "/filecaches/json", query, nil)
+	logrus.Debug("FileCacheList get response :",serverResp)
 	if err != nil {
 		logrus.Debug("FileCacheList get response error:",err)
 		return

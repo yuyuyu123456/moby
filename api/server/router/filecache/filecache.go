@@ -32,7 +32,7 @@ func (r *filecacheRouter) Routes() []router.Route {
 func (r *filecacheRouter) initRoutes() {
 	r.routes = []router.Route{
 		// GET
-		router.NewGetRoute("/filecache/json", r.getFilecachesJSON),
+		router.NewGetRoute("/filecaches/json", r.getFilecachesJSON),
 
 	}
 }
