@@ -9,6 +9,7 @@ import (
 	"github.com/docker/docker/api/types"
 	"golang.org/x/net/context"
 	"encoding/json"
+	"github.com/Sirupsen/logrus"
 )
 // ImageRemove removes an image from the docker host.
 func (cli *Client) FileCacheRemove(ctx context.Context,filecache string)(deleteresponses []types.FileCacheDeleteResponseItem, err error) {
@@ -16,6 +17,7 @@ func (cli *Client) FileCacheRemove(ctx context.Context,filecache string)(deleter
 
 	resp, err := cli.delete(ctx, "/filecaches/"+filecache, query, nil)
 	if err != nil {
+		logrus.Debug("FileCacheRemove get response error:",err)
 		return
 	}
 	err = json.NewDecoder(resp.body).Decode(&deleteresponses)

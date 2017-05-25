@@ -10,6 +10,7 @@ import (
 	"golang.org/x/net/context"
 	"strings"
 	"fmt"
+	"github.com/Sirupsen/logrus"
 )
 func (s *filecacheRouter) getFilecachesJSON(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
 	if err := httputils.ParseForm(r); err != nil {
@@ -37,6 +38,7 @@ func (s *filecacheRouter) getFilecachesJSON(ctx context.Context, w http.Response
 
 func (s *filecacheRouter) deleteFileCaches(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
 	if err := httputils.ParseForm(r); err != nil {
+		logrus.Debug("deleteFileCaches error:",err)
 		return err
 	}
 
@@ -49,6 +51,7 @@ func (s *filecacheRouter) deleteFileCaches(ctx context.Context, w http.ResponseW
 
 	list, err := s.backend.FileCacheDelete(name)
 	if err != nil {
+		logrus.Debug("deleteFileCaches backend FileCacheDelete error:",err)
 		return err
 	}
 

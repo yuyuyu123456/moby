@@ -22,6 +22,7 @@ func (daemon *Daemon) FileCacheDelete(Orig string)(deleteresponses []*types.File
 	pth:=filepath.Join(builder.Filecachejsonpath,mdStr)
 	_,err=os.Stat(pth)
 	if os.IsNotExist(err){
+		logrus.Debug("FileCacheDelete file is not exist ",Orig)
 		deleteresponse:=&types.FileCacheDeleteResponseItem{
 			Notexist:pth+"is not exist",
 		}
@@ -31,6 +32,7 @@ func (daemon *Daemon) FileCacheDelete(Orig string)(deleteresponses []*types.File
 	logrus.Debug("remove orig is ",Orig,"filename is ",pth)
 	err=os.Remove(pth)
 	if err!=nil{
+		logrus.Debug("FileCacheDelete remove file error ",err)
 		return
 	}
 	deleteresponse:=&types.FileCacheDeleteResponseItem{
