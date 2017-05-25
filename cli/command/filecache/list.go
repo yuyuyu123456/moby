@@ -44,8 +44,8 @@ func NewFileCachesCommand(dockerCli *command.DockerCli) *cobra.Command {
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "Only show filecache orig")
 	//flags.BoolVarP(&opts.all, "all", "a", false, "Show all images (default hides intermediate images)")
 	//flags.BoolVar(&opts.noTrunc, "no-trunc", false, "Don't truncate output")
-	//flags.BoolVar(&opts.showDigests, "digests", false, "Show digests")
-	//flags.StringVar(&opts.format, "format", "", "Pretty-print images using a Go template")
+	flags.BoolVar(&opts.showDigests, "digests", false, "Show digests")
+	flags.StringVar(&opts.format, "format", "", "Pretty-print images using a Go template")
 	flags.VarP(&opts.filter, "filter", "f", "Filter output based on conditions provided")
 
 	return cmd

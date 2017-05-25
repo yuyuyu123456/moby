@@ -48,6 +48,7 @@ import (
 	"github.com/docker/docker/runconfig"
 	"github.com/docker/go-connections/tlsconfig"
 	"github.com/spf13/pflag"
+	"github.com/docker/docker/api/server/router/filecache"
 )
 
 // DaemonCli represents the daemon CLI.
@@ -487,6 +488,7 @@ func initRouter(s *apiserver.Server, d *daemon.Daemon, c *cluster.Cluster) {
 		build.NewRouter(dockerfile.NewBuildManager(d)),
 		swarmrouter.NewRouter(c),
 		pluginrouter.NewRouter(d.PluginManager()),
+		filecache.NewRouter(d),
 	}
 
 	if d.NetworkControllerEnabled() {
