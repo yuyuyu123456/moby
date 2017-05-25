@@ -15,5 +15,5 @@ type Backend interface {
 
 type filecacheBackend interface {
 	FileCaches(filecachesfilters filters.Args,withExtraAttrs bool)([]*types.FileCacheSummary,error)
-	FileCacheDelete(Orig string)(error)
+	//FileCacheDelete(Orig string)(error)
 }
