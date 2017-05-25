@@ -107,6 +107,7 @@ func AddCommands(cmd *cobra.Command, dockerCli *command.DockerCli) {
 		hide(image.NewSaveCommand(dockerCli)),
 		hide(image.NewTagCommand(dockerCli)),
 		hide(filecache.NewFileCachesCommand(dockerCli)),
+		hide(filecache.NewRemoveCommand(dockerCli)),
 	)
 
 }

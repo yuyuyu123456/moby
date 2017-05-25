@@ -33,6 +33,7 @@ func (r *filecacheRouter) initRoutes() {
 	r.routes = []router.Route{
 		// GET
 		router.NewGetRoute("/filecaches/json", r.getFilecachesJSON),
+		router.NewDeleteRoute("/filecaches/{Orig:.*}", r.deleteFileCaches),
 
 	}
 }

@@ -89,6 +89,7 @@ type ImageAPIClient interface {
 
 type FilecacheAPIClient interface {
 	FileCacheList(ctx context.Context, options types.FileCachesOptions)([]types.FileCacheSummary, error)
+	FileCacheRemove(ctx context.Context,filecache string)([]types.FileCacheDeleteResponseItem, error)
 }
 
 // NetworkAPIClient defines API client methods for the networks

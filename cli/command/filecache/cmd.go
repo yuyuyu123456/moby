@@ -21,6 +21,7 @@ func NewFilecacheCommand(dockerCli *command.DockerCli) *cobra.Command {
 	cmd.AddCommand(
 
 		newListCommand(dockerCli),
+		newRemoveCommand(dockerCli),
 
 	)
 	return cmd

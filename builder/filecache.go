@@ -199,7 +199,7 @@ func (lruCache *LruCache)Remove(k string)(bool){
 	}
 	return false
 }
-const filecachejsonpath  = "/var/lib/docker/filecachejson"
+const Filecachejsonpath = "/var/lib/docker/filecachejson"
 func (fileMetaData *FileMetaData)ToDisk()error{
 	if err:=fileMetaData.checkFileMetaData();err!=nil{
 		return err
@@ -208,7 +208,7 @@ func (fileMetaData *FileMetaData)ToDisk()error{
 	hash.Write([]byte(fileMetaData.Orig))
 	md := hash.Sum(nil)
 	mdStr := hex.EncodeToString(md)
-	pth:=filepath.Join(filecachejsonpath,mdStr)
+	pth:=filepath.Join(Filecachejsonpath,mdStr)
 	jsonSource, err := ioutils.NewAtomicFileWriter(pth, 0644)
 	if err != nil {
 		return err
@@ -261,7 +261,7 @@ func (fileMetaData *FileMetaData)FromDisk()(error,bool){
 	hash.Write([]byte(fileMetaData.Orig))
 	md := hash.Sum(nil)
 	mdStr := hex.EncodeToString(md)
-	pth:=filepath.Join(filecachejsonpath,mdStr)
+	pth:=filepath.Join(Filecachejsonpath,mdStr)
 	jsonSource, err := os.Open(pth)
 	if err != nil {
 		if os.IsNotExist(err){
@@ -320,7 +320,7 @@ func removeDiskFile(orig string)(err error){
 	hash.Write([]byte(orig))
 	md := hash.Sum(nil)
 	mdStr := hex.EncodeToString(md)
-	pth:=filepath.Join(filecachejsonpath,mdStr)
+	pth:=filepath.Join(Filecachejsonpath,mdStr)
 	//filemetadata:=&FileMetaData{Orig:orig}
 	//if err=filemetadata.FromDisk();err!=nil{
 	//	return
