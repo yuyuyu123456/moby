@@ -12,6 +12,7 @@ import (
 	"github.com/docker/docker/cli"
 	"golang.org/x/net/context"
 	"github.com/pkg/errors"
+	"github.com/Sirupsen/logrus"
 )
 
 
@@ -41,12 +42,12 @@ func newRemoveCommand(dockerCli *command.DockerCli) *cobra.Command {
 func runRemove(dockerCli *command.DockerCli, filecaches []string) error {
 	client := dockerCli.Client()
 	ctx := context.Background()
-
-
+        logrus.Debug("runRemove filecaches :",filecaches)
 	var errs []string
 	for _, filecache := range filecaches{
 		dels, err := client.FileCacheRemove(ctx,filecache)
 		if err != nil {
+			logrus.Debug("runRemove error:",err)
 			errs = append(errs, err.Error())
 		} else {
 			for _, del := range dels {

@@ -21,6 +21,7 @@ func (cli *Client) FileCacheRemove(ctx context.Context,filecache string)(deleter
 		return
 	}
 	err = json.NewDecoder(resp.body).Decode(&deleteresponses)
+	logrus.Debug("FileCacheRemove decode error:",err)
 	ensureReaderClosed(resp)
 	return
 }
