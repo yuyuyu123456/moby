@@ -340,9 +340,21 @@ func removeDiskFile(orig string)(err error){
 	for _,v:=range filemetadata.Copyinfoandlastmod.Infos{
 		fileinfo:=v.FileInfo.(*HashedFileInfo)
 		fileinfo1:=(fileinfo.FileInfo).(PathFileInfo)
-		if err=os.Remove(fileinfo1.FilePath);err!=nil{
-			logrus.Debug("remove content file ",fileinfo1.FilePath," error:",err)
+		var fi FileInfo
+		if fi,err=os.Stat(fileinfo1.FilePath);err!=nil{
+			logrus.Debug("removedisk file stat fileinfo error: ",err)
 			return
+		}
+		if !fi.IsDir() {
+			if err = os.Remove(fileinfo1.FilePath); err != nil {
+				logrus.Debug("remove content file ", fileinfo1.FilePath, " error:", err)
+				return
+			}
+		}else{
+			if err = os.RemoveAll(fileinfo1.FilePath); err != nil {
+				logrus.Debug("remove content file dir ", fileinfo1.FilePath, " error:", err)
+				return
+			}
 		}
 	}
 
