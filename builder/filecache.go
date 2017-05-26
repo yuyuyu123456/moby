@@ -340,7 +340,7 @@ func removeDiskFile(orig string)(err error){
 	for _,v:=range filemetadata.Copyinfoandlastmod.Infos{
 		fileinfo:=v.FileInfo.(*HashedFileInfo)
 		fileinfo1:=(fileinfo.FileInfo).(PathFileInfo)
-		var fi FileInfo
+		var fi os.FileInfo
 		if fi,err=os.Stat(fileinfo1.FilePath);err!=nil{
 			logrus.Debug("removedisk file stat fileinfo error: ",err)
 			return
