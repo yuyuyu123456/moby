@@ -358,8 +358,9 @@ func removeDiskFile(orig string)(err error){
 			strings:=strings.Split(directorys,"/")
 			for _,v:=range strings{
 				directory=filepath.Join(directory,v)
-				logrus.Debug("remove disk file: file directory :",directory)
-				os.Remove(directory)
+				directoryfile:=filepath.Join("/var/lib/docker/cachefile",directory)
+				logrus.Debug("remove disk file: file directory :",directoryfile)
+				os.Remove(directoryfile)
 			}
 
 		}else{
