@@ -346,21 +346,26 @@ func removeDiskFile(orig string)(err error){
 			return
 		}
 		if !fi.IsDir() {
-			if err = os.Remove(fileinfo1.FilePath); err != nil {
-				logrus.Debug("remove content file ", fileinfo1.FilePath, " error:", err)
-				return
-			}
+			//if err = os.Remove(fileinfo1.FilePath); err != nil {
+			//	logrus.Debug("remove content file ", fileinfo1.FilePath, " error:", err)
+			//	return
+			//}
+			filePath:=fileinfo1.FilePath
 			var directorys,directory string
-			directorys,err=filepath.Rel("/var/lib/docker/cachefile",fileinfo1.FilePath)
+			directorys,err=filepath.Rel("/var/lib/docker/cachefile",filePath)
 			if err!=nil{
 				logrus.Debug("remove diskfile filepath rel error :",err)
 			}
-			strings:=strings.Split(directorys,"/")
-			for _,v:=range strings{
+			strs:=strings.Split(directorys,"/")
+			var removedir []string
+			for _,v:=range strs{
 				directory=filepath.Join(directory,v)
 				directoryfile:=filepath.Join("/var/lib/docker/cachefile",directory)
-				logrus.Debug("remove disk file: file directory :",directoryfile)
-				errr:=os.Remove(directoryfile)
+				removedir=append(removedir,directoryfile)
+			}
+			for i:=len(removedir)-1;i>=0;i--{
+				logrus.Debug("remove disk file: file directory :",removedir[i])
+				errr:=os.Remove(removedir[i])
 				if errr!=nil{
 					logrus.Debug("remove disk file remove empty dir ",errr)
 				}
