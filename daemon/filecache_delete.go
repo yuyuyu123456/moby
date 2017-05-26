@@ -38,6 +38,7 @@ func (daemon *Daemon) FileCacheDelete(Orig string)(deleteresponses []*types.File
 	//}
 	//_,err =daemon.filecache.SetCopyInfo(filemetadata.Orig,filemetadata.Copyinfoandlastmod,false)
 	_,err=daemon.filecache.DelCopyInfo([]string{Orig})
+	logrus.Debug("filecachedelete err: ",err)
 	if err!=nil{
 		logrus.Errorf("Failed to DelFile error:%v",err)
 	}
