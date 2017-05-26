@@ -488,7 +488,8 @@ func (filecache *FileCache)DelCopyInfo(origins []string)(bool,error){
 		return b,err
 	}
 	for _,orgin:=range origins{
-		_,exist,err:=filecache.GetCopyInfo(orgin)
+		var exist bool
+		_,exist,err=filecache.GetCopyInfo(orgin)
 		if err!=nil{
 			return b,err
 		}
