@@ -18,6 +18,7 @@ const(
 	filecacheFilePathHeader="FilePath"
 	filecacheLastModHeader="LastMod"
 	filecacheFileHashHeader="FileHash"
+	filecacheJsonFileName="JsonFileName"
 )
 
 // NewfileCacheFormat returns a format for rendering an FileCacheContext
@@ -77,6 +78,7 @@ func newFilecacheContext() *filecacheContext{
 		"FilePath":       filecacheFilePathHeader,
 		"FileHash":       filecacheFileHashHeader,
 		"LastMod":        filecacheLastModHeader,
+		"JsonFileName":   filecacheJsonFileName,
 	}
 	return &filecacheCtx
 }
@@ -114,4 +116,7 @@ func (f *filecacheContext)LastMod()string{
 		return "<NONE>"
 	}
 	return f.f.LastMod
+}
+func (f *filecacheContext)JsonFileName()string{
+	return f.f.JsonFileName
 }

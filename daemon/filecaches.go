@@ -38,6 +38,7 @@ func(daemon *Daemon) FileCaches(filecachesfilters filters.Args,withExtraAttrs bo
 				FileName:fileinfo1.FileName,
 				FilePath:fileinfo1.FilePath,
 				LastMod:filemetadata.Copyinfoandlastmod.LastMod,
+				JsonFileName:filename,
 			}
 			filecacheSummarys = append(filecacheSummarys,filecacheSummary)
 		}

@@ -15,5 +15,7 @@ type FileCacheSummary struct {
         FilePath string `json:"FilePath"`
 
 	LastMod string `json:"LastMod"`
+
+	JsonFileName string `json:"JsonFileName"`
 }
 
