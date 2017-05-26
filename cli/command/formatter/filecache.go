@@ -10,9 +10,9 @@ import (
 )
 
 const(
-	defaultFilecacheQuietFormat  = "{{.Orig}}"
-	defaultFilecacheTableFormatWithDigest="table {{.Orig}}\t{{.FileHash}}\t{{.FileName}}\t{{.FilePath}}\t{{.LastMod}}"
-        defaultFilecacheTableFormat="table {{.Orig}}\t{{.FileName}}\t{{.FilePath}}\t{{.LastMod}}"
+	defaultFilecacheQuietFormat  = "{{.JsonFileName}}"
+	defaultFilecacheTableFormatWithDigest="table {{.JsonFileName}}\t{{.Orig}}\t{{.FileHash}}\t{{.FileName}}\t{{.FilePath}}\t{{.LastMod}}"
+        defaultFilecacheTableFormat="table {{.JsonFileName}}\t{{.Orig}}\t{{.FileName}}\t{{.FilePath}}\t{{.LastMod}}"
 	filecacheOrigHeader="Orig"
 	filecacheFileNameHeader="FileName"
 	filecacheFilePathHeader="FilePath"
