@@ -350,6 +350,18 @@ func removeDiskFile(orig string)(err error){
 				logrus.Debug("remove content file ", fileinfo1.FilePath, " error:", err)
 				return
 			}
+			var directorys,directory string
+			directorys,err=filepath.Rel("/var/lib/docker/cachefile",fileinfo1.FilePath)
+			if err!=nil{
+				logrus.Debug("remove diskfile filepath rel error :",err)
+			}
+			strings:=strings.Split(directorys,"/")
+			for _,v:=range strings{
+				directory=filepath.Join(directory,v)
+				logrus.Debug("remove disk file: file directory :",directory)
+				os.Remove(directory)
+			}
+
 		}else{
 			if err = os.RemoveAll(fileinfo1.FilePath); err != nil {
 				logrus.Debug("remove content file dir ", fileinfo1.FilePath, " error:", err)
