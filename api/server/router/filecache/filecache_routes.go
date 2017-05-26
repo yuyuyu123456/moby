@@ -42,10 +42,10 @@ func (s *filecacheRouter) deleteFileCaches(ctx context.Context, w http.ResponseW
 		return err
 	}
 
-	name := vars["Orig"]
+	name := vars["JsonFileName"]
 
 	if strings.TrimSpace(name) == "" {
-		return fmt.Errorf("filecache Orig name cannot be blank")
+		return fmt.Errorf("filecache JsonFileName  cannot be blank")
 	}
 
 
