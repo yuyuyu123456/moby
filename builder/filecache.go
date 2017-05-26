@@ -360,7 +360,10 @@ func removeDiskFile(orig string)(err error){
 				directory=filepath.Join(directory,v)
 				directoryfile:=filepath.Join("/var/lib/docker/cachefile",directory)
 				logrus.Debug("remove disk file: file directory :",directoryfile)
-				os.Remove(directoryfile)
+				errr:=os.Remove(directoryfile)
+				if errr!=nil{
+					logrus.Debug("remove disk file remove empty dir ",errr)
+				}
 			}
 
 		}else{
